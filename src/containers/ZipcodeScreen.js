@@ -41,6 +41,7 @@ const BasicTextFields = () => {
     const api_url = `weather/${zipString}`;
     const response = await fetch(api_url);
     const quotedata = await response.json();
+    console.log(response);
     console.log(quotedata);
     setQuotes(quotedata);
 
