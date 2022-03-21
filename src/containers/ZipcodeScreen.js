@@ -49,7 +49,7 @@ const BasicTextFields = () => {
     elem.style.display = "block";
     window.scrollTo({
       behaviour: "smooth",
-      top: myRef.current.offsetTop - 30,
+      top: myRef.current.offsetTop + 100,
     });
   }
 
@@ -358,6 +358,7 @@ const BasicTextFields = () => {
               noValidate
               autoComplete="off"
               onSubmit={handleSubmit(onSubmit)}
+              id="zip-input-form"
             >
               <TextField
                 sx={{ mr: 2 }}

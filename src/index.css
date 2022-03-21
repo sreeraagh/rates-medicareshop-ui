@@ -15,8 +15,8 @@ html{
 }
 
 /* Chrome, Safari, Edge, Opera */
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input::-webkit-outer-spin-button,
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input::-webkit-inner-spin-button {
+#zip-input-form input::-webkit-outer-spin-button,
+#zip-input-form input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
   color: #000;
@@ -25,13 +25,13 @@ html{
 }
 
 
-.css-1tq4umm-MuiFormLabel-root-MuiInputLabel-root {
+#zip-input-form {
   color: #333;
   font-weight: 500;
 }
 
 /* Firefox */
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input[type=number] {
+#zip-input-form input {
   -moz-appearance: textfield; 
     color: #000;
     font-weight: bold;
