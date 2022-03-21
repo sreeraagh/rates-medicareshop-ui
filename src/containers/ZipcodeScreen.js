@@ -38,7 +38,7 @@ const BasicTextFields = () => {
   const myRef = useRef();
 
   async function position() {
-    const api_url = `weather/${zipString}`;
+    const api_url = `${process.env.REACT_APP_API_URL}/weather/${zipString}`;
     const response = await fetch(api_url);
     const quotedata = await response.json();
     console.log(response);
