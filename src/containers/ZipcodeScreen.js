@@ -413,7 +413,7 @@ const BasicTextFields = () => {
             sx={{ mb: 2 }}
           >
             Showing results for {""}
-            <b style={{ textDecoration: "underline" }}>
+            <b>
               {zipinfo}, {zipstate}, Age: 65, Gender: Female, Plan: G,
               Non-Tobacco
             </b>
