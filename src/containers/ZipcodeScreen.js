@@ -17,18 +17,18 @@ import Typography from "@mui/material/Typography";
 import QuoteCard from "../components/quotecard";
 import image from "../assets/background-img.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { ErrorBoundary } from "react-error-boundary";
+//import { ErrorBoundary } from "react-error-boundary";
 //import { Fallback } from "../components/ErrorHandler";
 
 const BasicTextFields = () => {
-  function ErrorFallback({ error }) {
-    return (
-      <div role="alert">
-        <p>Something went wrong:</p>
-        <pre style={{ color: "red" }}>{error.message}</pre>
-      </div>
-    );
-  }
+  // function ErrorFallback({ error }) {
+  //   return (
+  //     <div role="alert">
+  //       <p>Something went wrong:</p>
+  //       <pre style={{ color: "red" }}>{error.message}</pre>
+  //     </div>
+  //   );
+  // }
 
   const {
     register,
@@ -57,7 +57,8 @@ const BasicTextFields = () => {
       console.log(quotedata);
       setQuotes(quotedata);
     } catch (error) {
-      return <ErrorFallback error={error} />;
+      // return <ErrorFallback error={error} />;
+      console.log(error);
     }
   };
 
@@ -422,31 +423,31 @@ const BasicTextFields = () => {
           </Paper>
         </Grid>
 
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Container
-            id="quote_cards"
-            maxWidth="md"
-            sx={{ mt: 4, pb: 4, display: "none" }}
+        {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
+        <Container
+          id="quote_cards"
+          maxWidth="md"
+          sx={{ mt: 4, pb: 4, display: "none" }}
+        >
+          <Typography
+            variant="subtitle1"
+            style={{ textAlign: "center" }}
+            sx={{ mb: 2 }}
           >
-            <Typography
-              variant="subtitle1"
-              style={{ textAlign: "center" }}
-              sx={{ mb: 2 }}
-            >
-              Showing results for {""}
-              <b style={{ textDecoration: "underline" }}>
-                {zipinfo}, {zipstate}, Age: 65, Gender: Female, Plan: G,
-                Non-Tobacco
-              </b>
-            </Typography>
+            Showing results for {""}
+            <b style={{ textDecoration: "underline" }}>
+              {zipinfo}, {zipstate}, Age: 65, Gender: Female, Plan: G,
+              Non-Tobacco
+            </b>
+          </Typography>
 
-            {quotes.map((quote, i) => (
-              <Stack ref={myRef} key={i}>
-                <QuoteCard quote={quote} />
-              </Stack>
-            ))}
-          </Container>
-        </ErrorBoundary>
+          {quotes.map((quote, i) => (
+            <Stack ref={myRef} key={i}>
+              <QuoteCard quote={quote} />
+            </Stack>
+          ))}
+        </Container>
+        {/* </ErrorBoundary> */}
       </Box>
     </ThemeProvider>
   );
