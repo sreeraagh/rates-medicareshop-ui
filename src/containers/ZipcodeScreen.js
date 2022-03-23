@@ -1,6 +1,7 @@
-//import React from "react";
 import React, { useState, useRef } from "react";
-
+//import axios from "axios";
+//import React from "react";
+//import Dialog from "@mui/material/Dialog";
 //import ReactDOM from "react-dom";
 import { ThemeProvider } from "@mui/material";
 import customtheme from "../assets/theme";
@@ -16,9 +17,19 @@ import Typography from "@mui/material/Typography";
 import QuoteCard from "../components/quotecard";
 import image from "../assets/background-img.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-//import axios from "axios";
+import { ErrorBoundary } from "react-error-boundary";
+//import { Fallback } from "../components/ErrorHandler";
 
 const BasicTextFields = () => {
+  function ErrorFallback({ error }) {
+    return (
+      <div role="alert">
+        <p>Something went wrong:</p>
+        <pre style={{ color: "red" }}>{error.message}</pre>
+      </div>
+    );
+  }
+
   const {
     register,
     handleSubmit,
@@ -37,21 +48,22 @@ const BasicTextFields = () => {
 
   const myRef = useRef();
 
-  async function position() {
+  const position = async () => {
     const api_url = `https://mnw-server.herokuapp.com/weather/${zipString}`;
-    const response = await fetch(api_url);
-    const quotedata = await response.json();
-    console.log(response);
-    console.log(quotedata);
-    setQuotes(quotedata);
 
-    const elem = document.querySelector("#quote_cards");
-    elem.style.display = "block";
-    window.scrollTo({
-      behaviour: "smooth",
-      top: myRef.current.offsetTop + 100,
-    });
-  }
+    try {
+      const response = await fetch(api_url);
+      const quotedata = await response.json();
+      console.log(quotedata);
+      setQuotes(quotedata);
+    } catch (error) {
+      return <ErrorFallback error={error} />;
+    }
+  };
+
+  // if (hasError) {
+  //   return <p>Sorry, Sign up failed!</p>;
+  // }
 
   const onSubmit = (data) => {
     console.log(data);
@@ -63,10 +75,14 @@ const BasicTextFields = () => {
 
     console.log(JSON.parse(zipString));
 
-    // let ziped = data[].toString();
-    // console.log(ziped);
     getState(zipString);
     position();
+    const elem = document.querySelector("#quote_cards");
+    elem.style.display = "block";
+    // window.scrollTo({
+    //   behaviour: "smooth",
+    //   top: myRef.current.offsetTop + 1000,
+    // });
   };
 
   function getState(zipString) {
@@ -275,14 +291,11 @@ const BasicTextFields = () => {
     } else {
       st = "none";
       state = "none";
-      console.log("No state found matching", zipcode);
-      console.log(state);
     }
 
+    setZipstate(state);
     console.log(st);
-    setZipstate(st);
-    //return st;
-    return st;
+    return state;
   }
 
   const styles = {
@@ -365,14 +378,14 @@ const BasicTextFields = () => {
                 id="outlined-basic"
                 label="Enter your Zipcode"
                 variant="outlined"
-                type="number"
+                type="tel"
                 size="large"
                 color="secondary"
-                onInput={(e) => {
-                  e.target.value = Math.max(0, parseInt(e.target.value))
-                    .toString()
-                    .slice(0, 5);
-                }}
+                // onInput={(e) => {
+                //   e.target.value = Math.max(0, parseInt(e.target.value))
+                //     .toString()
+                //     .slice(0, 5);
+                // }}
                 // InputLabelProps={{ shrink: true }}
                 inputProps={{
                   maxLength: 5,
@@ -398,7 +411,7 @@ const BasicTextFields = () => {
             </form>
 
             {errors.zip?.type === "pattern" && (
-              <p className="error">Zipcode must contain only</p>
+              <p className="error">Zipcode must contain numbers only.</p>
             )}
             {errors.zip?.type === "required" && (
               <p className="error">Enter your Zipcode to view plans.</p>
@@ -409,30 +422,31 @@ const BasicTextFields = () => {
           </Paper>
         </Grid>
 
-        <Container
-          ref={myRef}
-          id="quote_cards"
-          maxWidth="md"
-          sx={{ mt: 4, pb: 4, display: "none" }}
-        >
-          <Typography
-            variant="subtitle1"
-            style={{ textAlign: "left" }}
-            sx={{ mb: 2 }}
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Container
+            id="quote_cards"
+            maxWidth="md"
+            sx={{ mt: 4, pb: 4, display: "none" }}
           >
-            Showing results for{" "}
-            <b style={{ textDecoration: "underline" }}>
-              {zipinfo}, {zipstate}, Age: 65, Gender: Female, Plan: G,
-              Non-Tobacco
-            </b>
-          </Typography>
+            <Typography
+              variant="subtitle1"
+              style={{ textAlign: "center" }}
+              sx={{ mb: 2 }}
+            >
+              Showing results for {""}
+              <b style={{ textDecoration: "underline" }}>
+                {zipinfo}, {zipstate}, Age: 65, Gender: Female, Plan: G,
+                Non-Tobacco
+              </b>
+            </Typography>
 
-          {quotes.map((quote, i) => (
-            <Stack key={i}>
-              <QuoteCard quote={quote} />
-            </Stack>
-          ))}
-        </Container>
+            {quotes.map((quote, i) => (
+              <Stack ref={myRef} key={i}>
+                <QuoteCard quote={quote} />
+              </Stack>
+            ))}
+          </Container>
+        </ErrorBoundary>
       </Box>
     </ThemeProvider>
   );
