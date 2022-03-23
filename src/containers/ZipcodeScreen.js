@@ -49,7 +49,7 @@ const BasicTextFields = () => {
   const myRef = useRef();
 
   const position = async () => {
-    const api_url = `https://mnw-server.herokuapp.com/weather/${zipString}`;
+    const api_url = `weather/${zipString}`;
 
     try {
       const response = await fetch(api_url);
