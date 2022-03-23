@@ -37,7 +37,7 @@ const BasicTextFields = () => {
 
   const myRef = useRef();
 
-  async function position() {
+  async function getquotes() {
     const api_url = `weather/${zipString}`;
     const response = await fetch(api_url);
     const quotedata = await response.json();
@@ -56,7 +56,7 @@ const BasicTextFields = () => {
     console.log(JSON.parse(zipString));
 
     getState(zipString);
-    position();
+    getquotes();
     const elem = document.querySelector("#quote_cards");
     elem.style.display = "block";
     // window.scrollTo({
