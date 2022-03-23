@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
-//import axios from "axios";
 //import React from "react";
-//import Dialog from "@mui/material/Dialog";
+import React, { useState, useRef } from "react";
+
 //import ReactDOM from "react-dom";
 import { ThemeProvider } from "@mui/material";
 import customtheme from "../assets/theme";
@@ -17,19 +16,9 @@ import Typography from "@mui/material/Typography";
 import QuoteCard from "../components/quotecard";
 import image from "../assets/background-img.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-//import { ErrorBoundary } from "react-error-boundary";
-//import { Fallback } from "../components/ErrorHandler";
+//import axios from "axios";
 
 const BasicTextFields = () => {
-  // function ErrorFallback({ error }) {
-  //   return (
-  //     <div role="alert">
-  //       <p>Something went wrong:</p>
-  //       <pre style={{ color: "red" }}>{error.message}</pre>
-  //     </div>
-  //   );
-  // }
-
   const {
     register,
     handleSubmit,
@@ -48,23 +37,13 @@ const BasicTextFields = () => {
 
   const myRef = useRef();
 
-  const position = async () => {
+  async function position() {
     const api_url = `weather/${zipString}`;
-
-    try {
-      const response = await fetch(api_url);
-      const quotedata = await response.json();
-      console.log(quotedata);
-      setQuotes(quotedata);
-    } catch (error) {
-      // return <ErrorFallback error={error} />;
-      console.log(error);
-    }
-  };
-
-  // if (hasError) {
-  //   return <p>Sorry, Sign up failed!</p>;
-  // }
+    const response = await fetch(api_url);
+    const quotedata = await response.json();
+    console.log(quotedata);
+    setQuotes(quotedata);
+  }
 
   const onSubmit = (data) => {
     console.log(data);
@@ -423,7 +402,6 @@ const BasicTextFields = () => {
           </Paper>
         </Grid>
 
-        {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
         <Container
           id="quote_cards"
           maxWidth="md"
@@ -447,7 +425,6 @@ const BasicTextFields = () => {
             </Stack>
           ))}
         </Container>
-        {/* </ErrorBoundary> */}
       </Box>
     </ThemeProvider>
   );
