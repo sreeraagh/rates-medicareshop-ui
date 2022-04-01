@@ -39,14 +39,45 @@ html{
 }
 
 p.error {
-  margin-top: 10px;
-  margin-bottom: 0px;
+  margin: 0px;
   font-family: 'Inter';
-  font-size: 13px;
+  font-size: 14px;
   color: red;
-  margin-bottom: -10px;
 }
 
+#act_wrap .MuiAlert-icon{
+  color: red;
+}
+
+#act_wrap .MuiCircularProgress-root{
+width: 20px !important;
+height: 20px !important;
+}
+
+#act_wrap .MuiAlert-filledGrey{
+  padding: 0px 10px;
+  margin: 5px 0;
+}
+
+#plogo{
+  max-height: 30px;
+}
+
+#demo-simple-select-label{
+  color: #000;
+  font-weight: 500;
+}
+
+#quote-cards .MuiTypography-body1{
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+
+#update-info .MuiAlert-action{
+  margin-right: 0px;
+  padding: 0px;
+}
 
 /* width */
 ::-webkit-scrollbar {

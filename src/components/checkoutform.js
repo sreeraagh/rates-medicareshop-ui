@@ -10,6 +10,12 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+
 export default function CheckoutForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,7 +27,7 @@ export default function CheckoutForm() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xl">
       <Box
         sx={{
           marginTop: 1,
@@ -30,8 +36,9 @@ export default function CheckoutForm() {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Sign up
+        <Typography variant="subtitle1">
+          Tell us about yourself so we can recommend Medicare Supplement
+          Insurance Plans that may fit your needs.
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -54,7 +61,7 @@ export default function CheckoutForm() {
                 autoComplete="family-name"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 fullWidth
@@ -63,30 +70,101 @@ export default function CheckoutForm() {
                 autoComplete="email"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                autoComplete="new-password"
+                type="tel"
+                label="Phone"
+                name="phone"
+                autoComplete="phone"
               />
             </Grid>
-            <Grid item xs={12}>
+
+            <Grid item xs={12} sm={6} sx={{ mt: 3, mb: 3 }}>
+              <TextField
+                required
+                fullWidth
+                name="Zipcode"
+                label="Zipcode"
+                type="tel"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} sx={{ mt: 3, mb: 3 }}>
+              <TextField
+                required
+                fullWidth
+                name="Date of Birth"
+                label="Date of Birth"
+                type="Date of Birth"
+              />
+            </Grid>
+
+            {/* Gender */}
+            <Grid item xs={12} sm={6}>
+              <FormControl>
+                <FormLabel id="demo-radio-buttons-group-label">
+                  Gender
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                </RadioGroup>
+              </FormControl>
+              {/* Gender */}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl>
+                <FormLabel id="demo-radio-buttons-group-label">
+                  Do you use Tobacco?
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="Yes"
+                    control={<Radio />}
+                    label="Yes"
+                  />
+                  <FormControlLabel value="No" control={<Radio />} label="No" />
+                </RadioGroup>
+              </FormControl>
+              {/* Gender */}
+            </Grid>
+
+            <Grid item xs={12} sx={{ mt: 4 }}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label="I want to receive inspira..."
               />
             </Grid>
           </Grid>
+
           <Button
             type="submit"
             fullWidth
+            size="large"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Submit
           </Button>
         </Box>
       </Box>
