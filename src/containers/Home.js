@@ -64,7 +64,7 @@ const Home = () => {
   const getPlans = async () => {
     try {
       //const response = await fetch(`weather/plans/${zipstring}/${st}`);
-      const response = await fetch(`weather/${zipstring}`);
+      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
      
 
       if (!response.ok ) {
