@@ -1,187 +1,371 @@
 import React, { useState, useEffect } from "react";
-import { ThemeProvider } from "@mui/material";
-import customtheme from "../assets/theme";
 import { useLocation } from "react-router-dom";
-//import Skeleton from "@mui/material/Skeleton";
 import { useNavigate } from "react-router";
+
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-// import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
+
 import Button from "@mui/material/Button";
-// import { useForm } from "react-hook-form";
 import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-// import image from "../assets/background-img.jpg";
-// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import Quotecard from "../components/quotecard";
-//import Quoteslist from "../components/quoteslist";
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import CheckoutForm from "../components/checkoutform";
+
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Alert from '@mui/material/Alert';
-import Fade from '@mui/material/Fade';
+import Alert from "@mui/material/Alert";
+import Fade from "@mui/material/Fade";
 import Skeleton from "@mui/material/Skeleton";
+import Zoom from "@mui/material/Zoom";
+import CircularProgress from "@mui/material/CircularProgress";
+
+import Updateinfo from "../components/updateinfo";
+import Quotecard from "../components/quotecard";
 
 const Plans = () => {
-  const { state } = useLocation();
-  
-  const [quotes, setQuotes] = useState([]);
-  const [zipcode, setZipcode] = useState(null);
-  const [county, setCounty] = useState(null);
+
   const navigate = useNavigate();
-
-
+  const { state } = useLocation();
 
   
+
+  // const [zipcode, setZipcode] =useState
+  const [quotes, setQuotes] = useState([]);
+  const [show, setShow] = useState(false);
+  const [isvisible, setIsvisible] = useState(true);
+  const [error, setError] = useState(null);
+  const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isloading, setIsloading] = useState(false);
+  const [openDialogName, setOpenDialog] = useState(null);
+  
+  let plan;
+  let openfade = true;
+  let openzoom = true;
+  let zipcode;
+  let st;
+  
+  // const [userinfo, setUserinfo] = useState({
+  //   firstname: "",
+  //   lastname: "",
+  //   zip: "",
+  //   gender: "",
+  //   age: "",
+  //   tobacco: ""
+  // })
+
+const userdata =  JSON.parse(localStorage.getItem('user'));
+const usstate = localStorage.getItem('state');
+const isuser = localStorage.getItem('isuser');
+
   useEffect(() => {
-    setQuotes(state.plans);
-    
-    if (!state.zipstring) {
-      navigate("../#");
-    } else{
-      setZipcode(state.zipstring);
+        
+    // if(state === null && isuser === "No"){
+    //   navigate("/"); 
+    // }
+
+    console.log(isuser);
+
+    if(isuser === "Yes"){
+        setIsvisible(false);
+        userQuotes();
     }
-    setCounty(state.plans[0].location_base.state);
-  }, [ state ]);
+    
+    if(state === null && isuser === "No") {
+      navigate("/");
+    } 
+    
+    if (!state === null && isuser === "No"){
+      setQuotes(state.quoteData);
+      zipcode = state.zipstring;
+      st = state.quoteData[0].location_base.state;
+      getPlans();
+    }
+    
 
- let openfade = true; 
+    const timer = setTimeout(() => {
+      setLoading(true);
+    }, 1000);
+  
+    return () => clearTimeout(timer);  
 
-const [open, setOpen] = useState(false);
+  }, []);
+
 
   const handleClickOpen = () => {
-		setOpen(true);
-	};
+    setOpenDialog("updateinfo");
+  };
 
-	const handleClose = () => {
-		setOpen(false);
-	};
-  
-
-  // const [plans, setPlans] = useState([]);
-  // const [show, setShow] = useState(false);
-  // const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   const getPlans = async () => {
-  //     try {
-  //       const response = await fetch(`weather/plans/${zipcode}/${county}`);
-  //       if (!response.ok) {
-  //         throw new Error(`(${response.status})`);
-  //       }
-  //       let actualplans = await response.json();
-  //       setPlans(actualplans);
-  //       console.log(actualplans);
-  //       console.log(zipcode);
-  //       console.log(county);
-  //     } catch (err) {
-  //       setError(err.message);
-  //       setPlans(null);
-  //     } finally {
-  //       setShow(true);
-  //     }
-  //   };
-  //   getPlans();
-  // }, [zipcode, county]);
-
-  //console.log(plans);
-
-  const [plan, setPlan] = useState([]);
+  const handleClose = () => {
+    setOpenDialog(null);
+  };
 
   const handleChange = (event) => {
-    setPlan(event.target.value);
+    plan = event.target.value;
+    setShow(false);
+    setIsloading(true);
+    
+
+    if(isuser === "Yes"){
+      userplanUpdate();
+    }else{
+      planUpdate();
+    }
+  };
+
+  const getPlans = async () => {
+    try {
+      const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
+      //const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
+      if (!response.ok) {
+        throw new Error(`(${response.status})`);
+      }
+      let actualplans = await response.json();
+      setPlans(actualplans);
+    } catch (err) {
+      setError(err.message);
+      setPlans(null);
+    } finally {
+      setShow(true);
+    }
   };
 
 
-	const [loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setLoading(true);
-		}, 1000);
 
-		return () => clearTimeout(timer);
-	}, []);
+  const planUpdate = async () => {
+
+    try {
+      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+
+      if (!response.ok) {
+        throw new SyntaxError("Oops, something went wrong. Try again later.");
+      }
+
+      let actualData = await response.json();
+
+      if (response.ok && actualData.status === "error") {
+        throw new Error(`Unable to fetch quotes. Try again later.`);
+      }
+
+      if (actualData.length === 0) {
+        throw new Error(`No quotes found for selected plan.`);
+      }
+
+      if (response.ok && actualData.length) {
+        setQuotes(actualData);
+        setIsloading(false);
+        setShow(false);
+      }
+    } catch (err) {
+      setError(err.message);
+      console.log(err);
+      setQuotes(null);
+      setIsloading(false);
+      setShow(true);
+    } finally {
+      setIsloading(false);
+    }
+  };
+
+
+  const userQuotes = async () => {  
+    const zipstring = userdata.zipcode;
+    const age = userdata.age;
+    let gender;
+    let tobacco;
+
+    if(userdata.gender === "Female"){
+     gender = "F";
+    } else{
+      gender = "M";
+    }
+
+    if(userdata.tobacco === "Yes"){
+      tobacco = "1";
+     } else{
+      tobacco = "0";
+     }
+
+     console.log(zipstring, age, gender, tobacco);
+    
+    try {
+      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+      // const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+
+      if (!response.ok) {
+        throw new SyntaxError("Oops, something went wrong. Try again later.");
+      }
+
+      let quoteData = await response.json();
+
+      if (response.ok && quoteData.status === "error") {
+        throw new Error(
+          `Enter a valid US zip5 code to get quotes in your area.`
+        );
+      }
+
+      if (response.ok) {
+        setIsloading(false);
+        setShow(false);
+        console.log(quoteData);
+        setQuotes(quoteData);
+        zipcode = zipstring;
+        st = quoteData[0].location_base.state;
+        localStorage.setItem('state', st);
+        getPlans();
+      }
+    } catch (err) {
+      setError(err.message);
+      console.log(err);
+      setIsloading(false);
+      setShow(true);
+    } finally {
+      setIsloading(false);
+    }
+  };
+
+
+  const userplanUpdate = async () => {
+
+    zipcode = userdata.zipcode;
+
+    try {
+      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+
+      if (!response.ok) {
+        throw new SyntaxError("Oops, something went wrong. Try again later.");
+      }
+
+      let actualData = await response.json();
+
+      if (response.ok && actualData.status === "error") {
+        throw new Error(`Unable to fetch quotes. Try again later.`);
+      }
+
+      if (actualData.length === 0) {
+        throw new Error(`No quotes found for selected plan.`);
+      }
+
+      if (response.ok && actualData.length) {
+        setQuotes(actualData);
+        setIsloading(false);
+        setShow(false);
+      }
+    } catch (err) {
+      setError(err.message);
+      console.log(err);
+      setQuotes(null);
+      setIsloading(false);
+      setShow(true);
+    } finally {
+      setIsloading(false);
+    }
+  };
 
 
   return (
-    <ThemeProvider theme={customtheme}>
+    <>
       <Box
         component="main"
         sx={{
           backgroundColor: "#f4f5f7",
           flexGrow: 1,
-          // height: "100vh",
+          height: "100vh",
           overflow: "auto",
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          justifyContent: "center",
-          paddingTop: "30px",
+          justifyContent: "flex-start",
         }}
       >
-
-      <Container maxWidth="md">
-        <Fade in={openfade} >
-
-        {loading ? (
-          
-                  <Alert severity="info" id="update-info"  color="secondary" variant="filled" sx={{display: "flex", alignItems: "center", mb: 4, background: "#000"}}
-                  action={
-                    <Button
-                      startIcon={<BorderColorOutlinedIcon />}
-                      color="inherit"
-                      sx={{color: "#000", background: "#fff"}}
-                      size="large"
-                      variant="contained"
-                      onClick={handleClickOpen}    
-                    >
-                  
-                     Update my Info
-                    </Button>
-                  }
-                  >
-                
-                            
-                <Stack direction="column" >
-                <Typography
-                variant="subtitle2"
-            style={{ textAlign: "left" }}
-            >
-            Showing results for{" "}
-          </Typography>
-          <Typography  variant="body1" sx={{fontWeight: "600", fontSize: "1.2em"}}>
-              {zipcode}, {county} Age: 65, Gender: Female,
-              Non-Tobacco.
-            </Typography>
-            </Stack>
-
-          
-                  </Alert>
-
-                  ) : (
-						<Skeleton
-							variant="rectangle"
-							animation="wave"
-							height="4em"
-							width="100%"
-              sx={{mb:4}}
-						/>
-					)}
-
-          </Fade>
-          </Container>
-
-
-        <Container maxWidth="md">
-            <Grid item xs={3} sx={{mb:2}}>
+        <Container maxWidth="md" sx={{ mt: 4 }}>
+          <Fade in={openfade}>
             {loading ? (
-              
+              <Alert
+                severity="info"
+                id="update-info"
+                color="secondary"
+                variant="filled"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mb: 4,
+                  background: "#000",
+                }}
+                action={
+                  <>
+                  {isvisible && (
+                  <Button
+                    startIcon={<BorderColorOutlinedIcon />}
+                    color="inherit"
+                    sx={{ color: "#000", background: "#fff" }}
+                    size="large"
+                    variant="contained"
+                    onClick={handleClickOpen}
+                  >
+                    Update my Info
+                  </Button>
+                  )}
+                  </>
+                }
+              >
+                {isvisible && (
+                <Stack direction="column">
+                  <Typography variant="subtitle2" style={{ textAlign: "left" }}>
+                    Showing results for{" "}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: "600", fontSize: "1.2em" }}
+                  >
+                    {zipcode}, {st} Age: 65, Gender: Female, Non-Tobacco.
+                  </Typography>
+                </Stack>
+
+                )}
+
+                {!isvisible && (
+                <Stack direction="column">
+                  <Typography variant="body1" sx={{ fontWeight: "600", fontSize: "1.2em" }}>
+                    Hi {userdata.firstName},
+                  </Typography>
+                  <Typography
+                    variant="subtitle2 "
+                    style={{ textAlign: "left" }}
+                  >
+                    Showing results for{" "}
+                    {userdata.zipcode}, {usstate}, Age: {userdata.age}, Gender: {userdata.gender}, Tobacco: {userdata.tobacco}.
+                  </Typography>
+                </Stack>
+                )}
+              </Alert>
+            ) : (
+              <Skeleton
+                variant="rectangle"
+                animation="wave"
+                height="4em"
+                width="100%"
+                sx={{ mb: 4 }}
+              />
+            )}
+          </Fade>
+        </Container>
+
+        <Container
+          maxWidth="md"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Grid item xs={3}>
+            {loading ? (
               <FormControl fullWidth>
                 <InputLabel
                   id="demo-simple-select-label"
@@ -195,33 +379,64 @@ const [open, setOpen] = useState(false);
                   id="demo-simple-select"
                   label="Select a Plan"
                   size="large"
+                  value={plan}
                   color="secondary"
                   onChange={handleChange}
-                  defaultValue={10}
+                  defaultValue="G"
                 >
-                  {/* {plans.map((plan, i) => (
+                  {plans.map((plan, i) => (
                     <MenuItem key={i} value={plan}>
-                      {plan}
+                      Plan <b style={{ marginLeft: "5px" }}>{plan}</b>
                     </MenuItem>
-                  ))} */}
-                  <MenuItem value={10}>Plan A</MenuItem>
-                  <MenuItem value={20}>Plan B</MenuItem>
-                  <MenuItem value={30}>Plan C</MenuItem>
-                  <MenuItem value={40}>Plan D</MenuItem>
-                  <MenuItem value={50}>Plan E</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
-              
             ) : (
               <Skeleton
                 variant="rectangle"
                 animation="wave"
                 height="4em"
                 width="100%"
-                sx={{mb:2}}
+                sx={{ mb: 2 }}
               />
             )}
-            </Grid>
+          </Grid>
+
+          <Grid item sx={{ ml: 2 }} id="plans_loading">
+            {isloading && (
+              <Zoom
+                in={openzoom}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Alert icon={false} color="grey" variant="filled">
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <CircularProgress color="secondary" />
+                    <Typography
+                      variant="subtitle1"
+                      color="secondary"
+                      sx={{ ml: 2, fontWeight: 500 }}
+                    >
+                      Finding quotes for you...
+                    </Typography>
+                  </Box>
+                </Alert>
+              </Zoom>
+            )}
+
+            {error && show && (
+              <Zoom
+                in={openzoom}
+                sx={{ display: "flex", alignItems: "center", mv: 1 }}
+              >
+                <Alert severity="warning" color="grey" variant="filled">
+                  <p className="error">
+                    No quotes found for selected the plan.
+                  </p>
+                  
+                </Alert>
+              </Zoom>
+            )}
+          </Grid>
         </Container>
 
         {/* {!show && (
@@ -235,28 +450,24 @@ const [open, setOpen] = useState(false);
             {`OOPS! Something went wrong. Try again later. ${error}`}
           </Typography>
         )} */}
-      
 
-        <Container maxWidth="md">
-
-        
-
-          
-
-          {quotes.map((quote, i) => (
-            <Stack key={i}>
-              <Quotecard quote={quote} />
-            </Stack>
-          ))}
-        </Container>
-
-
-			<Dialog open={open} onClose={handleClose}>
-				<CheckoutForm />
-			</Dialog>
-
+        {quotes && (
+          <Container maxWidth="md" sx={{ mb: 8, mt: 3 }}>
+            {quotes.map((quote, i) => (
+              <Stack key={i}>
+                <Quotecard quote={quote} />
+              </Stack>
+            ))}
+          </Container>
+        )}
       </Box>
-    </ThemeProvider>
+
+      <Updateinfo
+        open={openDialogName === "updateinfo"}
+        onClose={handleClose}
+      />
+      
+    </>
   );
 };
 

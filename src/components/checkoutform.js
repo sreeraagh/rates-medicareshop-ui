@@ -1,173 +1,321 @@
-import React from "react";
-import Button from "@mui/material/Button";
+import React, { useState  } from "react";
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Button from '@mui/material/Button';
+
+import Typography from '@mui/material/Typography';
+import Dialog from "@mui/material/Dialog";
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
 
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
-export default function CheckoutForm() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+import FormHelperText from '@mui/material/FormHelperText';
 
-  return (
-    <Container component="main" maxWidth="xl">
-      <Box
-        sx={{
-          marginTop: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="subtitle1">
-          Tell us about yourself so we can recommend Medicare Supplement
-          Insurance Plans that may fit your needs.
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                type="tel"
-                label="Phone"
-                name="phone"
-                autoComplete="phone"
-              />
-            </Grid>
 
-            <Grid item xs={12} sm={6} sx={{ mt: 3, mb: 3 }}>
-              <TextField
-                required
-                fullWidth
-                name="Zipcode"
-                label="Zipcode"
-                type="tel"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} sx={{ mt: 3, mb: 3 }}>
-              <TextField
-                required
-                fullWidth
-                name="Date of Birth"
-                label="Date of Birth"
-                type="Date of Birth"
-              />
-            </Grid>
 
-            {/* Gender */}
-            <Grid item xs={12} sm={6}>
-              <FormControl>
-                <FormLabel id="demo-radio-buttons-group-label">
-                  Gender
+const steps = ['Basic-info', 'Address', 'Checkout'];
+
+const userdata =  JSON.parse(localStorage.getItem('user'));
+const usstate =  localStorage.getItem('state');
+
+const GetStepContent = (step) => {
+
+  // const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+  // const onSubmit = (formData, e) => {
+  //   e.preventDefault();
+  
+  //   if( Object.keys(formData).length > 0 ){
+  //     console.log(formData);
+  //   }
+    
+  // };
+
+  switch (step) {
+    case 0:
+      return(
+        <React.Fragment>
+        {/* <Typography variant="h6" gutterBottom>
+          Shipping address
+        </Typography> */}
+
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              name="firstName"
+              label="First Name"
+              fullWidth
+              color="secondary"
+              value={userdata.firstName}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              name="lastName"
+              label="Last Name"
+              fullWidth
+              color="secondary"
+              value={userdata.lastName}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="phone"
+              name="phone"
+              label="Phone"
+              fullWidth
+              color="secondary"
+              value={userdata.phone}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="email"
+              name="email"
+              label="Email"
+              fullWidth
+              color="secondary"
+              value={userdata.email}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+       
+          
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="gender"
+              name="gender"
+              label="Gender"
+              fullWidth
+              color="secondary"
+              value={userdata.gender}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+       
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="age"
+              name="age"
+              label="Age"
+              fullWidth
+              color="secondary"
+              value={userdata.age}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+
+        </Grid>
+      </React.Fragment>
+      );
+    case 1:
+      return (
+        <React.Fragment>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <TextField
+              required
+              id="zip"
+              label="Zipcode"
+              name="age"
+              fullWidth
+              color="secondary"
+              value={userdata.zipcode}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <TextField
+              required
+              id="city"
+              label="City"
+              name="city"
+              fullWidth
+              color="secondary"
+              value={usstate}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+              
+            />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <TextField
+              required
+              id="state"
+              label="State"
+              name="state"
+              fullWidth
+              color="secondary"
+              value={usstate}
+              InputLabelProps={{ shrink: true, readOnly: true, }}
+            />
+          </Grid>
+          
+          <Grid item xs={12} md={12}>
+            <TextField
+              required
+              id="outlined-multiline-flexible"
+              label="Primary Address"
+              name="address"
+              fullWidth
+              color="secondary"
+              rows={2}
+              multiline
+              maxRows={2}
+              InputLabelProps={{ shrink: true, }}
+              autoFocus
+            />
+          </Grid>
+         
+        </Grid>
+      </React.Fragment>
+      );
+    case 2:
+      
+      return (
+      
+            <React.Fragment>
+              
+              <Grid item xs={12} sm={12} sx={{mb:3}}>
+              <FormControl >
+                <FormLabel required id="demo-radio-buttons-group-label" color="secondary">
+                Are you within 6 months of enrolling into Medicare Part B or turning 65?
                 </FormLabel>
                 <RadioGroup
                   row
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="Female"
-                  />
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
-                  />
-                </RadioGroup>
-              </FormControl>
-              {/* Gender */}
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <FormControl>
-                <FormLabel id="demo-radio-buttons-group-label">
-                  Do you use Tobacco?
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
+                  
+                  name="hq"
                 >
                   <FormControlLabel
                     value="Yes"
-                    control={<Radio />}
+                    control={<Radio color="secondary" />}
                     label="Yes"
                   />
-                  <FormControlLabel value="No" control={<Radio />} label="No" />
+                  <FormControlLabel
+                    value="No"
+                    control={<Radio color="secondary"/>}
+                    label="No"
+                  />
                 </RadioGroup>
+                <FormHelperText style={{color: "#d32f2f"}}></FormHelperText>
+
               </FormControl>
-              {/* Gender */}
+              
+            </Grid>
+            
+            <Grid item xs={12} sm={12}>
+            <FormLabel required id="demo-radio-buttons-group-label" color="secondary">
+                Do you have any of the following medical conditions?
+                </FormLabel>
+
+            <FormGroup>
+                <FormControlLabel control={<Checkbox />} label="COPD, emphysema, pulminary Fibrosis" />
+                <FormControlLabel control={<Checkbox />} label="Insulin dependent diabetes" />
+                <FormControlLabel control={<Checkbox />} label="History of cancer, not including skin cancer" />
+                <FormControlLabel control={<Checkbox />} label="Rheumatoid or psoriatic arthritis" />
+                <FormControlLabel control={<Checkbox />} label="Artery disease or congestive heart failure" />
+                <FormControlLabel control={<Checkbox />} label="None of the above" />
+              </FormGroup>
             </Grid>
 
-            <Grid item xs={12} sx={{ mt: 4 }}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspira..."
-              />
-            </Grid>
-          </Grid>
+            </React.Fragment>
+       
+      );
+    default:
+      throw new Error('Unknown step');
+  }
+}
 
-          <Button
-            type="submit"
-            fullWidth
-            size="large"
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Submit
-          </Button>
+
+export default function Checkout({open, onClose}) {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <Container component="main" maxWidth="sm">
+        <Box variant="outlined" sx={{ my: { xs: 3, md: 3 },  }}>
+          <Typography  variant="body1" align="left">
+          Tell us about yourself so we can recommend Medicare Supplement
+          Insurance Plans that may fit your needs.
+          </Typography>
+          <Stepper id="ui-stepper" activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel >{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <React.Fragment>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h5" gutterBottom>
+                  Thank you for your Enquiry.
+                </Typography>
+                <Typography variant="subtitle1">
+                  We have received it, Our support agent will get back to you shortly.
+                </Typography>
+
+                <Button sx={{mt:3}} size="large" variant="contained"  color="secondary" onClick={onClose}>Okay!</Button>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {GetStepContent(activeStep)}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt:3, mb:3 }}>
+                  {activeStep !== 0 && (
+                    <Button size="large" color="secondary" sx={{mr:2}} onClick={handleBack} >
+                      Back
+                    </Button>
+                  )}
+
+                  <Button
+                    variant="contained"
+                    size="large"
+                    color="secondary"
+                    onClick={handleNext}
+                    
+                  >
+                    {activeStep === steps.length - 1 ? 'Checkout' : 'Next'}
+                  </Button>
+                </Box>
+
+                
+              </React.Fragment>
+            )}
+          </React.Fragment>
         </Box>
-      </Box>
-    </Container>
+        
+      </Container>
+    </Dialog>
   );
 }

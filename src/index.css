@@ -6,6 +6,7 @@ body {
 
 html{
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 .app{
@@ -14,14 +15,19 @@ html{
   
 }
 
+#seemyquotes-btn:hover{
+  background-color: #212121;
+  color: #fff ;
+}
+
 /* Chrome, Safari, Edge, Opera */
 #zip-input-form input::-webkit-outer-spin-button,
 #zip-input-form input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-  color: #000;
-  font-weight: bold;
-  font-size: 18px;
+  color: #000 !important;
+  font-weight: bold !important;
+  font-size: 18px !important;
 }
 
 
@@ -33,28 +39,36 @@ html{
 /* Firefox */
 #zip-input-form input {
   -moz-appearance: textfield; 
-    color: #000;
-    font-weight: bold;
-    font-size: 18px;
+    color: #000 !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+}
+
+.MuiFormHelperText-root{
+  margin-left: 0px !important;
 }
 
 p.error {
   margin: 0px;
   font-family: 'Inter';
-  font-size: 14px;
-  color: red;
+  font-size: 16px;
+  color: #d32f2f;
 }
 
-#act_wrap .MuiAlert-icon{
-  color: red;
+#act_wrap .MuiAlert-icon,
+ #plans_loading .MuiAlert-icon{
+  color: #d32f2f;
+  margin-right: 7px;
 }
 
-#act_wrap .MuiCircularProgress-root{
+#act_wrap .MuiCircularProgress-root,
+#plans_loading .MuiCircularProgress-root{
 width: 20px !important;
 height: 20px !important;
 }
 
-#act_wrap .MuiAlert-filledGrey{
+#act_wrap .MuiAlert-filledGrey,
+#plans_loading .MuiAlert-filledGrey{
   padding: 0px 10px;
   margin: 5px 0;
 }
@@ -77,6 +91,17 @@ height: 20px !important;
 #update-info .MuiAlert-action{
   margin-right: 0px;
   padding: 0px;
+}
+
+#ui-stepper .MuiStepIcon-root.Mui-active,
+#ui-stepper .MuiStepIcon-root.Mui-completed{
+  color: #9c27b0;
+}
+
+input {
+  text-transform: capitalize !important;
+  font-weight: 500 !important;
+  color: #000 !important;
 }
 
 /* width */
