@@ -57,8 +57,8 @@ const Home = () => {
 
   const getQuotes = async () => {
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");

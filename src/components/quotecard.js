@@ -21,15 +21,26 @@ import Divider from "@mui/material/Divider";
 
 export default function Quotecard({ quote }) {
   const rateinc = quote.rate_increases;
-  const ageinc = quote.age_increases;
+  const st = quote.location_base.state;
+  let ageinc = quote.age_increases;
   let disc = quote.discounts;
   
-  const sum_rateinc = rateinc.map(item => (item.rate_increase*100)).reduce((a, b) => a + b);
-  const avg_rateinc = (sum_rateinc / rateinc.length).toString().substr(0,4);
+  let sum_rateinc;
+  let avg_rateinc;
+  let sum_ageinc;
+  let avg_ageinc;
 
- const sum_ageinc = ageinc.map(item => (item*100)).reduce((a, b) => a + b);
- const avg_ageinc = (sum_ageinc / ageinc.length).toString().substr(0,4);
- const st = quote.location_base.state;
+  if(rateinc.length > 0){
+    sum_rateinc = rateinc.map(item => (item.rate_increase*100)).reduce((a, b) => a + b);
+    avg_rateinc = (sum_rateinc / rateinc.length).toString().substr(0,4);
+  }
+
+  if(ageinc.length > 0){
+    sum_ageinc = ageinc.map(item => (item*100)).reduce((a, b) => a + b);
+    avg_ageinc = (sum_ageinc / ageinc.length).toString().substr(0,4);
+  }
+
+  
  
 
  const [checkbtn, setCheckbtn] = useState(false);
