@@ -22,13 +22,18 @@ import Divider from "@mui/material/Divider";
 export default function Quotecard({ quote }) {
   const rateinc = quote.rate_increases;
   const st = quote.location_base.state;
-  let ageinc = quote.age_increases;
-  let disc = quote.discounts;
+  let ageinc = quote.age_increases;  
   
+  let disc = quote.discounts;
+
   let sum_rateinc;
   let avg_rateinc;
   let sum_ageinc;
   let avg_ageinc;
+  
+  let discname;
+  let discvalue;
+  let discfull;
 
   if(rateinc.length > 0){
     sum_rateinc = rateinc.map(item => (item.rate_increase*100)).reduce((a, b) => a + b);
@@ -40,9 +45,17 @@ export default function Quotecard({ quote }) {
     avg_ageinc = (sum_ageinc / ageinc.length).toString().substr(0,4);
   }
 
-  
- 
+  if(quote.discounts.length === 0){
+    discfull = "N/A";
+  } else{
+    discname = disc.map(data => (data.name));
+    discvalue = (disc.map(data => ((data.value * 100).toString().substr(0, 4)))) + "%";
+    discfull = discname + "(" + discvalue +")";
+  }
 
+  // disc.map(data => ( {data.name}, {(data.value * 100).toString().substr(0, 4)}  ));
+
+ 
  const [checkbtn, setCheckbtn] = useState(false);
  const [pricebtn, setPricebtn] = useState(false);
  const [openDialoginfo, setOpenDialoginfo] = useState(null);
@@ -66,8 +79,10 @@ const handleClosecheck = () => {
 };
 
 
-  let plogo;
-  let prov;
+  
+  const prov = quote.company_base.name_full;
+  const plogo = "";
+  
 
 
   useEffect(() => {
@@ -79,79 +94,78 @@ const handleClosecheck = () => {
     setPricebtn(true);
   }
   }, []);
-  // const prov = quote.company_base.parent_company_base.name;
-  // console.log(prov);
   
-  if (quote.company_base.parent_company_base.name === "AETNA GRP") {
-    prov = "Aetna";
-  } else if (
-    quote.company_base.parent_company_base.name === "Blue Shield of CA Grp"
-  ) {
-    prov = "Blue Shield";
-  } else if (
-    quote.company_base.parent_company_base.name === "UNITEDHEALTH GRP"
-  ) {
-    prov = "United Healthcare";
-  } else if (quote.company_base.parent_company_base.name === "Anthem Inc Grp") {
-    prov = "Anthem";
-  } else if (quote.company_base.parent_company_base.name === "CIGNA GRP") {
-    prov = "Cigna";
-  } else {
-    prov = quote.company_base.parent_company_base.name;
-  }
+  
+  // if (quote.company_base.parent_company_base.name === "AETNA GRP") {
+  //   prov = "Aetna";
+  // } else if (
+  //   quote.company_base.parent_company_base.name === "Blue Shield of CA Grp"
+  // ) {
+  //   prov = "Blue Shield";
+  // } else if (
+  //   quote.company_base.parent_company_base.name === "UNITEDHEALTH GRP"
+  // ) {
+  //   prov = "United Healthcare";
+  // } else if (quote.company_base.parent_company_base.name === "Anthem Inc Grp") {
+  //   prov = "Anthem";
+  // } else if (quote.company_base.parent_company_base.name === "CIGNA GRP") {
+  //   prov = "Cigna";
+  // } else {
+  //   prov = quote.company_base.parent_company_base.name;
+  // }
 
-  if (quote.company_base.parent_company_base.name === "AETNA GRP") {
-    plogo = (
-      <img
-        id="plogo"
-        src={require("../assets/aetna-text-logo.png")}
-        style={{ marginRight: "16px" }}
-        alt="Aetna"
-      />
-    );
-  } else if (
-    quote.company_base.parent_company_base.name === "Blue Shield of CA Grp"
-  ) {
-    plogo = (
-      <img
-        id="plogo"
-        src={require("../assets/Blue_Shield_of_California_logo.png")}
-        style={{ marginRight: "16px" }}
-        alt="Cigna"
-      />
-    );
-  } else if (quote.company_base.parent_company_base.name === "Anthem Inc Grp") {
-    plogo = (
-      <img
-        id="plogo"
-        src={require("../assets/anthem-logo.png")}
-        style={{ marginRight: "16px" }}
-        alt="Cigna"
-      />
-    );
-  } else if (
-    quote.company_base.parent_company_base.name === "UNITEDHEALTH GRP"
-  ) {
-    plogo = (
-      <img
-        id="plogo"
-        src={require("../assets/unitedhealthcare-logo.png")}
-        style={{ marginRight: "16px" }}
-        alt="Cigna"
-      />
-    );
-  } else if (quote.company_base.parent_company_base.name === "CIGNA GRP") {
-    plogo = (
-      <img
-        id="plogo"
-        src={require("../assets/cigna-text-logo.jpg")}
-        style={{ marginRight: "16px" }}
-        alt="Cigna"
-      />
-    );
-  } else {
-    plogo = " ";
-  }
+  // if (quote.company_base.parent_company_base.name === "AETNA GRP") {
+  //   plogo = (
+  //     <img
+  //       id="plogo"
+  //       src={require("../assets/aetna-text-logo.png")}
+  //       style={{ marginRight: "16px" }}
+  //       alt="Aetna"
+  //     />
+  //   );
+  // } else if (
+  //   quote.company_base.parent_company_base.name === "Blue Shield of CA Grp"
+  // ) {
+  //   plogo = (
+  //     <img
+  //       id="plogo"
+  //       src={require("../assets/Blue_Shield_of_California_logo.png")}
+  //       style={{ marginRight: "16px" }}
+  //       alt="Cigna"
+  //     />
+  //   );
+  // } else if (quote.company_base.parent_company_base.name === "Anthem Inc Grp") {
+  //   plogo = (
+  //     <img
+  //       id="plogo"
+  //       src={require("../assets/anthem-logo.png")}
+  //       style={{ marginRight: "16px" }}
+  //       alt="Cigna"
+  //     />
+  //   );
+  // } else if (
+  //   quote.company_base.parent_company_base.name === "UNITEDHEALTH GRP"
+  // ) {
+  //   plogo = (
+  //     <img
+  //       id="plogo"
+  //       src={require("../assets/unitedhealthcare-logo.png")}
+  //       style={{ marginRight: "16px" }}
+  //       alt="Cigna"
+  //     />
+  //   );
+  // } else if (quote.company_base.parent_company_base.name === "CIGNA GRP") {
+  //   plogo = (
+  //     <img
+  //       id="plogo"
+  //       src={require("../assets/cigna-text-logo.jpg")}
+  //       style={{ marginRight: "16px" }}
+  //       alt="Cigna"
+  //     />
+  //   );
+  // } else {
+  //   plogo = " ";
+  // }
 
   const [loading, setLoading] = useState(false);
 
@@ -209,7 +223,7 @@ const handleClosecheck = () => {
             spacing={3}
             sx={{ alignItems: "center", justifyContent: "space-between" }}
           >
-            <Stack direction="row" sx={{ alignItems: "center" }} spacing={1}>
+            <Stack direction="column" sx={{ alignItems: "start" }} spacing={0}>
               {plogo}
               <Typography color="text.secondary" variant="subtitle2">
                 Provider:
@@ -217,7 +231,7 @@ const handleClosecheck = () => {
               <Typography
                 color="common.black"
                 variant="subtitle1"
-                sx={{ fontSize: "1.1em" }}
+                sx={{ fontSize: "1em" }}
               >
                 <b>{prov}</b>
               </Typography>
@@ -328,13 +342,17 @@ const handleClosecheck = () => {
                   <Typography color="text.secondary" variant="subtitle2">
                     Discounts :{" "}
                   </Typography>
-                  {disc.map((data, i) => (
+                  <Typography color="text.primary" variant="body1">
+                  {discfull}
+                  </Typography>
+
+                  {/* {disc.map((data, i) => (
                     <Typography key={i} color="text.primary" variant="body1">
                       {" "}
                       {data.name} ({(data.value * 100).toString().substr(0, 4)}
                       %)
                     </Typography>
-                  ))}
+                  ))} */}
                 </Stack>
 
                 {/* <Stack direction="row" sx={{ alignItems: "center" }} spacing={1}>

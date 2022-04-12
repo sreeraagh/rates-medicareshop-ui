@@ -22,7 +22,8 @@ import Zoom from "@mui/material/Zoom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import Updateinfo from "../components/updateinfo";
-import Quotecard from "../components/quotecard";
+//import Quotecard from "../components/quotecard";
+import Quotecard2 from "../components/quotecard2";
 import { userinfo } from "../constants/global";
 
 const Plans = () => {
@@ -56,6 +57,8 @@ const Plans = () => {
     if(isuser === null || isuser === undefined || isuser === "" ){
       navigate("/");
     }
+
+
 
     if(isuser === "Yes"){
       userQuotes();
@@ -310,10 +313,10 @@ const Plans = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  // justifyContent: "center",
                   // background: "#fff",
                 }}
-                // action={}
+                
               >
                 {isvisible && (
                 <Stack direction="row" spacing={1}>
@@ -324,7 +327,7 @@ const Plans = () => {
                     variant="body1"
                     sx={{ fontWeight: "600", fontSize: "1.2em" }}
                   >
-                    Showing results for {" "} {zipcode}, {st} Age: 65, Gender: Female, Non-Tobacco.
+                    Showing results for {" "} {zipcode}, {st}, Age: 65, Gender: Female, Non-Tobacco.
                   </Typography>
                 </Stack>
                 )}
@@ -334,14 +337,15 @@ const Plans = () => {
                 {!isvisible && (
                 <Stack direction="column">
                   
-                  <Typography
+                  {/* <Typography
                     variant="subtitle2 "
                     style={{ textAlign: "left" }}
                   >
-                    Hi {userdata.firstName},
-                  </Typography>
+                   
+                  </Typography> */}
 
                   <Typography variant="body1" sx={{ fontWeight: "600", fontSize: "1.2em" }}>
+                  Hi {userdata.firstName},
                   Showing results for{" "}
                     {userdata.zipcode}, {st}, Age: {userdata.age}, Gender: {userdata.gender}, Tobacco: {userdata.tobacco}.
                   </Typography>
@@ -362,11 +366,11 @@ const Plans = () => {
           </Fade>
 
             
-            {isvisible && (
+              {isvisible && (
                   <Stack direction="column" sx={{mt: 3, alignItems: "center", justifyContent: "center"}} spacing={1}>
-                  <Typography variant="body1"
-                    sx={{ fontWeight: "400", fontSize: "1em" }}>
-                    Not you? See your quotes by updating you info.. {" "}
+                  <Typography
+                    variant="body1" sx={{ fontWeight: "500", fontSize: "1em" }}>
+                    <b>Not you?</b> See personalised quotes by updating your info.. {" "}
                   </Typography>
                   <Button
                     startIcon={<BorderColorOutlinedIcon />}
@@ -485,7 +489,8 @@ const Plans = () => {
           <Container maxWidth="md" sx={{ mb: 8, mt: 3 }}>
             {quotes.map((quote, i) => (
               <Stack key={i}>
-                <Quotecard quote={quote} />
+                {/* <Quotecard quote={quote} /> */}
+                <Quotecard2 quote={quote} />
               </Stack>
             ))}
           </Container>
