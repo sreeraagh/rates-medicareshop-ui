@@ -70,7 +70,7 @@ export default function Updateinfo(  { open, onClose }) {
 
     if( Object.keys(formData).length > 0 ){
 
-      fetch(`https://hooks.zapier.com/hooks/catch/1239764/oo73gyz/`, {
+      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
         method: "POST",
         body: JSON.stringify(formData),
       })
