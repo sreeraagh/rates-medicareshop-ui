@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState, useEffect  } from "react";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
@@ -21,236 +21,251 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
 import FormHelperText from '@mui/material/FormHelperText';
 
 
+export default function Checkout({open, onClose}) {
 
 const steps = ['Basic-info', 'Address', 'Checkout'];
+const [userdata, setUserdata] = useState({});
+const isuser =  localStorage.getItem('isuser');
 
-const userdata =  JSON.parse(localStorage.getItem('user'));
+const [checkdata, SetCheckdata] = useState({});
+
+useEffect(() => {
+  if(isuser === "Yes"){
+    let ss = localStorage.getItem('state');
+    console.log(ss);
+    setUserdata(JSON.parse(localStorage.getItem('user')));
+  }
+  
+}, []);
+
 const usstate =  localStorage.getItem('state');
 
 const GetStepContent = (step) => {
 
-  // const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-  // const onSubmit = (formData, e) => {
-  //   e.preventDefault();
+    // const { register, handleSubmit, watch, formState: { errors } } = useForm();
   
-  //   if( Object.keys(formData).length > 0 ){
-  //     console.log(formData);
-  //   }
+    // const onSubmit = (formData, e) => {
+    //   e.preventDefault();
     
-  // };
-
-  switch (step) {
-    case 0:
-      return(
-        <React.Fragment>
-        {/* <Typography variant="h6" gutterBottom>
-          Shipping address
-        </Typography> */}
-
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              name="firstName"
-              label="First Name"
-              fullWidth
-              color="secondary"
-              value={userdata.firstName}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              name="lastName"
-              label="Last Name"
-              fullWidth
-              color="secondary"
-              value={userdata.lastName}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="phone"
-              name="phone"
-              label="Phone"
-              fullWidth
-              color="secondary"
-              value={userdata.phone}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="email"
-              name="email"
-              label="Email"
-              fullWidth
-              color="secondary"
-              value={userdata.email}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-       
-          
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="gender"
-              name="gender"
-              label="Gender"
-              fullWidth
-              color="secondary"
-              value={userdata.gender}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-       
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="age"
-              name="age"
-              label="Age"
-              fullWidth
-              color="secondary"
-              value={userdata.age}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-
-        </Grid>
-      </React.Fragment>
-      );
-    case 1:
-      return (
-        <React.Fragment>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <TextField
-              required
-              id="zip"
-              label="Zipcode"
-              name="age"
-              fullWidth
-              color="secondary"
-              value={userdata.zipcode}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <TextField
-              required
-              id="city"
-              label="City"
-              name="city"
-              fullWidth
-              color="secondary"
-              value={usstate}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-              
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <TextField
-              required
-              id="state"
-              label="State"
-              name="state"
-              fullWidth
-              color="secondary"
-              value={usstate}
-              InputLabelProps={{ shrink: true, readOnly: true, }}
-            />
-          </Grid>
-          
-          <Grid item xs={12} md={12}>
-            <TextField
-              required
-              id="outlined-multiline-flexible"
-              label="Primary Address"
-              name="address"
-              fullWidth
-              color="secondary"
-              rows={2}
-              multiline
-              maxRows={2}
-              InputLabelProps={{ shrink: true, }}
-              autoFocus
-            />
-          </Grid>
+    //   if( Object.keys(formData).length > 0 ){
+    //     console.log(formData);
+    //   }
+      
+    // };
+  
+    switch (step) {
+      case 0:
+        return(
+          <React.Fragment>
+          {/* <Typography variant="h6" gutterBottom>
+            Shipping address
+          </Typography> */}
+  
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                name="firstName"
+                label="First Name"
+                fullWidth
+                color="secondary"
+                value={userdata.firstName}
+                InputLabelProps={{ shrink: true,  }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                name="lastName"
+                label="Last Name"
+                fullWidth
+                color="secondary"
+                value={userdata.lastName}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="phone"
+                name="phone"
+                label="Phone"
+                fullWidth
+                color="secondary"
+                value={userdata.phone}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="email"
+                name="email"
+                label="Email"
+                fullWidth
+                color="secondary"
+                value={userdata.email}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+              />
+            </Grid>
          
-        </Grid>
-      </React.Fragment>
-      );
-    case 2:
-      
-      return (
-      
-            <React.Fragment>
-              
-              <Grid item xs={12} sm={12} sx={{mb:3}}>
-              <FormControl >
-                <FormLabel required id="demo-radio-buttons-group-label" color="secondary">
-                Are you within 6 months of enrolling into Medicare Part B or turning 65?
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  
-                  name="hq"
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio color="secondary" />}
-                    label="Yes"
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio color="secondary"/>}
-                    label="No"
-                  />
-                </RadioGroup>
-                <FormHelperText style={{color: "#d32f2f"}}></FormHelperText>
-
-              </FormControl>
-              
+            
+  
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="gender"
+                name="gender"
+                label="Gender"
+                fullWidth
+                color="secondary"
+                value={userdata.gender}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+              />
+            </Grid>
+         
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="age"
+                name="age"
+                label="Age"
+                fullWidth
+                color="secondary"
+                value={userdata.age}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+              />
+            </Grid>
+  
+          </Grid>
+        </React.Fragment>
+        );
+      case 1:
+        return (
+          <React.Fragment>
+          <Grid container spacing={3}>
+            <Grid item xs={6} md={6}>
+              <TextField
+                required
+                id="zip"
+                label="Zipcode"
+                name="age"
+                fullWidth
+                color="secondary"
+                value={userdata.zipcode}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+              />
+            </Grid>
+  
+            {/* <Grid item xs={4} md={4}>
+              <TextField
+                required
+                id="city"
+                label="City"
+                name="city"
+                fullWidth
+                color="secondary"
+                value={usstate}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+                
+              />
+            </Grid> */}
+  
+            <Grid item xs={6} md={6}>
+              <TextField
+                required
+                id="state"
+                label="State"
+                name="state"
+                fullWidth
+                color="secondary"
+                value={usstate}
+                InputLabelProps={{ shrink: true, readOnly: true, }}
+              />
             </Grid>
             
-            <Grid item xs={12} sm={12}>
-            <FormLabel required id="demo-radio-buttons-group-label" color="secondary">
-                Do you have any of the following medical conditions?
-                </FormLabel>
-
-            <FormGroup>
-                <FormControlLabel control={<Checkbox />} label="COPD, emphysema, pulminary Fibrosis" />
-                <FormControlLabel control={<Checkbox />} label="Insulin dependent diabetes" />
-                <FormControlLabel control={<Checkbox />} label="History of cancer, not including skin cancer" />
-                <FormControlLabel control={<Checkbox />} label="Rheumatoid or psoriatic arthritis" />
-                <FormControlLabel control={<Checkbox />} label="Artery disease or congestive heart failure" />
-                <FormControlLabel control={<Checkbox />} label="None of the above" />
-              </FormGroup>
+            <Grid item xs={12} md={12}>
+              <TextField
+                required
+                id="outlined-multiline-flexible"
+                label="Primary Address"
+                name="address"
+                fullWidth
+                color="secondary"
+                rows={2}
+                multiline
+                maxRows={2}
+                InputLabelProps={{ shrink: true, }}
+                autoFocus
+              />
             </Grid>
-
-            </React.Fragment>
-       
-      );
-    default:
-      throw new Error('Unknown step');
+           
+          </Grid>
+        </React.Fragment>
+        );
+      case 2:
+        
+        return (
+        
+              <React.Fragment>
+                
+                <Grid item xs={12} sm={12} sx={{mb:3}}>
+                <FormControl >
+                  <FormLabel required id="demo-radio-buttons-group-label" color="secondary">
+                  Are you within 6 months of enrolling into Medicare Part B or turning 65?
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    
+                    name="hq"
+                  >
+                    <FormControlLabel
+                      value="Yes"
+                      control={<Radio color="secondary" />}
+                      label="Yes"
+                    />
+                    <FormControlLabel
+                      value="No"
+                      control={<Radio color="secondary"/>}
+                      label="No"
+                    />
+                  </RadioGroup>
+                  <FormHelperText style={{color: "#d32f2f"}}></FormHelperText>
+  
+                </FormControl>
+                
+              </Grid>
+              
+              <Grid item xs={12} sm={12}>
+              <FormLabel required id="demo-radio-buttons-group-label" color="secondary">
+                  Do you have any of the following medical conditions?
+                  </FormLabel>
+  
+              <FormGroup>
+                  <FormControlLabel control={<Checkbox color="secondary"/>} label="COPD, emphysema, pulminary Fibrosis" />
+                  <FormControlLabel control={<Checkbox color="secondary"/>} label="Insulin dependent diabetes" />
+                  <FormControlLabel control={<Checkbox color="secondary"/>} label="History of cancer, not including skin cancer" />
+                  <FormControlLabel control={<Checkbox color="secondary"/>} label="Rheumatoid or psoriatic arthritis" />
+                  <FormControlLabel control={<Checkbox color="secondary"/>} label="Artery disease or congestive heart failure" />
+                  <FormControlLabel control={<Checkbox color="secondary"/>} label="None of the above" />
+                </FormGroup>
+              </Grid>
+  
+              </React.Fragment>
+         
+        );
+      default:
+        throw new Error('Unknown step');
+    }
   }
-}
 
-
-export default function Checkout({open, onClose}) {
   const [activeStep, setActiveStep] = React.useState(0);
+
+
+  // const handleSubmit = (e, formData) => {
+  //   e.preventDefault();
+  // }
 
   
   const handleNext = () => {
@@ -303,7 +318,6 @@ export default function Checkout({open, onClose}) {
                     size="large"
                     color="secondary"
                     onClick={handleNext}
-                    
                   >
                     {activeStep === steps.length - 1 ? 'Checkout' : 'Next'}
                   </Button>

@@ -57,8 +57,8 @@ const Home = () => {
 
   const getQuotes = async () => {
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -76,9 +76,14 @@ const Home = () => {
         setIsloading(false);
         setShow(false);
         console.log(quoteData);
-          navigate("../plans", {
-            state: { quoteData, zipstring, replace: true },
-          });
+        sessionStorage.setItem("plans", JSON.stringify(quoteData));
+        sessionStorage.setItem("zipcode", zipstring);
+        sessionStorage.setItem("state", quoteData[0].location_base.state);
+        navigate("../plans", {replace: true});
+        
+        // navigate("../plans", {
+        //     state: { quoteData, zipstring, replace: true },
+        // });
         
         // setTimeout(() => {
         //   navigate("../plans", {
@@ -99,7 +104,7 @@ const Home = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);

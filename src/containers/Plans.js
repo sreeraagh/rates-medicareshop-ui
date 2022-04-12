@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
+import Paper from "@mui/material/Paper";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -23,15 +23,18 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import Updateinfo from "../components/updateinfo";
 import Quotecard from "../components/quotecard";
+import { userinfo } from "../constants/global";
 
 const Plans = () => {
 
   const navigate = useNavigate();
-  const { state } = useLocation();
+  //const { state } = useLocation();
 
   
 
-  // const [zipcode, setZipcode] =useState
+  const isuser = localStorage.getItem('isuser');
+  const userdata =  JSON.parse(localStorage.getItem('user'));
+
   const [quotes, setQuotes] = useState([]);
   const [show, setShow] = useState(false);
   const [isvisible, setIsvisible] = useState(true);
@@ -40,85 +43,76 @@ const Plans = () => {
   const [loading, setLoading] = useState(false);
   const [isloading, setIsloading] = useState(false);
   const [openDialogName, setOpenDialog] = useState(null);
+
+  const [zipcode, setZipcode] = useState(null);
+  const [st, setSt] = useState(null);
   
   let plan;
   let openfade = true;
   let openzoom = true;
-  let zipcode;
-  let st;
-  
-  // const [userinfo, setUserinfo] = useState({
-  //   firstname: "",
-  //   lastname: "",
-  //   zip: "",
-  //   gender: "",
-  //   age: "",
-  //   tobacco: ""
-  // })
 
-const userdata =  JSON.parse(localStorage.getItem('user'));
-const usstate = localStorage.getItem('state');
-const isuser = localStorage.getItem('isuser');
+  useEffect (() => {
 
-  useEffect(() => {
-        
-    // if(state === null && isuser === "No"){
-    //   navigate("/"); 
-    // }
+    if(isuser === null || isuser === undefined || isuser === "" ){
+      navigate("/");
+    }
 
-    console.log(isuser);
+
 
     if(isuser === "Yes"){
-        setIsvisible(false);
-        userQuotes();
-    }
-    
-    if(state === null && isuser === "No") {
-      navigate("/");
-    } 
-    
-    if (!state === null && isuser === "No"){
-      setQuotes(state.quoteData);
-      zipcode = state.zipstring;
-      st = state.quoteData[0].location_base.state;
+      userQuotes();
+      setIsvisible(false);
+      setZipcode(localStorage.getItem('zipcode'));
+      setSt(localStorage.getItem('state'));
+      
+    } else{
+      setQuotes(JSON.parse(sessionStorage.getItem('plans')));
+      setZipcode(sessionStorage.getItem('zipcode'));
+      setSt(sessionStorage.getItem('state'));
       getPlans();
     }
-    
 
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 1000);
+    }, 500);
   
     return () => clearTimeout(timer);  
 
   }, []);
 
 
-  const handleClickOpen = () => {
-    setOpenDialog("updateinfo");
-  };
-
-  const handleClose = () => {
-    setOpenDialog(null);
-  };
-
-  const handleChange = (event) => {
-    plan = event.target.value;
-    setShow(false);
-    setIsloading(true);
+ 
+  const getPlans = async () => {
     
+    let zipcode = sessionStorage.getItem('zipcode');
+    let st = sessionStorage.getItem('state');
 
-    if(isuser === "Yes"){
-      userplanUpdate();
-    }else{
-      planUpdate();
+    try {
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
+      const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
+      if (!response.ok) {
+        throw new Error(`(${response.status})`);
+      }
+      let actualplans = await response.json();
+      setPlans(actualplans);
+      console.log(plans);
+    } catch (err) {
+      setError(err.message);
+      setPlans(null);
+    } finally {
+      setShow(true);
     }
   };
 
-  const getPlans = async () => {
+
+  const getuserPlans = async () => {
+  
+    let zipcode = localStorage.getItem('zipcode');
+    let st = localStorage.getItem('state');
+
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
-      //const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
+      const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
       if (!response.ok) {
         throw new Error(`(${response.status})`);
       }
@@ -132,14 +126,13 @@ const isuser = localStorage.getItem('isuser');
     }
   };
 
-
-
-
   const planUpdate = async () => {
 
+    
+
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+     // const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -193,8 +186,8 @@ const isuser = localStorage.getItem('isuser');
      console.log(zipstring, age, gender, tobacco);
     
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
-      // const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -212,11 +205,9 @@ const isuser = localStorage.getItem('isuser');
         setIsloading(false);
         setShow(false);
         console.log(quoteData);
-        setQuotes(quoteData);
-        zipcode = zipstring;
-        st = quoteData[0].location_base.state;
-        localStorage.setItem('state', st);
-        getPlans();
+        setQuotes(quoteData);        
+        localStorage.setItem('state', quoteData[0].location_base.state);
+        getuserPlans();
       }
     } catch (err) {
       setError(err.message);
@@ -231,11 +222,9 @@ const isuser = localStorage.getItem('isuser');
 
   const userplanUpdate = async () => {
 
-    zipcode = userdata.zipcode;
-
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -267,6 +256,33 @@ const isuser = localStorage.getItem('isuser');
     }
   };
 
+  const handleClickOpen = () => {
+    setOpenDialog("updateinfo");
+  };
+
+  const handleClose = () => {
+    setOpenDialog(null);
+    userQuotes();
+    
+    
+    getuserPlans();
+    window.location.reload(true);
+  };
+
+  const handleChange = (event) => {
+    plan = event.target.value;
+    setShow(false);
+    setIsloading(true);
+    
+
+    if(isuser === "Yes"){
+      userplanUpdate();
+    }else{
+      planUpdate();
+    }
+  };
+
+
 
   return (
     <>
@@ -283,64 +299,59 @@ const isuser = localStorage.getItem('isuser');
           justifyContent: "flex-start",
         }}
       >
-        <Container maxWidth="md" sx={{ mt: 4 }}>
+        <Container maxWidth="md" >
+          
+          <Paper elevation={3} sx={{background: "#fff", mt:4,  mb:6, p:2}}>
           <Fade in={openfade}>
             {loading ? (
               <Alert
                 severity="info"
                 id="update-info"
                 color="secondary"
-                variant="filled"
+                variant="outlined"
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  mb: 4,
-                  background: "#000",
+                  justifyContent: "center",
+                  // background: "#fff",
                 }}
                 action={
                   <>
-                  {isvisible && (
-                  <Button
-                    startIcon={<BorderColorOutlinedIcon />}
-                    color="inherit"
-                    sx={{ color: "#000", background: "#fff" }}
-                    size="large"
-                    variant="contained"
-                    onClick={handleClickOpen}
-                  >
-                    Update my Info
-                  </Button>
-                  )}
+                  
                   </>
                 }
               >
                 {isvisible && (
-                <Stack direction="column">
-                  <Typography variant="subtitle2" style={{ textAlign: "left" }}>
+                <Stack direction="row" spacing={1}>
+                  {/* <Typography variant="subtitle2" style={{ textAlign: "left" }}>
                     Showing results for{" "}
-                  </Typography>
+                  </Typography> */}
                   <Typography
                     variant="body1"
                     sx={{ fontWeight: "600", fontSize: "1.2em" }}
                   >
-                    {zipcode}, {st} Age: 65, Gender: Female, Non-Tobacco.
+                    Showing results for {" "} {zipcode}, {st} Age: 65, Gender: Female, Non-Tobacco.
                   </Typography>
                 </Stack>
-
                 )}
+
+
 
                 {!isvisible && (
                 <Stack direction="column">
-                  <Typography variant="body1" sx={{ fontWeight: "600", fontSize: "1.2em" }}>
-                    Hi {userdata.firstName},
-                  </Typography>
+                  
                   <Typography
                     variant="subtitle2 "
                     style={{ textAlign: "left" }}
                   >
-                    Showing results for{" "}
-                    {userdata.zipcode}, {usstate}, Age: {userdata.age}, Gender: {userdata.gender}, Tobacco: {userdata.tobacco}.
+                    Hi {userdata.firstName},
                   </Typography>
+
+                  <Typography variant="body1" sx={{ fontWeight: "600", fontSize: "1.2em" }}>
+                  Showing results for{" "}
+                    {userdata.zipcode}, {st}, Age: {userdata.age}, Gender: {userdata.gender}, Tobacco: {userdata.tobacco}.
+                  </Typography>
+
                 </Stack>
                 )}
               </Alert>
@@ -353,7 +364,32 @@ const isuser = localStorage.getItem('isuser');
                 sx={{ mb: 4 }}
               />
             )}
+
           </Fade>
+
+            
+            {isvisible && (
+                  <Stack direction="column" sx={{mt: 3, alignItems: "center", justifyContent: "center"}} spacing={1}>
+                  <Typography variant="body1"
+                    sx={{ fontWeight: "400", fontSize: "1em" }}>
+                    Not you? See your quotes by updating you info.. {" "}
+                  </Typography>
+                  <Button
+                    startIcon={<BorderColorOutlinedIcon />}
+                    color="secondary"
+                    // sx={{ color: "#000", background: "#fff" }}
+                    size="large"
+                    variant="contained"
+                    onClick={handleClickOpen}
+                  >
+                    Update my Info
+                  </Button>
+                  </Stack>
+                  )}
+
+            
+            </Paper>
+
         </Container>
 
         <Container
