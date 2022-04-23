@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
-
+import ResponsiveAppBar from "../components/AppBar";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -16,6 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Alert from "@mui/material/Alert";
+import AlertTitle from '@mui/material/AlertTitle';
 import Fade from "@mui/material/Fade";
 import Skeleton from "@mui/material/Skeleton";
 import Zoom from "@mui/material/Zoom";
@@ -35,12 +36,15 @@ const Plans = () => {
 
   const isuser = localStorage.getItem('isuser');
   const userdata =  JSON.parse(localStorage.getItem('user'));
+  const userage =  JSON.parse(localStorage.getItem('age'));
 
   const [quotes, setQuotes] = useState([]);
   const [show, setShow] = useState(false);
   const [isvisible, setIsvisible] = useState(true);
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState(null);
   const [plans, setPlans] = useState([]);
+  const [plan, setPlan] = useState("G");
   const [loading, setLoading] = useState(false);
   const [isloading, setIsloading] = useState(false);
   const [openDialogName, setOpenDialog] = useState(null);
@@ -48,17 +52,17 @@ const Plans = () => {
   const [zipcode, setZipcode] = useState(null);
   const [st, setSt] = useState(null);
   
-  let plan;
+  // let plan = "G";
+
   let openfade = true;
   let openzoom = true;
+  
 
   useEffect (() => {
 
     if(isuser === null || isuser === undefined || isuser === "" ){
       navigate("/");
     }
-
-
 
     if(isuser === "Yes"){
       userQuotes();
@@ -75,9 +79,8 @@ const Plans = () => {
 
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 500);
-  
-    return () => clearTimeout(timer);  
+    }, 300);
+    return () => clearTimeout(timer);
 
   }, []);
 
@@ -91,12 +94,13 @@ const Plans = () => {
     try {
       const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
       //const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
+      
       if (!response.ok) {
         throw new Error(`(${response.status})`);
       }
       let actualplans = await response.json();
       setPlans(actualplans);
-      console.log(plans);
+      
     } catch (err) {
       setError(err.message);
       setPlans(null);
@@ -114,6 +118,7 @@ const Plans = () => {
     try {
       const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
       //const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
+      
       if (!response.ok) {
         throw new Error(`(${response.status})`);
       }
@@ -129,11 +134,9 @@ const Plans = () => {
 
   const planUpdate = async () => {
 
-    
-
     try {
      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
-    //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -167,8 +170,9 @@ const Plans = () => {
 
 
   const userQuotes = async () => {  
+    
     const zipstring = userdata.zipcode;
-    const age = userdata.age;
+    const age = userage;
     let gender;
     let tobacco;
 
@@ -184,11 +188,11 @@ const Plans = () => {
       tobacco = "0";
      }
 
-     console.log(zipstring, age, gender, tobacco);
+     
     
     try {
       const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+     //const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -205,16 +209,20 @@ const Plans = () => {
       if (response.ok) {
         setIsloading(false);
         setShow(false);
-        console.log(quoteData);
-        setQuotes(quoteData);        
+        
+        setQuotes(quoteData);                  
+        setSt(quoteData[0].location_base.state);
         localStorage.setItem('state', quoteData[0].location_base.state);
         getuserPlans();
       }
+
     } catch (err) {
-      setError(err.message);
+      setErrors(err.message);
       console.log(err);
       setIsloading(false);
       setShow(true);
+      setSt('N/A');
+      localStorage.setItem('state', 'N/A');
     } finally {
       setIsloading(false);
     }
@@ -222,6 +230,8 @@ const Plans = () => {
 
 
   const userplanUpdate = async () => {
+
+    const zipcode = userdata.zipcode;
 
     try {
       const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
@@ -263,18 +273,13 @@ const Plans = () => {
 
   const handleClose = () => {
     setOpenDialog(null);
-    userQuotes();
-    
-    
-    getuserPlans();
-    window.location.reload(true);
   };
 
   const handleChange = (event) => {
-    plan = event.target.value;
+    // plan = event.target.value;
+    setPlan(event.target.value);
     setShow(false);
     setIsloading(true);
-    
 
     if(isuser === "Yes"){
       userplanUpdate();
@@ -287,6 +292,7 @@ const Plans = () => {
 
   return (
     <>
+    <ResponsiveAppBar />
       <Box
         component="main"
         sx={{
@@ -298,66 +304,219 @@ const Plans = () => {
           alignItems: "center",
           flexDirection: "column",
           justifyContent: "flex-start",
+          paddingTop: "65px",
         }}
       >
-        <Container maxWidth="md" >
+        <Container maxWidth="md" id="info-cont">
           
-          <Paper elevation={3} sx={{background: "#fff", mt:4,  mb:6, p:2}}>
+          <Paper elevation={3} sx={{background: "#fff", mt:4,  mb:6, p:2}} id="info-wrap">
           <Fade in={openfade}>
             {loading ? (
               <Alert
                 severity="info"
                 id="update-info"
                 color="secondary"
+                icon={false}
                 variant="outlined"
                 sx={{
                   display: "flex",
-                  alignItems: "center",
+                  // alignItems: "center",
                   // justifyContent: "center",
                   // background: "#fff",
                 }}
                 
               >
                 {isvisible && (
-                <Stack direction="row" spacing={1}>
-                  {/* <Typography variant="subtitle2" style={{ textAlign: "left" }}>
-                    Showing results for{" "}
-                  </Typography> */}
-                  <Typography
-                    variant="body1"
-                    sx={{ fontWeight: "600", fontSize: "1.2em" }}
-                  >
-                    Showing results for {" "} {zipcode}, {st}, Age: 65, Gender: Female, Non-Tobacco.
+            <Stack direction="column" id="info-stack" spacing={0} sx={{p:1}}>
+            
+            <AlertTitle color="text.primary" variant="body1">Showing quotes for..{" "}</AlertTitle>
+                
+            <Stack direction="row" sx={{ alignItems: "start" }} spacing={4} id="info-substack">
+
+                <Stack
+                  direction="row"
+                  sx={{ alignItems: "center" }}
+                  spacing={1}
+                  id="info-details"
+                >
+                  <Typography color="text.secondary" variant="subtitle1">
+                    Zip Code :
+                  </Typography>
+                  <Typography color="text.primary" variant="h6">
+                  <b>{zipcode}</b>
                   </Typography>
                 </Stack>
+
+                <Stack
+                id="info-details"
+                  direction="row"
+                  sx={{ alignItems: "center" }}
+                  spacing={1}
+                >
+                  <Typography color="text.secondary" variant="subtitle1">
+                    State :
+                  </Typography>
+                  <Typography color="text.primary" variant="h6">
+                  <b>{st}</b>
+                  </Typography>
+                </Stack>
+
+                <Stack
+                id="info-details"
+                  direction="row"
+                  sx={{ alignItems: "center" }}
+                  spacing={1}
+                >
+                  <Typography color="text.secondary" variant="subtitle1">
+                    Age :
+                  </Typography>
+                  <Typography color="text.primary" variant="h6">
+                    <b>65</b>
+                  </Typography>
+                </Stack>
+
+                <Stack
+                id="info-details"
+                  direction="row"
+                  sx={{ alignItems: "center" }}
+                  spacing={1}
+                >
+                  <Typography color="text.secondary" variant="subtitle1">
+                    Gender :
+                  </Typography>
+                  <Typography color="text.primary" variant="h6" >
+                  <b>Female</b>
+                  </Typography>
+                </Stack>
+
+                <Stack
+                id="info-details"
+                  direction="row"
+                  sx={{ alignItems: "center" }}
+                  spacing={1}
+                >
+                  <Typography color="text.secondary" variant="subtitle1">
+                    Tobacco :
+                  </Typography>
+                  <Typography color="text.primary" variant="h6">
+                  <b>No</b>
+                  </Typography>
+                </Stack>
+
+</Stack>
+
+            </Stack>
+
                 )}
 
 
 
                 {!isvisible && (
-                <Stack direction="column">
+
+      <Stack direction="column" spacing={1} sx={{p:1}} id="info-stack">
+            
+  <AlertTitle color="text.primary" variant="body1">👋 Hi {userdata.firstName}, Showing quotes for..{" "}</AlertTitle>
+    
+<Stack direction="row" sx={{ alignItems: "start" }} spacing={4} id="info-substack">
+
+    <Stack
+      direction="row"
+      sx={{ alignItems: "center" }}
+      spacing={1}
+      id="info-details"
+    >
+      <Typography color="text.secondary" variant="subtitle1">
+        Zip Code :
+      </Typography>
+      <Typography color="text.primary" variant="h6">
+      <b>{userdata.zipcode}</b>
+      </Typography>
+    </Stack>
+
+    <Stack
+      direction="row"
+      sx={{ alignItems: "center" }}
+      spacing={1}
+      id="info-details"
+    >
+      <Typography color="text.secondary" variant="subtitle1">
+        State :
+      </Typography>
+      <Typography color="text.primary" variant="h6">
+      <b>{st}</b>
+      </Typography>
+    </Stack>
+
+    <Stack
+      direction="row"
+      sx={{ alignItems: "center" }}
+      spacing={1}
+      id="info-details"
+    >
+      <Typography color="text.secondary" variant="subtitle1">
+        Age :
+      </Typography>
+      <Typography color="text.primary" variant="h6">
+        <b>{userage}</b>
+      </Typography>
+    </Stack>
+
+    <Stack
+      direction="row"
+      sx={{ alignItems: "center" }}
+      spacing={1}
+      id="info-details"
+    >
+      <Typography color="text.secondary" variant="subtitle1">
+        Gender :
+      </Typography>
+      <Typography color="text.primary" variant="h6" sx={{ textTransform: "capitalize"}}>
+      <b>{userdata.gender}</b>
+      </Typography>
+    </Stack>
+
+    <Stack
+      direction="row"
+      sx={{ alignItems: "center" }}
+      spacing={1}
+      id="info-details"
+    >
+      <Typography color="text.secondary" variant="subtitle1">
+        Tobacco :
+      </Typography>
+      <Typography color="text.primary" variant="h6">
+      <b>{userdata.tobacco}</b>
+      </Typography>
+    </Stack>
+
+</Stack>
+
+</Stack>
+
+
+                // <Stack direction="column">
                   
-                  {/* <Typography
-                    variant="subtitle2 "
-                    style={{ textAlign: "left" }}
-                  >
+                //   {/* <Typography
+                //     variant="subtitle2 "
+                //     style={{ textAlign: "left" }}
+                //   >
                    
-                  </Typography> */}
+                //   </Typography> */}
 
-                  <Typography variant="body1" sx={{ fontWeight: "600", fontSize: "1.2em" }}>
-                  Hi {userdata.firstName},
-                  Showing results for{" "}
-                    {userdata.zipcode}, {st}, Age: {userdata.age}, Gender: {userdata.gender}, Tobacco: {userdata.tobacco}.
-                  </Typography>
+                //   <Typography variant="body1" sx={{ fontWeight: "600", fontSize: "1.2em" }}>
+                  
+                //   Showing results for{" "}
+                //     {userdata.zipcode}, {st}, Age: {userdata.age}, Gender: {userdata.gender}, Tobacco: {userdata.tobacco}.
+                //   </Typography>
 
-                </Stack>
+                // </Stack>
                 )}
               </Alert>
             ) : (
               <Skeleton
                 variant="rectangle"
                 animation="wave"
-                height="4em"
+                height="7em"
                 width="100%"
                 sx={{ mb: 4 }}
               />
@@ -366,11 +525,13 @@ const Plans = () => {
           </Fade>
 
             
+          {loading ? (
+            <>
               {isvisible && (
-                  <Stack direction="column" sx={{mt: 3, alignItems: "center", justifyContent: "center"}} spacing={1}>
+                  <Stack direction="column" sx={{mt: 4, mb:1, alignItems: "center", justifyContent: "center"}} spacing={2} id="notyou">
                   <Typography
                     variant="body1" sx={{ fontWeight: "500", fontSize: "1em" }}>
-                    <b>Not you?</b> See personalised quotes by updating your info.. {" "}
+                    <b>Not you?</b> See personalized quotes by updating your info.. {" "}
                   </Typography>
                   <Button
                     startIcon={<BorderColorOutlinedIcon />}
@@ -384,39 +545,85 @@ const Plans = () => {
                   </Button>
                   </Stack>
                   )}
+              </>
+              ) : (
+                <Skeleton
+                  variant="rectangle"
+                  animation="wave"
+                  height="3em"
+                  width="60%"
+                  sx={{ mb: 4, margin: "0 auto" }}
+                />
+              )}
 
             
             </Paper>
 
         </Container>
 
+
+
+        {errors && show && (
+          <Container
+          maxWidth="md"
+          id="info-cont"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            mb:2
+          }}
+        >
+              <Zoom
+                in={openzoom}
+                id="no_plans"
+                sx={{ display: "flex", alignItems: "center",  mv: 1 }}
+              >
+                
+                <Alert severity="warning" color="grey" variant="filled" elevation={3}>
+                  <p className="error">
+                    No Quotes/ Plans available for your Zip code.
+                  </p>
+                </Alert>
+              </Zoom>
+              </Container>
+            )}
+
+
         <Container
           maxWidth="md"
+          id="info-cont"
+          className="info-splan"
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
           }}
         >
-          <Grid item xs={3}>
+
+
+      {!errors && (
+          <Grid item xs={2} id="select-plan" >
             {loading ? (
-              <FormControl fullWidth>
-                <InputLabel
+              <Paper elevation={2}>
+              <FormControl fullWidth >
+                {/* <InputLabel
                   id="demo-simple-select-label"
-                  size="large"
+                  size="small"
                   color="secondary"
+                  
                 >
                   Select a Plan
-                </InputLabel>
+                </InputLabel> */}
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label="Select a Plan"
-                  size="large"
+                  //label="Select a Plan"
+                  
                   value={plan}
                   color="secondary"
                   onChange={handleChange}
-                  defaultValue="G"
+                  // defaultValue = "G"
                 >
                   {plans.map((plan, i) => (
                     <MenuItem key={i} value={plan}>
@@ -425,6 +632,7 @@ const Plans = () => {
                   ))}
                 </Select>
               </FormControl>
+              </Paper>
             ) : (
               <Skeleton
                 variant="rectangle"
@@ -435,26 +643,29 @@ const Plans = () => {
               />
             )}
           </Grid>
+        )}
 
-          <Grid item sx={{ ml: 2 }} id="plans_loading">
+           
+        <Grid item sx={{ ml: 2 }} id="plan_loader-wrap">
             {isloading && (
               <Zoom
                 in={openzoom}
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{ display: "flex", alignItems: "center", }}
               >
-                <Alert icon={false} color="grey" variant="filled">
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <CircularProgress color="secondary" />
+                <Alert icon={false} color="grey" variant="filled" elevation={3} id="plans_loading">
+                  <Box sx={{ display: "flex", alignItems: "center" , color: "#000"}}>
+                    <CircularProgress color="inherit" />
                     <Typography
                       variant="subtitle1"
-                      color="secondary"
+                      color="common.black"
                       sx={{ ml: 2, fontWeight: 500 }}
                     >
-                      Finding quotes for you...
+                      Finding quotes for the selected plan...
                     </Typography>
                   </Box>
                 </Alert>
               </Zoom>
+        
             )}
 
             {error && show && (
@@ -462,15 +673,14 @@ const Plans = () => {
                 in={openzoom}
                 sx={{ display: "flex", alignItems: "center", mv: 1 }}
               >
-                <Alert severity="warning" color="grey" variant="filled">
+                <Alert severity="warning" color="grey" variant="filled" elevation={3} id="plans_error">
                   <p className="error">
                     No quotes found for selected the plan.
-                  </p>
-                  
+                  </p>                  
                 </Alert>
               </Zoom>
             )}
-          </Grid>
+            </Grid>
         </Container>
 
         {/* {!show && (
@@ -486,11 +696,11 @@ const Plans = () => {
         )} */}
 
         {quotes && (
-          <Container maxWidth="md" sx={{ mb: 8, mt: 3 }}>
+          <Container maxWidth="md" sx={{ mb: 8, mt: 3 }} id="info-cont-last">
             {quotes.map((quote, i) => (
               <Stack key={i}>
                 {/* <Quotecard quote={quote} /> */}
-                <Quotecard2 quote={quote} />
+                <Quotecard2  quote={quote} plan={plan} />
               </Stack>
             ))}
           </Container>
@@ -500,6 +710,7 @@ const Plans = () => {
       <Updateinfo
         open={openDialogName === "updateinfo"}
         onClose={handleClose}
+        plan={plan}
       />
       
     </>

@@ -53,12 +53,15 @@ p.error {
   font-family: 'Inter';
   font-size: 16px;
   color: #d32f2f;
+  line-height: normal;
 }
 
 #act_wrap .MuiAlert-icon,
- #plans_loading .MuiAlert-icon{
+ #plans_error .MuiAlert-icon,
+ #no_plans .MuiAlert-icon,
+ #ui-form-error{
   color: #d32f2f;
-  margin-right: 7px;
+  margin-right: 10px;
 }
 
 #act_wrap .MuiCircularProgress-root,
@@ -67,14 +70,18 @@ width: 20px !important;
 height: 20px !important;
 }
 
-#act_wrap .MuiAlert-filledGrey,
-#plans_loading .MuiAlert-filledGrey{
+#act_wrap .MuiAlert-filledGrey{
   padding: 0px 10px;
   margin: 5px 0;
 }
 
+#prov-text{
+  text-transform: capitalize;
+}
+
 #plogo{
-  max-height: 30px;
+  max-width: 60%;
+  width: 60%;
 }
 
 #demo-simple-select-label{
@@ -87,10 +94,22 @@ height: 20px !important;
   text-transform: capitalize;
 }
 
+#ui-form .MuiFormHelperText-root{
+  font-size: 14px;
+  line-height: normal;
+}
 
 #update-info .MuiAlert-action{
   margin-right: 0px;
   padding: 0px;
+}
+
+#update-info {
+  border: 1px solid #999;
+}
+
+#update-info .MuiAlert-icon{
+  color: #999;
 }
 
 #ui-stepper .MuiStepIcon-root.Mui-active,
@@ -99,10 +118,446 @@ height: 20px !important;
 }
 
 input {
-  text-transform: capitalize !important;
+  text-transform: capitalize;
   font-weight: 500 !important;
   color: #000 !important;
 }
+
+#ui_email{
+  text-transform: lowercase !important;
+}
+
+#tq-icon{
+  background: #f4f5f7;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+div#select-plan #demo-simple-select{
+  color: #9c27b0;
+  background: #fff;
+  border: 2px solid #9c27b0;
+  font-size: 18px;
+}
+
+div#select-plan #demo-simple-select:hover{
+  background: #eee;
+}
+
+div#select-plan fieldset{
+  border: none;
+}
+
+div#select-plan svg{
+  color: #9c27b0;
+}
+
+#ui-form .MuiSelect-select{
+  font-weight: 500;
+  color: #000;
+}
+
+
+.videoWrapper{
+  position: relative;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.ms-iframe{
+  overflow: hidden;
+  border: 0;
+  align-self: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#chform-btn-wrap{
+  margin: 0px;
+  padding: 16px;
+}
+
+/* Responsive CSS */
+@media only screen and (max-width: 600px) {
+
+  /* header */
+  #appbar-tr, #appbar-tr .MuiButton-root {
+    padding: 5px 10px;
+  }
+
+  #appbar-tr h6{
+    display: none;
+  }
+
+  /* home */
+  #lp-head{
+    font-size: 30px;
+    margin-top: 3em;
+  }
+
+  #lp-para{
+    line-height: 1.6em;
+  }
+
+  #lp-formwrap{
+    padding: 16px;
+  }
+
+  #zip-input-form{
+    flex-direction: column;
+  }
+
+  #zip-input-form .MuiGrid-root {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  #lp-formbtn{
+    margin-top: 16px !important;
+  }
+
+  #lp-formbtn .MuiButton-root{
+    padding: 10px;
+  }
+
+  p.error{
+    font-size: 14px;
+  }
+
+  #act_wrap .MuiPaper-root{
+    align-items: center;
+  }
+
+  #act_wrap .MuiAlert-filledGrey {
+    padding: 0px 5px;
+  }
+
+  #act_wrap .MuiSvgIcon-root{
+    font-size: 18px;
+  }
+
+  #act_wrap .MuiAlert-icon, #plans_error .MuiAlert-icon, #no_plans .MuiAlert-icon, #ui-form-error{
+    margin-right: 5px;
+  }
+
+  #lp-loader {
+    padding: 0 10px !important;
+  }
+
+  #lp-loader h6{
+    margin-left: 10px;
+  }
+
+  /* plans */
+#info-cont, #info-cont-last, #info-cont-splan {
+  padding: 0px 10px;
+  margin: 0px;
+}
+
+#info-wrap {
+  margin: 20px 0;
+  padding: 10px;
+}
+
+#update-info{
+  padding: 10px;
+}
+
+#info-update, #info-stack, #info-substack, #update-info .MuiAlert-message{
+  padding: 0px;
+}
+
+#info-stack .MuiAlertTitle-root, #info-details .MuiTypography-root{
+  margin: 0px;
+  line-height: 1.4em;
+}
+
+div#info-substack {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 10px 0 0 0;
+}
+
+div#info-details {
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px 40px 0px 0px;
+}
+
+#notyou p{
+  text-align: center;
+}
+
+#notyou{
+  margin: 20px 0px;
+}
+
+div#select-plan {
+  width: 40%;
+  max-width: 40%;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+div#demo-simple-select {
+  padding: 10px 40px 10px 10px;
+}
+
+#quote-wrap {
+  padding: 20px;
+}
+
+div#quote-cards {
+  display: inline;
+  margin: 0px;
+  width: auto;
+}
+
+#quote-cards .MuiGrid-item{
+  padding: 0px;
+    margin: 0px;
+    width: 100%;
+    max-width: 100%;
+  align-items: flex-start;
+}
+
+#plogo{
+  width: 30% ;
+  height: 30%;
+}
+
+.bs-logo{
+  width: 30% !important;
+  height: 30% !important;
+}
+
+
+.moo-logo {
+  width: 50% !important;
+  height: 50% !important;
+}
+
+#prov{
+  margin: 20px 0;
+}
+
+#prov-text{
+  margin-top: 3px;
+}
+
+div#quote-info {
+  margin: 0px;
+  margin-bottom: 10px;
+  flex-direction: row;
+}
+
+div#quote-info p {
+  margin-left: 10px;
+}
+
+#quote-cta {
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+#quote-pre{
+  align-items: flex-start;
+}
+
+#quote-pre .MuiTypography-subtitle1{
+  line-height: 1.4em;
+  margin-top: 5px;
+}
+
+#viewprice{
+  width: 50%;
+  margin: 0px;
+}
+
+#viewprice button{
+  width: 100%;
+}
+
+#info-cont-last{
+  margin-bottom: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+
+
+#ui-dial .MuiDialog-paper{
+width: 100% !important;
+max-width: 100% !important;
+margin: 10px;
+height: 100% !important;
+max-height: 95% !important;
+}
+
+#ui-dial main{
+  padding: 16px;
+}
+
+#ui-chform{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+#ui-head{
+  margin-top: 0px;
+  margin-bottom: 20px;
+  line-height: 1.3em;
+}
+
+#ui-formwrap{
+  margin: 0px;
+}
+
+#ui-form{
+  display: flex;
+    margin: 0px;
+    width: 100%;
+    max-width: 100%;
+}
+
+#ui-form #uiform-field{
+  padding: 0;
+  padding-bottom: 20px;
+}
+
+#uiform-field-dobd, #uiform-field-dobm, #uiform-field-doby{
+  padding: 0px !important;
+}
+
+#uiform-field-dobd{
+  margin: 0 10px;
+  width: 25%;
+  max-width: 25%;
+}
+
+#uiform-field-dobm{
+  width: 45%;
+  max-width: 45%;
+}
+
+#uiform-field-doby{
+  width: 27%;
+  max-width: 27%;
+}
+
+#dob-label{
+  margin-bottom: 16px;
+}
+
+button#uiform-submit {
+  margin: 10px 0px 20px !important;
+}
+
+
+div#no_plans {
+  width: 100%;
+  max-width: 100%;
+  padding: 5px 10px;
+  margin-top: 10px;
+}
+
+#viewprice button{
+  padding: 12px 0;
+}
+
+div#ch-box {
+  margin: 0px;
+}
+
+div#ui-stepper {
+  padding: 0px;
+  margin-bottom: 30px;
+  
+}
+
+div#ui-stepper .MuiStep-root{
+  padding: 0px 3px;
+}
+
+div#ui-stepper .MuiStep-root .MuiStepLabel-iconContainer{
+  padding-right: 3px;
+}
+
+
+
+
+#chform-btn{
+  width: 100%;
+}
+
+div#ch-gender, div#ch-age {
+  width: 50%;
+  max-width: 50%;
+}
+
+#hq-wrap{
+  margin-top: 10px;
+}
+
+#tq-icon {
+  padding: 5px;
+}
+
+#tq-head{
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+#tq-sub1{
+  margin-bottom: 16px;
+}
+
+#tq-sub1,#tq-sub2, #tq-sub3{
+  line-height: 1.5em;
+}
+
+#chform-help{
+  flex-direction: column;
+}
+
+#chform-help .MuiButton-root{
+  margin-top: 16px;
+  margin-left: 0px;
+}
+
+#plan_loader-wrap{
+  margin: 0px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.info-splan {
+  flex-direction: column;
+  align-items: flex-start !important;
+}
+
+#plan_loader-wrap .MuiPaper-root{
+  padding: 0px 10px;
+  
+}
+
+}
+
+/*  */
+
 
 /* width */
 ::-webkit-scrollbar {

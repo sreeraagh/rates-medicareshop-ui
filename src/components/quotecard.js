@@ -19,11 +19,13 @@ import Divider from "@mui/material/Divider";
 
 
 
-export default function Quotecard({ quote }) {
+export default function Quotecard({ quote, i }) {
   const rateinc = quote.rate_increases;
   const st = quote.location_base.state;
   let ageinc = quote.age_increases;  
   
+  console.log(quote.keys);
+
   let disc = quote.discounts;
 
   let sum_rateinc;
@@ -50,7 +52,7 @@ export default function Quotecard({ quote }) {
   } else{
     discname = disc.map(data => (data.name));
     discvalue = (disc.map(data => ((data.value * 100).toString().substr(0, 4)))) + "%";
-    discfull = discname + "(" + discvalue +")";
+    discfull = discname + "(" + discvalue + ")";
   }
 
   // disc.map(data => ( {data.name}, {(data.value * 100).toString().substr(0, 4)}  ));
@@ -63,6 +65,7 @@ export default function Quotecard({ quote }) {
 
  const handleClickOpen = () => {
   setOpenDialoginfo("updateinfo");
+  console.log(quote);
 };
 
 const handleCheckClickOpen = () => {
@@ -215,7 +218,7 @@ const handleClosecheck = () => {
   // }));
 
   return (
-    <Card sx={{ minWidth: 275, mb: 3 }} elevation={3}>
+    <Card sx={{ minWidth: 275, mb: 3 }} elevation={3} >
       <Grid item xs={12} sx={{ p: 2 }}>
         {loading ? (
           <Stack
@@ -557,6 +560,7 @@ const handleClosecheck = () => {
 
       <Checkoutform
         open={openDialogcheck === "checkoutform"}
+        quote={quote}
         onClose={handleClosecheck}
       />
 

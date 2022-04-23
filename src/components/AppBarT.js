@@ -14,10 +14,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 //import Tooltip from "@mui/material/Tooltip";
 //import MenuItem from "@mui/material/MenuItem";
-import Logo from "../assets/medicareshop-logo.png";
+import Logo from "../assets/medicareshop-tlogo.png";
 import { Stack } from "@mui/material";
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBarT = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -29,8 +29,8 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar
-      sx={{ background: "#fff", position: "absolute", top: 0, zIndex: 99 }}
-      elevation={1}
+      elevation={0}
+      sx={{ background: "transparent", position: "absolute", top: 0, zIndex: 99 }}
     >
       <Container maxWidth="xl" id="appbar-tr">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
@@ -51,11 +51,11 @@ const ResponsiveAppBar = () => {
           )}
 
           {loading ? (
-            <Stack direction="row" spacing={1} sx={{alignItems: "center"}}>
-               <Typography color="text.secondary" variant="subtitle1">
+            <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#fff"}}>
+               <Typography color="common.white" variant="subtitle1">
                 Need Help?
                 </Typography>
-            <Button size="large" variant="outlined" color="secondary" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>
+            <Button size="large" variant="outlined" color="inherit" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>
             </Stack>
           ) : (
             <Skeleton variant="rectangle" animation="wave">
@@ -67,4 +67,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default ResponsiveAppBarT;

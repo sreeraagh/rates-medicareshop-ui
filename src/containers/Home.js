@@ -14,6 +14,7 @@ import image from "../assets/background-img.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CircularProgress from "@mui/material/CircularProgress";
 import Zoom from "@mui/material/Zoom";
+import ResponsiveAppBarT from "../components/AppBarT";
 
 const Home = () => {
 
@@ -35,7 +36,7 @@ const Home = () => {
     } else{
       localStorage.setItem("isuser", "No");
     }    
-    if (user.length === "" || user.length === null || user.length === undefined) {
+    if (user === "" || user === null || user === undefined) {
       localStorage.setItem("isuser", "No");
     }
     
@@ -75,7 +76,7 @@ const Home = () => {
       if (response.ok) {
         setIsloading(false);
         setShow(false);
-        console.log(quoteData);
+        
         sessionStorage.setItem("plans", JSON.stringify(quoteData));
         sessionStorage.setItem("zipcode", zipstring);
         sessionStorage.setItem("state", quoteData[0].location_base.state);
@@ -104,9 +105,9 @@ const Home = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 500);
-
+    }, 300);
     return () => clearTimeout(timer);
+
   }, []);
 
 
@@ -128,6 +129,8 @@ const Home = () => {
   };
 
   return (
+<>
+    <ResponsiveAppBarT/>
     <Box
       component="main"
       sx={{
@@ -138,7 +141,7 @@ const Home = () => {
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
-        marginTop: "-64px",
+        
       }}
     >
       <Container style={styles.paperContainer}>
@@ -153,6 +156,7 @@ const Home = () => {
         >
           {loading ? (
             <Typography
+              id="lp-head"
               maxWidth="sm"
               variant="h4"
               style={{
@@ -177,6 +181,7 @@ const Home = () => {
 
           {loading ? (
             <Typography
+            id="lp-para"
               maxWidth="sm"
               variant="subtitle1"
               style={{
@@ -201,6 +206,7 @@ const Home = () => {
         </Box>
         <Grid container sx={{ justifyContent: "center", mt: 2, mb: 2 }}>
           <Paper
+          id="lp-formwrap"
             elevation={4}
             sx={{ p: 3, display: "flex", flexDirection: "column" }}
           >
@@ -216,7 +222,7 @@ const Home = () => {
                   {loading ? (
                     <TextField
                       id="outlined-basic"
-                      label="Enter your Zipcode"
+                      label="Enter your Zip Code"
                       variant="outlined"
                       type="tel"
                       size="large"
@@ -238,7 +244,7 @@ const Home = () => {
                   )}
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid id="lp-formbtn" item xs={6}>
                   {loading ? (
                     <Button
                       endIcon={<ArrowForwardIcon />}
@@ -281,7 +287,7 @@ const Home = () => {
               sx={{ display: "flex", alignItems: "center", mv: 1 }}
             >
               <Alert severity="warning" color="grey" variant="filled">
-                <p className="error">Zipcode must contain numbers only.</p>
+                <p className="error">Zip Code must contain numbers only.</p>
               </Alert>
             </Zoom>
           )}
@@ -292,7 +298,7 @@ const Home = () => {
             >
               <Alert severity="warning" color="grey" variant="filled">
                 <p className="error">
-                  Enter your Zipcode to get quotes in your area.
+                  Enter your Zip Code to get quotes.
                 </p>
               </Alert>
             </Zoom>
@@ -303,7 +309,7 @@ const Home = () => {
               sx={{ display: "flex", alignItems: "center", mv: 1 }}
             >
               <Alert severity="warning" color="grey" variant="filled">
-                <p className="error">Zipcode must be 5 digit long.</p>
+                <p className="error">Zip Code must be 5 digit long.</p>
               </Alert>
             </Zoom>
           )}
@@ -319,16 +325,16 @@ const Home = () => {
           )}
 
           {isloading && (
-            <Zoom in={open} sx={{ display: "flex", alignItems: "center" }}>
+            <Zoom in={open} sx={{ display: "flex", alignItems: "center" }} id="lp-loader">
               <Alert icon={false} color="grey" variant="filled">
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <CircularProgress color="secondary" />
+                <Box sx={{ display: "flex", alignItems: "center", color: "#000" }}>
+                  <CircularProgress color="inherit" />
                   <Typography
                     variant="subtitle1"
-                    color="secondary"
+                    color="common.black"
                     sx={{ ml: 2, fontWeight: 500 }}
                   >
-                    Fetching the best quotes in your area...
+                    Finding the best quotes in your area...
                   </Typography>
                 </Box>
               </Alert>
@@ -337,6 +343,7 @@ const Home = () => {
         </Box>
       </Container>
     </Box>
+    </>
   );
 };
 

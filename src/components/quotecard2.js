@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Updateinfo from "./updateinfo";
 import Checkoutform from "./checkoutform";
 import Skeleton from "@mui/material/Skeleton";
-import Dialog from "@mui/material/Dialog";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import IconButton from "@mui/material/IconButton";
-import Divider from "@mui/material/Divider";
+//import Box from "@mui/material/Box";
+// import CardActions from "@mui/material/CardActions";
+// import Dialog from "@mui/material/Dialog";
+// import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+// import { styled } from "@mui/material/styles";
+// import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+// import IconButton from "@mui/material/IconButton";
+// import Divider from "@mui/material/Divider";
 
 
 
-export default function Quotecard2({ quote }) {
+export default function Quotecard2({ quote, plan }) {
+
+
   const rateinc = quote.rate_increases;
   const st = quote.location_base.state;
   let ageinc = quote.age_increases;  
   
+  let premium = (quote.rate.month) / 100;
+
   let disc = quote.discounts;
 
   let sum_rateinc;
@@ -52,10 +56,16 @@ export default function Quotecard2({ quote }) {
   if(quote.discounts.length === 0){
     discfull = "N/A";
   } else{
-    discname = disc.map(data => (data.name));
-    discvalue = (disc.map(data => ((data.value * 100).toString().substr(0, 4)))) + "%";
-    discfull = discname + "(" + discvalue +")";
+    discname = disc.map(data => (data.name));    
+    discvalue = (disc.map(data => ((data.value * 100).toString().substr(0, 1)))) + "%";
+    discfull = discname +  " (" + discvalue + ")";
   }
+
+  // if(quote.discounts.length === 0 &&  quote.discounts.name === "household"){
+  //   discname = "HH";
+  // }
+
+  
 
   // disc.map(data => ( {data.name}, {(data.value * 100).toString().substr(0, 4)}  ));
 
@@ -74,6 +84,9 @@ const handleCheckClickOpen = () => {
 };
 
 
+ 
+
+
 const handleCloseinfo = () => {
   setOpenDialoginfo(null);
 };
@@ -84,7 +97,7 @@ const handleClosecheck = () => {
 
 
   
-  const prov = quote.company_base.name_full;
+  const prov = quote.company_base.name_full.toLowerCase();
   let plogo;
   
 
@@ -122,6 +135,7 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
+        class="aetna-logo"
         src={require("../assets/aetna-text-logo.png")}
         style={{ marginRight: "16px" }}
         alt="Aetna"
@@ -133,18 +147,20 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
+        class="bs-logo"
         src={require("../assets/Blue_Shield_of_California_logo.png")}
-        style={{ marginRight: "16px" }}
-        alt="Cigna"
+        style={{ marginRight: "16px", width: "50%", maxWidth: "50%" }}
+        alt="Blue Shield"
       />
     );
   } else if (quote.company_base.parent_company_base.name === "Anthem Inc Grp") {
     plogo = (
       <img
         id="plogo"
+        class="anthem-logo"
         src={require("../assets/anthem-logo.png")}
         style={{ marginRight: "16px" }}
-        alt="Cigna"
+        alt="Anthem"
       />
     );
   } else if (
@@ -153,21 +169,33 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
+        class="uh-logo"
         src={require("../assets/unitedhealthcare-logo.png")}
         style={{ marginRight: "16px" }}
-        alt="Cigna"
+        alt="United Healthcare"
       />
     );
-  } else if (quote.company_base.parent_company_base.name === "CIGNA GRP") {
+  } else if (quote.company_base.parent_company_base.name === "CIGNA GRP" || quote.company_base.parent_company_base.name === "CIGNA HLTH GRP") {
     plogo = (
       <img
         id="plogo"
-        src={require("../assets/cigna-text-logo.jpg")}
+        class="cigna-logo"
+        src={require("../assets/cigna-text-logo.png")}
         style={{ marginRight: "16px" }}
         alt="Cigna"
       />
     );
-  } else {
+  } else if (quote.company_base.parent_company_base.name === "MUTUAL OF OMAHA GRP" ) {
+    plogo = (
+      <img
+        id="plogo"
+        class="moo-logo"
+        src={require("../assets/mutualofomaha-text-logo.png")}
+        style={{ marginRight: "16px", width: "90%", maxWidth: "90%" }}
+        alt="Mutual of Omaha"
+      />
+    );
+  }else {
     plogo = " ";
   }
 
@@ -176,8 +204,7 @@ const handleClosecheck = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 1000);
-
+    }, 300);
     return () => clearTimeout(timer);
   }, []);
 
@@ -222,11 +249,11 @@ const handleClosecheck = () => {
     <Card sx={{ minWidth: 275, mb: 3 }} elevation={3}>
   
 
-      <CardContent>
+      <CardContent id="quote-wrap">
 
       <Grid container spacing={3} id="quote-cards">
 
-      <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" , alignItems: "center", justifyContent: "center" }}>
+      <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" , alignItems: "center", justifyContent: "center" }} >
         
         {loading ? (
           <Stack direction="column" spacing={4} >
@@ -234,11 +261,12 @@ const handleClosecheck = () => {
               {plogo}
               </Stack>
               
-              <Stack direction="column" sx={{ alignItems: "start" }} spacing={1}>
-              <Typography color="text.secondary" variant="subtitle2" sx={{}}>
-                Provider:
+              <Stack direction="column" sx={{ alignItems: "start" }} spacing={1} id="prov">
+              <Typography color="text.secondary" variant="subtitle2" >
+                Provider :
               </Typography>
               <Typography
+                id="prov-text"
                 color="common.black"
                 variant="subtitle1"
                 sx={{ fontSize: "1em", fontWeight: "600", lineHeight: "normal" }}
@@ -253,23 +281,24 @@ const handleClosecheck = () => {
           <Skeleton
             variant="rectangle"
             animation="wave"
-            height="3em"
+            height="100%"
             width="100%"
           />
         )}
         
       </Grid>
       
-      <Grid item xs={3}>
+      <Grid item xs={3} >
       {loading ? (
-              <Stack direction="column" spacing={3}>
+              <Stack direction="column" spacing={3} >
                 <Stack
                   direction="column"
                   sx={{ alignItems: "start" }}
                   spacing={0}
+                  id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    Ambest / SP Rating:
+                    Ambest / SP Rating :
                   </Typography>
                   <Typography color="text.primary" variant="body1">
                     {quote.company_base.ambest_rating} / {quote.company_base.sp_rating}
@@ -282,9 +311,11 @@ const handleClosecheck = () => {
                   direction="column"
                   sx={{ alignItems: "start" }}
                   spacing={0}
+                  id="quote-info"
+                  
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    Years in the market:
+                    Years in the market :
                   </Typography>
                   <Typography color="text.primary" variant="body1">
                     {2022 - quote.company_base.established_year}
@@ -296,6 +327,7 @@ const handleClosecheck = () => {
                   direction="column"
                   sx={{ alignItems: "start" }}
                   spacing={0}
+                  id="quote-info"
                 >
                   {/* <Typography color="text.primary">
                     Age Increase history
@@ -314,22 +346,23 @@ const handleClosecheck = () => {
               <Skeleton
                 variant="rectangle"
                 animation="wave"
-                height="5em"
+                height="100%"
                 width="100%"
               />
             )}
       </Grid>
 
         
-          <Grid item xs={3}>
+          <Grid item xs={3} >
  
 
         {loading ? (
-              <Stack direction="column" spacing={3}>
+              <Stack direction="column" spacing={3} >
                 <Stack
                   direction="column"
                   sx={{ alignItems: "start" }}
                   spacing={0}
+                  id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
                     Rate Type :
@@ -343,6 +376,7 @@ const handleClosecheck = () => {
                   direction="column"
                   sx={{ alignItems: "start" }}
                   spacing={0}
+                  id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
                     Discounts :{" "}
@@ -356,6 +390,7 @@ const handleClosecheck = () => {
                   direction="column"
                   sx={{ alignItems: "start" }}
                   spacing={0}
+                  id="quote-info"
                 >
 				  <Typography color="text.secondary" variant="subtitle2">
 				  Rate Increase history : 
@@ -371,7 +406,7 @@ const handleClosecheck = () => {
               <Skeleton
                 variant="rectangle"
                 animation="wave"
-                height="5em"
+                height="100%"
                 width="100%"
               />
             )}
@@ -383,11 +418,12 @@ const handleClosecheck = () => {
 
         <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" , alignItems: "center", justifyContent: "center" }} >
 
-        <Stack spacing={4}>
+        {loading ? (
+        <Stack spacing={4} id="quote-cta">
 
-        <Stack direction="column" sx={{ alignItems: "center", justifyContent: "center" }} spacing={0}>
+        <Stack direction="column" sx={{ alignItems: "center", justifyContent: "center" }} spacing={0} id="quote-pre">
               <Typography color="text.secondary" variant="subtitle2">
-                Premium:
+                Premium :
               </Typography>
 
               <Typography
@@ -395,39 +431,29 @@ const handleClosecheck = () => {
                 variant="subtitle1"
                 sx={{ fontSize: "1.1em" }}
               >
-                <b>${quote.rate.month / 100} /month</b>
+                <b>${premium} /month</b>
               </Typography>
             </Stack>
 
-         <Stack direction="row" sx={{ alignItems: "center", justifyContent: "center" }} spacing={0}>
+         <Stack direction="row" sx={{ alignItems: "center", justifyContent: "center" }} spacing={0} id="viewprice">
 
         {pricebtn && (
-          <>
-          {loading ? (
             <Button
               size="large"
               color="secondary"
               variant="contained"
-              onClick={handleClickOpen}
+              // onClick={handleClickOpen}
+              onClick={() => handleClickOpen({ quote })}
               disableElevation
             >
               View Price
             </Button>
-          ) : (
-            <Skeleton
-              variant="rectangle"
-              animation="wave"
-              height="3em"
-              width="10em"
-            />
-          )}
-          </>
+            
     )}
 
 
         {checkbtn && (
-          <>
-          {loading ? (
+          
             <Button
               color="secondary"
               variant="contained"
@@ -436,21 +462,18 @@ const handleClosecheck = () => {
             >
               Checkout
             </Button>
-            
-          ) : (
-            <Skeleton
-              variant="rectangle"
-              animation="wave"
-              height="3em"
-              width="10em"
-            />
-          
-          )}
-      </>
 )}
          </Stack>
 
          </Stack>
+          ) : (
+            <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height="10em"
+              width="100%"
+            />
+          )}
         </Grid>
         
         </Grid>
@@ -462,6 +485,9 @@ const handleClosecheck = () => {
       <Updateinfo
         open={openDialoginfo === "updateinfo"}
         onClose={handleCloseinfo}
+        prov={prov}
+        premium={premium}
+        plan={plan}
       />
 
       <Checkoutform
