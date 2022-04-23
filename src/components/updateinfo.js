@@ -28,6 +28,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from "@mui/material/Dialog";
 
 
+<<<<<<< HEAD
 
 export default function Updateinfo({ open, onClose, prov, plan, premium }) {
 
@@ -75,6 +76,57 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
     setDay(event.target.value);
     
   };
+=======
+export default function Updateinfo({ open, onClose }) {
+
+  const [show, setShow] = useState(true);
+  const [opensub, setOpensub] = useState(false);
+
+  const [username, setUsername] = useState("");
+
+  const [fbclid, setfbclid] = useState("");
+  const [term_id, setterm_id] = useState("");
+  const [Campaign_ID, setCampaign_ID] = useState("");
+  const [user_agent, setuser_agent] = useState("");
+  const [content_id, setcontent_id] = useState("");
+  const [utm_term, setutm_term] = useState("");
+  const [utm_type, setutm_type] = useState("");
+  const [utm_campaign, setutm_campaign] = useState("");
+  const [utm_source, setutm_source] = useState("");
+  const [utm_content, setutm_content] = useState("");
+  const [gclid, setgclid] = useState("");
+  const [ga_client_id, setga_client_id] = useState("");
+  const [keyword, setkeyword] = useState("");
+  const [xxTrustedFormCertUrl, setxxTrustedFormCertUrl] = useState("");
+  const [TCPALanguage, setTCPALanguage] = useState("");
+  const [LandingPage, setLandingPage] = useState("");
+  const [eventid, seteventid] = useState("");
+
+  useEffect(() => {
+    setfbclid("fbclid");
+    setterm_id("");
+    setCampaign_ID("");
+    setuser_agent("user_agent");
+    setcontent_id("");
+    setutm_term("");
+    setutm_type("");
+    setutm_campaign("");
+    setutm_source("");
+    setutm_content("");
+    setgclid("");
+    setga_client_id("");
+    setkeyword("");
+    setxxTrustedFormCertUrl("xxTrustedFormCertUrl");
+    setTCPALanguage("By clicking the button above, you provide your signature expressly consenting to receive marketing communications via live telephone, an automatic telephone dialing system, pre-recorded/artificial voice message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or these Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand all of the Privacy Policy of this site.");
+    setLandingPage("https://mnw-client.herokuapp.com/");
+    seteventid("");
+  }, [])
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+  const [age, setAge] = useState('');
+
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
 
   const handleYearChange = (event) => {
     setYear(event.target.value);
@@ -99,6 +151,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
   const onSubmit = (formData, e) => {
 
     e.preventDefault();
+<<<<<<< HEAD
     setOpensub(!opensub);
     let userinfo = formData;
     
@@ -132,6 +185,13 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
       
       localStorage.setItem('age', uage);
     
+=======
+
+    setOpensub(!opensub);
+
+    if (Object.keys(formData).length > 0) {
+
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
       fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
         method: "POST",
         body: JSON.stringify({
@@ -142,6 +202,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
         })
         
       })
+<<<<<<< HEAD
         .then(response => {
           console.log(response);  
         })
@@ -161,6 +222,21 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
           
           
 
+=======
+        .then(() => {
+          setTimeout(() => {
+            setOpensub(opensub);
+            setShow(false);
+          }, 1000);
+          localStorage.setItem('user', JSON.stringify(formData));
+          localStorage.setItem('isuser', "Yes");
+          localStorage.setItem('state', "");
+          setUsername(formData.firstName);
+        })
+        .catch(() => alert("There was an error, please try again."))
+    }
+
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
   };
 
 
@@ -189,6 +265,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
               onSubmit={handleSubmit(onSubmit)}
               sx={{ mt: 3 }}
             >
+<<<<<<< HEAD
               <Grid container spacing={3} id="ui-form">
                   <Box sx={{display: "none"}}>
                 <TextField
@@ -288,10 +365,113 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                   value={xxtrustedformcerturl}
                 />
                 <TextField
+=======
+              <Grid container spacing={3}>
+                <input
+                  name="fbclid"
+                  hidden
+                  label="FB click Id"
+                  // value={fbclid}
+                  {...register("fbclid")}
+                />
+                <input
+                  name="term_id"
+                  hidden
+                  label="term_id"
+                  // value={term_id}
+                  {...register("term_id")}
+                />
+                <input
+                  name="Campaign_ID"
+                  hidden
+                  label="Campaign_ID"
+                  // value={Campaign_ID}
+                  {...register("Campaign_ID")}
+                />
+                <input
+                  name="user_agent"
+                  hidden
+                  label="User Agent"
+                  // value={user_agent}
+                  {...register("user_agent")}
+                />
+                <input
+                  name="content_id"
+                  hidden
+                  label="content_id"
+                  // value={content_id}
+                  {...register("content_id")}
+                />
+                <input
+                  name="utm_term"
+                  hidden
+                  label="utm_term"
+                  // value={utm_term}
+                  {...register("utm_term")}
+                />
+                <input
+                  name="utm_type"
+                  hidden
+                  label="utm_type"
+                  // value={utm_type}
+                  {...register("utm_type")}
+                />
+                <input
+                  name="utm_campaign"
+                  hidden
+                  label="utm_campaign"
+                  // value={utm_campaign}
+                  {...register("utm_campaign")}
+                />
+                <input
+                  name="utm_source"
+                  hidden
+                  label="utm_source"
+                  // value={utm_source}
+                  {...register("utm_source")}
+                />
+                <input
+                  name="utm_content"
+                  hidden
+                  label="utm_content"
+                  // value={utm_content}
+                  {...register("utm_content")}
+                />
+                <input
+                  name="gclid"
+                  hidden
+                  label="gclid"
+                  // value={gclid}
+                  {...register("gclid")}
+                />
+                <input
+                  name="ga_client_id"
+                  hidden
+                  label="ga_client_id"
+                  // value={ga_client_id}
+                  {...register("ga_client_id")}
+                />
+                <input
+                  name="keyword"
+                  hidden
+                  label="Keyword"
+                  // value={keyword}
+                  {...register("keyword")}
+                />
+                <input
+                  name="xxTrustedFormCertUrl"
+                  hidden
+                  label="xxTrustedFormCertUrl"
+                  // value={xxTrustedFormCertUrl}
+                  {...register("xxTrustedFormCertUrl")}
+                />
+                <input
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
                   name="Jornaya"
                   hidden
                   label="Jornaya"
                   id="Jornaya"
+<<<<<<< HEAD
                 />
                 <TextField
                   name="TCPALanguage"
@@ -315,6 +495,33 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
 </Box>
 
                 <Grid item xs={12} sm={6} id="uiform-field">
+=======
+                  {...register("Jornaya")}
+                />
+                <input
+                  name="TCPALanguage"
+                  hidden
+                  label="TCPA Language"
+                  // value={TCPALanguage}
+                  {...register("TCPALanguage")}
+                />
+                <input
+                  name="LandingPage"
+                  hidden
+                  label="LandingPage"
+                  // value={LandingPage}
+                  {...register("LandingPage")}
+                />
+                <input
+                  name="eventid"
+                  hidden
+                  label="eventid"
+                  // value={eventid}
+                  {...register("eventid")}
+                />
+
+                <Grid item xs={12} sm={6}>
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
                   <TextField
                     name="firstName"
                     required
@@ -465,6 +672,78 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                 
                 <Grid container spacing={3} id="ui-form">
                 
+<<<<<<< HEAD
+=======
+                helperText={errors.dob?.message}
+              /> */}
+
+                  {/* <TextField
+          id="outlined-select-currency"
+          select
+          label="Age"
+          value={age}
+          required
+          fullWidth
+          name="age"
+          color="secondary"
+          onChange={handleAgeChange}
+          //onChange={e => setAge(e.target.value)}
+          error={Boolean(errors.age)}
+          {...register("age", {required: "Age is required",})}
+          helperText={errors.age?.message}
+        >
+                      <MenuItem value={18}>18</MenuItem>
+                      <MenuItem value={19}>19</MenuItem>
+                      <MenuItem value={20}>20</MenuItem>
+                      <MenuItem value={21}>21</MenuItem>
+                      <MenuItem value={22}>22</MenuItem>
+                      <MenuItem value={23}>23</MenuItem>
+                      <MenuItem value={24}>24</MenuItem>
+                      <MenuItem value={25}>25</MenuItem>
+                      <MenuItem value={26}>26</MenuItem>
+                      <MenuItem value={27}>27</MenuItem>
+                      <MenuItem value={28}>28</MenuItem>
+                      <MenuItem value={29}>29</MenuItem>
+                      <MenuItem value={30}>30</MenuItem>
+                      <MenuItem value={31}>31</MenuItem>
+                      <MenuItem value={32}>32</MenuItem>
+                      <MenuItem value={33}>33</MenuItem>
+                      <MenuItem value={34}>34</MenuItem>
+                      <MenuItem value={35}>35</MenuItem>
+                      <MenuItem value={36}>36</MenuItem>
+                      <MenuItem value={37}>37</MenuItem>
+                      <MenuItem value={38}>38</MenuItem>
+                      <MenuItem value={39}>39</MenuItem>
+                      <MenuItem value={40}>40</MenuItem>
+                      <MenuItem value={41}>41</MenuItem>
+                      <MenuItem value={42}>42</MenuItem>
+                      <MenuItem value={43}>43</MenuItem>
+                      <MenuItem value={44}>44</MenuItem>
+                      <MenuItem value={45}>45</MenuItem>
+                      <MenuItem value={46}>46</MenuItem>
+                      <MenuItem value={47}>47</MenuItem>
+                      <MenuItem value={48}>48</MenuItem>
+                      <MenuItem value={49}>49</MenuItem>
+                      <MenuItem value={50}>50</MenuItem>
+                      <MenuItem value={51}>51</MenuItem>
+                      <MenuItem value={52}>52</MenuItem>
+                      <MenuItem value={53}>53</MenuItem>
+                      <MenuItem value={54}>54</MenuItem>
+                      <MenuItem value={55}>55</MenuItem>
+                      <MenuItem value={56}>56</MenuItem>
+                      <MenuItem value={57}>57</MenuItem>
+                      <MenuItem value={58}>58</MenuItem>
+                      <MenuItem value={59}>59</MenuItem>
+                      <MenuItem value={60}>60</MenuItem>
+                      <MenuItem value={61}>61</MenuItem>
+                      <MenuItem value={62}>62</MenuItem>
+                      <MenuItem value={63}>63</MenuItem>
+                      <MenuItem value={64}>64</MenuItem>
+                      <MenuItem value={65}>65</MenuItem>
+                      <MenuItem value={66}>66</MenuItem>
+                      <MenuItem value={67}>67</MenuItem>
+        </TextField> */}
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
 
                 <Grid item xs={4} sm={4} id="uiform-field-dobm">
                   <FormControl fullWidth required error={Boolean(errors.month)}>
@@ -504,8 +783,16 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                   </FormControl>
                 </Grid>
 
+<<<<<<< HEAD
                 <Grid item xs={4} sm={4}  id="uiform-field-dobd" >
                   <FormControl fullWidth required error={Boolean(errors.day)}>
+=======
+
+
+
+
+                  <FormControl fullWidth required error={Boolean(errors.age)}>
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
                     <InputLabel
                       color="secondary"
                       id="demo-simple-select-helper-label"
@@ -515,6 +802,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                     <Select
                       labelId="demo-simple-select-helper-label"
                       id="demo-simple-select-helper"
+<<<<<<< HEAD
                       value={day}
                       label="Day"
                       name="day"
@@ -581,6 +869,15 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                       {...register("year", { required: "Year is required.", })}
                       
                       onChange={handleYearChange}
+=======
+                      value={age}
+
+                      label="Age"
+                      name="age"
+                      color="secondary"
+                      {...register("age", { required: "Age is required", })}
+
+>>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
                       //onChange={e => setAge(e.target.value)}
                     >
                       
