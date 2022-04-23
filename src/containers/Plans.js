@@ -232,11 +232,6 @@ const Plans = () => {
   const userplanUpdate = async () => {
 
     const zipcode = userdata.zipcode;
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> f43101cd0716c975d891f9ee9d2c69a3f2a10d8f
     try {
       const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
       //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
