@@ -62,7 +62,7 @@ const Home = () => {
       //const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
 
       if (!response.ok) {
-        throw new SyntaxError("Oops, something went wrong. Try again later.");
+        throw new SyntaxError("Oops! Something went wrong. Try again later.");
       }
 
       let quoteData = await response.json();
