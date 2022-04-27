@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -10,18 +9,19 @@ import Typography from "@mui/material/Typography";
 import Updateinfo from "./updateinfo";
 import Checkoutform from "./checkoutform";
 import Skeleton from "@mui/material/Skeleton";
-import Dialog from "@mui/material/Dialog";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import IconButton from "@mui/material/IconButton";
+// import Box from "@mui/material/Box";
+// import Dialog from "@mui/material/Dialog";
+// import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+// import { styled } from "@mui/material/styles";
+// import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+// import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 
 
 
 export default function Quotecard({ quote, i }) {
   const rateinc = quote.rate_increases;
-  const st = quote.location_base.state;
+  // const st = quote.location_base.state;
   let ageinc = quote.age_increases;  
   
   console.log(quote.keys);

@@ -55,7 +55,7 @@ const ResponsiveAppBar = () => {
                <Typography color="text.secondary" variant="subtitle1">
                 Need Help?
                 </Typography>
-            <Button size="large" variant="outlined" color="secondary" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>
+            <Button size="medium" variant="outlined" color="secondary" id="help-btn" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>
             </Stack>
           ) : (
             <Skeleton variant="rectangle" animation="wave">

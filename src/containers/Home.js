@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import InputAdornment from '@mui/material/InputAdornment';
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -16,6 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Zoom from "@mui/material/Zoom";
 import ResponsiveAppBarT from "../components/AppBarT";
 
+
 const Home = () => {
 
   const navigate = useNavigate();
@@ -25,12 +28,19 @@ const Home = () => {
   const [show, setShow] = useState(false);
   const [error, setError] = useState(null);
 
+  const ischecked = localStorage.getItem("ischecked");
+
   let open = true;
   let zipstring;
 
 
   useEffect(() => {
     const user = localStorage.getItem("isuser");
+
+    if(ischecked === "Yes"){
+      navigate("/thankyou");
+    }
+
     if (user === "Yes") {
       navigate("/plans");
     } else{
@@ -61,6 +71,8 @@ const Home = () => {
       const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
       //const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
 
+      
+
       if (!response.ok) {
         throw new SyntaxError("Oops! Something went wrong. Try again later.");
       }
@@ -69,7 +81,7 @@ const Home = () => {
 
       if (response.ok && quoteData.status === "error") {
         throw new Error(
-          `Enter a valid US zip5 code to get quotes in your area.`
+          `Enter a valid US Zip5 code to get quotes in your area.`
         );
       }
 
@@ -227,6 +239,9 @@ const Home = () => {
                       type="tel"
                       size="large"
                       color="secondary"
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start"><LocationOnIcon sx={{color:"#999"}} /></InputAdornment>,
+                      }}
                       inputProps={{
                         maxLength: 5,
                         inputMode: "numeric",

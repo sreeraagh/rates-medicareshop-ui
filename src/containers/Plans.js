@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
 import ResponsiveAppBar from "../components/AppBar";
 import Stack from "@mui/material/Stack";
@@ -11,7 +10,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import InputLabel from "@mui/material/InputLabel";
+
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -25,7 +25,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Updateinfo from "../components/updateinfo";
 //import Quotecard from "../components/quotecard";
 import Quotecard2 from "../components/quotecard2";
-import { userinfo } from "../constants/global";
+
+//import { useLocation } from "react-router-dom";
+//import InputLabel from "@mui/material/InputLabel";
+//import { userinfo } from "../constants/global";
 
 const Plans = () => {
 
@@ -35,15 +38,17 @@ const Plans = () => {
   
 
   const isuser = localStorage.getItem('isuser');
+  const ischecked = localStorage.getItem('ischecked');
   const userdata =  JSON.parse(localStorage.getItem('user'));
-  const userage =  JSON.parse(localStorage.getItem('age'));
+  const userage =  localStorage.getItem('age');
+  console.log(userage);
 
   const [quotes, setQuotes] = useState([]);
   const [show, setShow] = useState(false);
   const [isvisible, setIsvisible] = useState(true);
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState(null);
-  const [plans, setPlans] = useState([]);
+  //const [plans, setPlans] = useState([]);
   const [plan, setPlan] = useState("G");
   const [loading, setLoading] = useState(false);
   const [isloading, setIsloading] = useState(false);
@@ -51,7 +56,21 @@ const Plans = () => {
 
   const [zipcode, setZipcode] = useState(null);
   const [st, setSt] = useState(null);
-  
+
+const plansA = [
+"A",
+"B",
+"C",
+"D",
+"F",
+"G",
+"HDF",
+"HDG",
+"K",
+"L",
+"N"
+  ];
+
   // let plan = "G";
 
   let openfade = true;
@@ -59,6 +78,10 @@ const Plans = () => {
   
 
   useEffect (() => {
+
+  if(ischecked === "Yes"){
+    navigate("/thankyou");
+  }
 
     if(isuser === null || isuser === undefined || isuser === "" ){
       navigate("/");
@@ -74,7 +97,7 @@ const Plans = () => {
       setQuotes(JSON.parse(sessionStorage.getItem('plans')));
       setZipcode(sessionStorage.getItem('zipcode'));
       setSt(sessionStorage.getItem('state'));
-      getPlans();
+      //getPlans();
     }
 
     const timer = setTimeout(() => {
@@ -86,54 +109,54 @@ const Plans = () => {
 
 
  
-  const getPlans = async () => {
+  // const getPlans = async () => {
     
-    let zipcode = sessionStorage.getItem('zipcode');
-    let st = sessionStorage.getItem('state');
+  //   let zipcode = sessionStorage.getItem('zipcode');
+  //   let st = sessionStorage.getItem('state');
 
-    try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
-      //const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
+  //   try {
+  //     //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
+  //     const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
       
-      if (!response.ok) {
-        throw new Error(`(${response.status})`);
-      }
-      let actualplans = await response.json();
-      setPlans(actualplans);
+  //     if (!response.ok) {
+  //       throw new Error(`(${response.status})`);
+  //     }
+  //     let actualplans = await response.json();
+  //     setPlans(actualplans);
       
-    } catch (err) {
-      setError(err.message);
-      setPlans(null);
-    } finally {
-      setShow(true);
-    }
-  };
+  //   } catch (err) {
+  //     setError(err.message);
+  //     setPlans(null);
+  //   } finally {
+  //     setShow(true);
+  //   }
+  // };
 
 
-  const getuserPlans = async () => {
+  // const getuserPlans = async () => {
   
-    let zipcode = localStorage.getItem('zipcode');
-    let st = localStorage.getItem('state');
+  //   let zipcode = localStorage.getItem('zipcode');
+  //   let st = localStorage.getItem('state');
 
-    try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
-      //const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
+  //   try {
+  //     //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
+  //     const response = await fetch(`http://localhost:5000/weather/plans/${zipcode}/${st}`);
       
-      if (!response.ok) {
-        throw new Error(`(${response.status})`);
-      }
-      let actualplans = await response.json();
-      setPlans(actualplans);
-    } catch (err) {
-      setError(err.message);
-      setPlans(null);
-    } finally {
-      setShow(true);
-    }
-  };
+  //     if (!response.ok) {
+  //       throw new Error(`(${response.status})`);
+  //     }
+  //     let actualplans = await response.json();
+  //     setPlans(actualplans);
+  //   } catch (err) {
+  //     setError(err.message);
+  //     setPlans(null);
+  //   } finally {
+  //     setShow(true);
+  //   }
+  // };
 
   const planUpdate = async () => {
-
+    
     try {
      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
       //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
@@ -165,6 +188,7 @@ const Plans = () => {
       setShow(true);
     } finally {
       setIsloading(false);
+      setLoading(true);
     }
   };
 
@@ -173,6 +197,7 @@ const Plans = () => {
     
     const zipstring = userdata.zipcode;
     const age = userage;
+    console.log(age);
     let gender;
     let tobacco;
 
@@ -213,7 +238,7 @@ const Plans = () => {
         setQuotes(quoteData);                  
         setSt(quoteData[0].location_base.state);
         localStorage.setItem('state', quoteData[0].location_base.state);
-        getuserPlans();
+        //getuserPlans();
       }
 
     } catch (err) {
@@ -263,6 +288,7 @@ const Plans = () => {
       setShow(true);
     } finally {
       setIsloading(false);
+      setLoading(true);
     }
   };
 
@@ -529,7 +555,7 @@ const Plans = () => {
               {isvisible && (
                   <Stack direction="column" sx={{mt: 4, mb:1, alignItems: "center", justifyContent: "center"}} spacing={2} id="notyou">
                   <Typography
-                    variant="body1" sx={{ fontWeight: "500", fontSize: "1em" }}>
+                    variant="body1" sx={{ fontWeight: "500", fontSize: "20px", color:"#000" }}>
                     <b>Not you?</b> See personalized quotes by updating your info.. {" "}
                   </Typography>
                   <Button
@@ -624,7 +650,7 @@ const Plans = () => {
                   onChange={handleChange}
                   // defaultValue = "G"
                 >
-                  {plans.map((plan, i) => (
+                  {plansA.map((plan, i) => (
                     <MenuItem key={i} value={plan}>
                       Plan <b style={{ marginLeft: "5px" }}>{plan}</b>
                     </MenuItem>
@@ -702,6 +728,35 @@ const Plans = () => {
                 <Quotecard2  quote={quote} plan={plan} />
               </Stack>
             ))}
+
+<Typography color="text.primary" variant="caption">
+Disclaimer: JERA Marketing Solutions, LLC does not 
+guarantee or warrant the accuracy of the above premium
+rates or underwriting information. Carriers may have 
+made rate or underwriting adjustments that have not yet 
+been reflected in our database. All data obtained from 
+public sources.
+Monthly rates may reflect EFT discounts, if applicable.
+A few companies in the database offer premium rates 
+based upon special underwriting or administrative rules. 
+In those cases multiple rates are shown for the same 
+company.
+Minnesota and Wisconsin: Age increase data is 
+determined using the base policy, not including any 
+riders. Historical increase data is determined using a 
+composite increase on the base policy and the 
+riders. 2021 Market Data Source: 2021 NAIC Medicare 
+Supplement Experience Exhibits, and data filed with the 
+National Association of Insurance Commissioners in 
+annual financial statements.
+Data Source: National Association of Insurance 
+Commissioners, by permission. The NAIC does not 
+endorse any analysis or conclusions based upon the use 
+of its data.
+JERA Marketing Solutions, LLC does not guarantee or 
+warrant the accuracy of the above market data.
+</Typography>
+
           </Container>
         )}
       </Box>

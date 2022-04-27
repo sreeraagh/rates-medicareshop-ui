@@ -48,6 +48,7 @@ html{
   margin-left: 0px !important;
 }
 
+
 p.error {
   margin: 0px;
   font-family: 'Inter';
@@ -82,6 +83,7 @@ height: 20px !important;
 #plogo{
   max-width: 60%;
   width: 60%;
+  margin-bottom: 30px;
 }
 
 #demo-simple-select-label{
@@ -105,7 +107,8 @@ height: 20px !important;
 }
 
 #update-info {
-  border: 1px solid #999;
+  border: 1px solid #eee;
+  background: #fefefe;
 }
 
 #update-info .MuiAlert-icon{
@@ -117,21 +120,97 @@ height: 20px !important;
   color: #9c27b0;
 }
 
-input {
+input, textarea {
   text-transform: capitalize;
   font-weight: 500 !important;
   color: #000 !important;
 }
 
-#ui_email{
+#ui_email, #ch-box #email{
   text-transform: lowercase !important;
 }
 
-#tq-icon{
+#tq-sub3{
+  margin: 30px 0 20px;
+}
+
+#chform-help{
+  justify-content: center;
+}
+
+/* #tq-icon{
   background: #f4f5f7;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #eee;
+} */
+
+ #tq-head{
+  justify-content: center;
+  margin: 50px 0 30px;
+  text-align: center;
+}
+
+#tq-icon h5, #tq-head h5{
+  font-size: 30px;
+  line-height: 1.5em;
+}
+
+
+
+#ui-close{
+  margin-left: 20px;
+  background: #d32f2f05;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #d32f2f10;
+  cursor: pointer;;
+}
+
+#ui-close:hover{
+  background: #fff;
+  border: 1px solid #d32f2f50;
+}
+
+#ui-head-stack{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  
+}
+
+#ui-head-stack h6{
+  margin: 0px;
+}
+
+/* div#ch-box {
+  margin-bottom: 16px;
+} */
+#tq-sub1,#tq-sub2, #tq-sub3{
+  width: 75%;
+    max-width: 75%;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+
+#tq-sub1{
+  font-size: 20px;
+  line-height: 1.5em;
+}
+
+#chform-help h6{
+  font-size: 18px;
+  line-height: 1.5em;
+}
+
+#tq-sub1, #tq-sub2{
+  margin-bottom: 30px;
+}
+
+#tq-subhead{
+  align-items: center;
 }
 
 div#select-plan #demo-simple-select{
@@ -159,6 +238,21 @@ div#select-plan svg{
 }
 
 
+#prov{
+  margin: 0px;
+}
+
+#hq1-helper{
+  margin-bottom : 20px;
+}
+
+
+
+#help-btn{
+  color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
 .videoWrapper{
   position: relative;
   padding-bottom: 56.25%;
@@ -179,12 +273,45 @@ div#select-plan svg{
 }
 
 #chform-btn-wrap{
-  margin: 0px;
-  padding: 16px;
+  margin-top: 40px;
+}
+
+#chform-btn-wrap-last{
+  margin-top: 20px;
+}
+
+#chform-btn{
+  width: 100%;
+}
+
+div#ui-stepper {
+    padding: 0px;
+    margin: 30px 0px 50px;
+}
+
+div#ch-fstep {
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+#ch-form-st3{
+  margin-top: -10px;
+}
+
+div#hq-wrap {
+  margin-bottom: 5px;
+}
+
+div#info-cont-last {
+  margin-bottom: 100px;
 }
 
 /* Responsive CSS */
 @media only screen and (max-width: 600px) {
+
+  #ui-head-stack h6{
+    font-size: 18px;
+  }
 
   /* header */
   #appbar-tr, #appbar-tr .MuiButton-root {
@@ -261,13 +388,15 @@ div#select-plan svg{
   margin: 0px;
 }
 
+
+
 #info-wrap {
   margin: 20px 0;
   padding: 10px;
 }
 
 #update-info{
-  padding: 10px;
+  padding: 10px 20px;
 }
 
 #info-update, #info-stack, #info-substack, #update-info .MuiAlert-message{
@@ -293,6 +422,10 @@ div#info-details {
 
 #notyou p{
   text-align: center;
+  width: 100%;
+  font-size: 18px;
+    margin-top: 10px;
+
 }
 
 #notyou{
@@ -331,6 +464,7 @@ div#quote-cards {
 #plogo{
   width: 30% ;
   height: 30%;
+  margin-bottom: 0px;
 }
 
 .bs-logo{
@@ -367,7 +501,7 @@ div#quote-info p {
   align-items: flex-end;
   width: 100%;
   justify-content: space-between;
-  padding-top: 10px;
+  padding-top: 20px;
   border-top: 1px solid #ddd;
   margin-top: 10px;
 }
@@ -382,8 +516,9 @@ div#quote-info p {
 }
 
 #viewprice{
-  width: 50%;
+  width: 45%;
   margin: 0px;
+  margin-left: 16px;
 }
 
 #viewprice button{
@@ -407,7 +542,9 @@ max-height: 95% !important;
 
 #ui-dial main{
   padding: 16px;
+  padding-bottom: 0px;
 }
+
 
 #ui-chform{
   display: flex;
@@ -418,9 +555,10 @@ max-height: 95% !important;
 
 #ui-head{
   margin-top: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   line-height: 1.3em;
 }
+
 
 #ui-formwrap{
   margin: 0px;
@@ -462,9 +600,9 @@ max-height: 95% !important;
   margin-bottom: 16px;
 }
 
-button#uiform-submit {
+/* button#uiform-submit {
   margin: 10px 0px 20px !important;
-}
+} */
 
 
 div#no_plans {
@@ -482,11 +620,10 @@ div#ch-box {
   margin: 0px;
 }
 
-div#ui-stepper {
+/* div#ui-stepper {
   padding: 0px;
   margin-bottom: 30px;
-  
-}
+} */
 
 div#ui-stepper .MuiStep-root{
   padding: 0px 3px;
@@ -512,25 +649,53 @@ div#ch-gender, div#ch-age {
   margin-top: 10px;
 }
 
-#tq-icon {
+/* #tq-icon {
   padding: 5px;
-}
+} */
 
 #tq-head{
-  margin-left: 10px;
+  margin: 30px 0 20px;
   font-size: 20px;
 }
 
 #tq-sub1{
   margin-bottom: 16px;
+font-size: 18px !important;  
+}
+
+#tq-sub2{
+  margin: 10px 0 40px;
+}
+
+#tq-sub3 {
+  margin: 10px 0px;
 }
 
 #tq-sub1,#tq-sub2, #tq-sub3{
   line-height: 1.5em;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  font-size: 16px;
+}
+
+#chform-help h6{
+  font-size: 16px;
+}
+
+#tq-sub2{
+
+  margin: 20px 0 40px;
+}
+
+#vid-wrap{
+  margin-bottom: 100px;
+  
 }
 
 #chform-help{
   flex-direction: column;
+  justify-content: center;
 }
 
 #chform-help .MuiButton-root{
@@ -539,9 +704,7 @@ div#ch-gender, div#ch-age {
 }
 
 #plan_loader-wrap{
-  margin: 0px;
-  margin-bottom: 20px;
-  margin-top: 10px;
+  margin: 10px 0px;
 }
 
 .info-splan {
@@ -551,7 +714,43 @@ div#ch-gender, div#ch-age {
 
 #plan_loader-wrap .MuiPaper-root{
   padding: 0px 10px;
-  
+}
+
+#ui-head-stack {
+  margin-bottom: 30px;
+}
+
+h6#ui-head small {
+  font-weight: 300 !important;
+}
+
+#add-wrap, #city-wrap {
+  max-width: 100%;
+  flex-basis: 100%;
+}
+
+#city-wrap .MuiFormControl-root{
+  width: 100%;
+}
+
+#zip-wrap, #state-wrap {
+  width: 50%;
+  max-width: 50%;
+  flex-basis: 50%;
+  margin-top: 10px;
+}
+
+#chform-btn-wrap, #chform-btn-wrap-last{
+  margin-bottom: 20px
+}
+
+#tq-icon h5, #tq-head h5{
+  font-size: 25px;
+  line-height: 1.5em;
+}
+
+#tq-icon {
+ display: block;
 }
 
 }

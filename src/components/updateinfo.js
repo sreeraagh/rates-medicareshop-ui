@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
+import CloseIcon from '@mui/icons-material/Close';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -15,10 +15,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-import Collapse from '@mui/material/Collapse';
+//import Collapse from '@mui/material/Collapse';
 import { useForm } from "react-hook-form";
 import FormHelperText from '@mui/material/FormHelperText';
-
+import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -32,7 +32,7 @@ import Dialog from "@mui/material/Dialog";
 export default function Updateinfo({ open, onClose, prov, plan, premium }) {
 
   const [opensub, setOpensub] = useState(false);
-  let fbclid;
+  //let fbclid;
   // const selectedcard = cardvalue;
   // let fbclid=document.getElementById("fbclid").value;
   // let term_id= document.getElementById("term_id").value;
@@ -48,17 +48,17 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
   // let ga_client_id=document.getElementById("ga_client_id").value; 
   // let keyword=document.getElementById("keyword").value;
 
-  const [xxtrustedformcerturl, setXXTrustedFormCertUrl] = useState("");
-  const [landingpage, setLandingPage] = useState("");
-  const [tcpalanguage, setTCPALanguage] = useState("");
-  const [eventid, setEventid] = useState("");
+  //const [xxtrustedformcerturl, setXXTrustedFormCertUrl] = useState("");
+  //const [landingpage, setLandingPage] = useState("");
+  //const [tcpalanguage, setTCPALanguage] = useState("");
+  //const [eventid, setEventid] = useState("");
 
-  useEffect(() => {
-    setXXTrustedFormCertUrl("xxTrustedFormCertUrl");
-    setLandingPage("https://mnw-client.herokuapp.com/");
-    setTCPALanguage("By clicking the button above, you provide your signature expressly consenting to receive marketing communications via live telephone, an automatic telephone dialing system, pre-recorded/artificial voice message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or these Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand all of the Privacy Policy of this site.");
-    setEventid("");
-  }, [])
+  // useEffect(() => {
+  //   setXXTrustedFormCertUrl("xxTrustedFormCertUrl");
+  //   setLandingPage("https://mnw-client.herokuapp.com/");
+  //   setTCPALanguage("By clicking the button above, you provide your signature expressly consenting to receive marketing communications via live telephone, an automatic telephone dialing system, pre-recorded/artificial voice message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or these Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand all of the Privacy Policy of this site.");
+  //   setEventid("");
+  // }, [])
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -89,11 +89,11 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
   );
 
 
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
   
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
+  // const handleChange = () => {
+  //   setChecked((prev) => !prev);
+  // };
 
 
   const onSubmit = (formData, e) => {
@@ -102,11 +102,10 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
     setOpensub(!opensub);
     let userinfo = formData;
     
+    
+
     if (Object.keys(userinfo).length > 0) {
-       
 
-
-       let udob =  month + "/" + day + "/" + year;
       
       // let gdob = year + month + day;
       // let gphone = "1"+formData.phone;
@@ -114,17 +113,20 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
       // let ggender;
       
       // if(fgender === "male" ){
-      //   ggender = "m"
-      // } else{
-      //   ggender = "f"
-      // }
-
+        //   ggender = "m"
+        // } else{
+          //   ggender = "f"
+          // }
+          
+      let udob =  month + "/" + day + "/" + year;
       let dob = new Date(JSON.stringify(udob)); 
+      
       let month_diff = Date.now() - dob.getTime();  
       let age_dt = new Date(month_diff);   
       let uyear = age_dt.getUTCFullYear();   
       let uage = Math.abs(uyear - 1970);
 
+     
 
       localStorage.setItem('user', JSON.stringify(userinfo));
       localStorage.setItem('isuser', "Yes");
@@ -149,18 +151,13 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
           console.log(error);  
         })
         
-    }
-
-    window.location.reload(true);
-    
-    setTimeout(() => {
-      setOpensub(opensub);
+        
+        setTimeout(() => {
+          setOpensub(opensub);
           onClose();
-    }, 1000);
-      
-          
-          
-
+          window.location.reload(true);
+        }, 1000);
+    }
   };
 
 
@@ -178,9 +175,14 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
               alignItems: "center",
             }}
           >
+            <Stack direction="row" id="ui-head-stack">
             <Typography variant="h6" sx={{fontWeight: "600", lineHeight: "1.4", mt: 1, mb:2}} id="ui-head">
               Update your basic information and we will display personalized results.
             </Typography>
+
+            <CloseIcon onClick={onClose} color="error" id="ui-close"/>
+
+            </Stack>
             
             <Box
               component="form"
@@ -192,7 +194,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
 
               <Grid container spacing={3} id="ui-form">
               
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} id="uiform-field">
 
                   <TextField
                     name="firstName"
@@ -202,7 +204,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                     color="secondary"
                     placeholder="Enter Your First Name"
                     autoFocus
-                    
+                     
                     {...register("firstName", {
                       pattern: { value: /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i
                       ,
@@ -272,6 +274,10 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                 </Grid>
                 <Grid item xs={12} sm={6} id="uiform-field">
                   <TextField
+                    inputProps={{ maxLength: 10 }}
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">+1</InputAdornment>,
+                    }}
                     required
                     fullWidth
                     type="tel"
@@ -306,6 +312,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                     fullWidth
                     name="zipcode"
                     label="Zip code"
+                    inputProps={{ maxLength: 5 }}
                     placeholder="Enter Your Zip code"
                     color="secondary"
                     type="tel"
@@ -464,7 +471,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                     >
                       
 
-                      <MenuItem value={"2004"} >2004</MenuItem>
+                      {/* <MenuItem value={"2004"} >2004</MenuItem>
                       <MenuItem value={"2003"} >2003</MenuItem>
                       <MenuItem value={"2002"} >2002</MenuItem>
                       <MenuItem value={"2001"} >2001</MenuItem>
@@ -507,13 +514,39 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                       <MenuItem value={"1964"} >1964</MenuItem>
                       <MenuItem value={"1963"} >1963</MenuItem>
                       <MenuItem value={"1962"} >1962</MenuItem>
-                      <MenuItem value={"1961"} >1961</MenuItem>
+                      <MenuItem value={"1961"} >1961</MenuItem> */}
                       <MenuItem value={"1960"} >1960</MenuItem>
                       <MenuItem value={"1959"} >1959</MenuItem>
                       <MenuItem value={"1958"} >1958</MenuItem>
                       <MenuItem value={"1957"} >1957</MenuItem>
                       <MenuItem value={"1956"} >1956</MenuItem>
-                     
+                      <MenuItem value={"1955"} >1955</MenuItem>
+                      <MenuItem value={"1954"} >1954</MenuItem>
+                      <MenuItem value={"1953"} >1953</MenuItem>
+                      <MenuItem value={"1952"} >1952</MenuItem>
+                      <MenuItem value={"1951"} >1951</MenuItem>
+                      <MenuItem value={"1950"} >1950</MenuItem>
+                      <MenuItem value={"1949"} >1949</MenuItem>
+                      <MenuItem value={"1948"} >1948</MenuItem>
+                      <MenuItem value={"1947"} >1947</MenuItem>
+                      <MenuItem value={"1946"} >1946</MenuItem>
+                      <MenuItem value={"1945"} >1945</MenuItem>
+                      <MenuItem value={"1944"} >1944</MenuItem>
+                      <MenuItem value={"1943"} >1943</MenuItem>
+                      <MenuItem value={"1942"} >1942</MenuItem>
+                      <MenuItem value={"1941"} >1941</MenuItem>
+                      <MenuItem value={"1940"} >1940</MenuItem>
+                      <MenuItem value={"1939"} >1939</MenuItem>
+                      <MenuItem value={"1938"} >1938</MenuItem>
+                      <MenuItem value={"1937"} >1937</MenuItem>
+                      <MenuItem value={"1936"} >1936</MenuItem>
+                      <MenuItem value={"1935"} >1935</MenuItem>
+                      <MenuItem value={"1934"} >1934</MenuItem>
+                      <MenuItem value={"1933"} >1933</MenuItem>
+                      <MenuItem value={"1932"} >1932</MenuItem>
+                      <MenuItem value={"1931"} >1931</MenuItem>
+                      <MenuItem value={"1930"} >1930</MenuItem>
+
                     </Select>
                     <FormHelperText>{errors.year?.message}</FormHelperText>
                   </FormControl>
@@ -622,7 +655,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
               </Grid>
 
               <Button
-              id="uiform-submit"
+                id="uiform-submit"
                 type="submit"
                 fullWidth
                 size="large"
@@ -635,10 +668,11 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
               </Button>
 
               <Grid item xs={12}>
-                <Collapse in={checked} collapsedSize={40}>
+                {/* <Collapse in={checked} collapsedSize={40}>
                   {icon}
-                </Collapse>
-                <Button
+                </Collapse> */}
+                {icon}
+                {/* <Button
                   color="secondary"
                   size="small"
                   sx={{ pt: 0, pb: 0, textTransform: "lowercase" }}
@@ -646,7 +680,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                   onClick={handleChange}
                 >
                   {checked ? "...show less" : "...show more"}
-                </Button>
+                </Button> */}
 
                 <Backdrop
                   sx={{

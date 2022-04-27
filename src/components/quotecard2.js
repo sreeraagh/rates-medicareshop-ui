@@ -7,11 +7,12 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Updateinfo from "./updateinfo";
 import Checkoutform from "./checkoutform";
+
 import Skeleton from "@mui/material/Skeleton";
 //import Box from "@mui/material/Box";
 // import CardActions from "@mui/material/CardActions";
 // import Dialog from "@mui/material/Dialog";
-// import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+// import Tooltip, { tooltipclassNamees } from "@mui/material/Tooltip";
 // import { styled } from "@mui/material/styles";
 // import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 // import IconButton from "@mui/material/IconButton";
@@ -23,7 +24,7 @@ export default function Quotecard2({ quote, plan }) {
 
 
   const rateinc = quote.rate_increases;
-  const st = quote.location_base.state;
+  //const st = quote.location_base.state;
   let ageinc = quote.age_increases;  
   
   let premium = (quote.rate.month) / 100;
@@ -38,6 +39,8 @@ export default function Quotecard2({ quote, plan }) {
   let discname;
   let discvalue;
   let discfull;
+  let ambest;
+  let sprate;
 
   if(rateinc.length > 0){
     sum_rateinc = rateinc.map(item => (item.rate_increase*100)).reduce((a, b) => a + b);
@@ -61,6 +64,18 @@ export default function Quotecard2({ quote, plan }) {
     discfull = discname +  " (" + discvalue + ")";
   }
 
+  if(quote.company_base.ambest_rating === 0 || quote.company_base.ambest_rating === null || quote.company_base.ambest_rating === undefined || quote.company_base.ambest_rating === ""){
+    ambest = "N/A";
+  } else{
+    ambest = quote.company_base.ambest_rating;
+  }
+
+
+  if(quote.company_base.sp_rating === 0 || quote.company_base.sp_rating === null || quote.company_base.sp_rating === undefined || quote.company_base.sp_rating === ""){
+    sprate = "N/A";
+  } else{
+    sprate = quote.company_base.sp_rating;
+  }
   // if(quote.discounts.length === 0 &&  quote.discounts.name === "household"){
   //   discname = "HH";
   // }
@@ -135,19 +150,17 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
-        class="aetna-logo"
+        className="aetna-logo"
         src={require("../assets/aetna-text-logo.png")}
         style={{ marginRight: "16px" }}
         alt="Aetna"
       />
     );
-  } else if (
-    quote.company_base.parent_company_base.name === "Blue Shield of CA Grp"
-  ) {
+  } else if (quote.company_base.parent_company_base.name === "Blue Shield of CA Grp" || quote.company_base.parent_company_base.name === "Guidewell Mut Holding Grp") {
     plogo = (
       <img
         id="plogo"
-        class="bs-logo"
+        className="bs-logo"
         src={require("../assets/Blue_Shield_of_California_logo.png")}
         style={{ marginRight: "16px", width: "50%", maxWidth: "50%" }}
         alt="Blue Shield"
@@ -157,7 +170,7 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
-        class="anthem-logo"
+        className="anthem-logo"
         src={require("../assets/anthem-logo.png")}
         style={{ marginRight: "16px" }}
         alt="Anthem"
@@ -169,7 +182,7 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
-        class="uh-logo"
+        className="uh-logo"
         src={require("../assets/unitedhealthcare-logo.png")}
         style={{ marginRight: "16px" }}
         alt="United Healthcare"
@@ -179,7 +192,7 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
-        class="cigna-logo"
+        className="cigna-logo"
         src={require("../assets/cigna-text-logo.png")}
         style={{ marginRight: "16px" }}
         alt="Cigna"
@@ -189,13 +202,24 @@ const handleClosecheck = () => {
     plogo = (
       <img
         id="plogo"
-        class="moo-logo"
+        className="moo-logo"
         src={require("../assets/mutualofomaha-text-logo.png")}
         style={{ marginRight: "16px", width: "90%", maxWidth: "90%" }}
         alt="Mutual of Omaha"
       />
     );
-  }else {
+  }
+  else if (quote.company_base.parent_company_base.name === "HCSC GRP" ) {
+    plogo = (
+      <img
+        id="plogo"
+        src={require("../assets/bcbs.png")}
+        style={{ marginRight: "16px", width: "90%", maxWidth: "90%" }}
+        alt="Mutual of Omaha"
+      />
+    );
+  }
+  else {
     plogo = " ";
   }
 
@@ -232,15 +256,15 @@ const handleClosecheck = () => {
 
   
 
-  // const HtmlTooltip = styled(({ className, ...props }) => (
-  //   <Tooltip {...props} classes={{ popper: className }} />
+  // const HtmlTooltip = styled(({ classNameName, ...props }) => (
+  //   <Tooltip {...props} classNamees={{ popper: classNameName }} />
   // ))(({ theme }) => ({
-  //   [`& .${tooltipClasses.tooltip}`]: {
+  //   [`& .${tooltipclassNamees.tooltip}`]: {
   //     backgroundColor: "#111",
 
   //     boxShadow: theme.shadows[1],
   //   },
-  //   [`& .${tooltipClasses.arrow}`]: {
+  //   [`& .${tooltipclassNamees.arrow}`]: {
   //     color: "#111",
   //   },
   // }));
@@ -253,10 +277,10 @@ const handleClosecheck = () => {
 
       <Grid container spacing={3} id="quote-cards">
 
-      <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" , alignItems: "center", justifyContent: "center" }} >
+      <Grid item xs={3} >
         
         {loading ? (
-          <Stack direction="column" spacing={4} >
+          <Stack direction="column" >
             <Stack direction="column" sx={{ alignItems: "start" }} >
               {plogo}
               </Stack>
@@ -298,10 +322,10 @@ const handleClosecheck = () => {
                   id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    Ambest / SP Rating :
+                    AM Best | S&P :
                   </Typography>
                   <Typography color="text.primary" variant="body1">
-                    {quote.company_base.ambest_rating} / {quote.company_base.sp_rating}
+                    {ambest} | {sprate}
                   </Typography>
                 </Stack>
 
@@ -336,7 +360,7 @@ const handleClosecheck = () => {
 				  Age Increase history : 
                   </Typography>
                   <Typography color="text.primary" variant="body1">
-				   {avg_ageinc}
+				   {avg_ageinc}%
                   </Typography>
                   
                 </Stack>
@@ -396,7 +420,7 @@ const handleClosecheck = () => {
 				  Rate Increase history : 
                   </Typography>
                   <Typography color="text.primary" variant="body1">
-				   {avg_rateinc}
+				   {avg_rateinc}%
                   </Typography>
                 </Stack>
 
@@ -493,6 +517,9 @@ const handleClosecheck = () => {
       <Checkoutform
         open={openDialogcheck === "checkoutform"}
         onClose={handleClosecheck}
+        prov={prov}
+        premium={premium}
+        plan={plan}
       />
 
       {/* <Dialog open={open} onClose={handleClose}>
