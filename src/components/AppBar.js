@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
-import Skeleton from "@mui/material/Skeleton";
+
 import CallIcon from '@mui/icons-material/Call';
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";

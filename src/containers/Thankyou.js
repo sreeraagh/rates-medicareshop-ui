@@ -9,7 +9,6 @@ import CallIcon from "@mui/icons-material/Call";
 import ResponsiveAppBar from "../components/AppBar";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 
 export default function Thankyou( ) {
 

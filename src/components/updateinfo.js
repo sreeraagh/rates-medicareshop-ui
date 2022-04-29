@@ -18,7 +18,7 @@ import InputMask from "react-input-mask";
 //import Collapse from '@mui/material/Collapse';
 import { useForm, Controller } from "react-hook-form";
 import FormHelperText from '@mui/material/FormHelperText';
-import InputAdornment from '@mui/material/InputAdornment';
+
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -157,7 +157,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
         .catch(error  => {
           console.log(error);  
         })
-        
+
         setTimeout(() => {
           window.location.reload(true);
         }, 1000);
