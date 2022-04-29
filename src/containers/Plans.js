@@ -167,8 +167,8 @@ const plansA = [
     setSkeloading(false);
 
     try {
-     //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+     const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -227,8 +227,8 @@ const plansA = [
      
     
     try {
-      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
-      const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+      //const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -272,8 +272,8 @@ const plansA = [
 
     const zipcode = userdata.zipcode;
     try {
-      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
