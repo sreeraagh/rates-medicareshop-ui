@@ -18,14 +18,6 @@ import Logo from "../assets/medicareshop-tlogo.png";
 import { Stack } from "@mui/material";
 
 const ResponsiveAppBarT = () => {
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(true);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <AppBar
@@ -34,34 +26,23 @@ const ResponsiveAppBarT = () => {
     >
       <Container maxWidth="xl" id="appbar-tr">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          {loading ? (
+
             <Box
               component="img"
               alt="MedicareShop"
               src={Logo}
               style={{ maxHeight: 45 }}
             />
-          ) : (
-            <Skeleton
-              variant="rectangular"
-              animation="wave"
-              height={45}
-              width={150}
-            />
-          )}
+         
 
-          {loading ? (
+         
             <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#fff"}}>
                <Typography color="common.white" variant="subtitle1">
                 Need Help?
                 </Typography>
             <Button size="large" variant="outlined" color="inherit" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>
             </Stack>
-          ) : (
-            <Skeleton variant="rectangle" animation="wave">
-              <Button />
-            </Skeleton>
-          )}
+          
         </Toolbar>
       </Container>
     </AppBar>

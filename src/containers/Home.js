@@ -4,7 +4,8 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+//import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PinDropIcon from '@mui/icons-material/PinDrop';
 import InputAdornment from '@mui/material/InputAdornment';
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -68,8 +69,8 @@ const Home = () => {
 
   const getQuotes = async () => {
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
 
       
 
@@ -86,31 +87,33 @@ const Home = () => {
       }
 
       if (response.ok) {
-        setIsloading(false);
+        
         setShow(false);
         
         sessionStorage.setItem("plans", JSON.stringify(quoteData));
         sessionStorage.setItem("zipcode", zipstring);
         sessionStorage.setItem("state", quoteData[0].location_base.state);
-        navigate("../plans", {replace: true});
         
         // navigate("../plans", {
-        //     state: { quoteData, zipstring, replace: true },
-        // });
-        
-        // setTimeout(() => {
-        //   navigate("../plans", {
-        //     state: { quoteData, zipstring, replace: true },
-        //   });
-        // }, 1000);
-      }
-    } catch (err) {
+          //     state: { quoteData, zipstring, replace: true },
+          // });
+          
+          
+        }
+
+        setTimeout(() => {
+          setIsloading(false);  
+          navigate("../plans", {replace: true});
+        }, 500);
+
+      } catch (err) {
       setError(err.message);
       console.log(err);
       setIsloading(false);
       setShow(true);
     } finally {
       setIsloading(false);
+      
     }
   };
 
@@ -233,14 +236,15 @@ const Home = () => {
                 <Grid item xs={6} sx={{ mr: 2 }}>
                   {loading ? (
                     <TextField
-                      id="outlined-basic"
-                      label="Enter your Zip Code"
+                      id="home-zip-input"
+                      label="Zip Code"
+                      placeholder="Enter your Zip Code"
                       variant="outlined"
                       type="tel"
                       size="large"
                       color="secondary"
                       InputProps={{
-                        startAdornment: <InputAdornment position="start"><LocationOnIcon sx={{color:"#999"}} /></InputAdornment>,
+                        startAdornment: <InputAdornment position="start"><PinDropIcon sx={{color:"#bbb"}} /></InputAdornment>,
                       }}
                       inputProps={{
                         maxLength: 5,
@@ -302,7 +306,7 @@ const Home = () => {
               sx={{ display: "flex", alignItems: "center", mv: 1 }}
             >
               <Alert severity="warning" color="grey" variant="filled">
-                <p className="error">Zip Code must contain numbers only.</p>
+                <Typography className="error">Zip Code must contain numbers only.</Typography>
               </Alert>
             </Zoom>
           )}
@@ -312,9 +316,9 @@ const Home = () => {
               sx={{ display: "flex", alignItems: "center", mv: 1 }}
             >
               <Alert severity="warning" color="grey" variant="filled">
-                <p className="error">
+                <Typography className="error">
                   Enter your Zip Code to get quotes.
-                </p>
+                </Typography>
               </Alert>
             </Zoom>
           )}
@@ -324,7 +328,7 @@ const Home = () => {
               sx={{ display: "flex", alignItems: "center", mv: 1 }}
             >
               <Alert severity="warning" color="grey" variant="filled">
-                <p className="error">Zip Code must be 5 digit long.</p>
+                <Typography className="error">Zip Code must be 5 digit long.</Typography>
               </Alert>
             </Zoom>
           )}

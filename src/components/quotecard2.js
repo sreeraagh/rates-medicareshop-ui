@@ -7,8 +7,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Updateinfo from "./updateinfo";
 import Checkoutform from "./checkoutform";
-
-import Skeleton from "@mui/material/Skeleton";
 //import Box from "@mui/material/Box";
 // import CardActions from "@mui/material/CardActions";
 // import Dialog from "@mui/material/Dialog";
@@ -20,7 +18,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 
 
-export default function Quotecard2({ quote, plan }) {
+export default function Quotecard2({ quote, plan}) {
 
 
   const rateinc = quote.rate_increases;
@@ -37,6 +35,7 @@ export default function Quotecard2({ quote, plan }) {
   let avg_ageinc;
   
   let discname;
+  let discstr;
   let discvalue;
   let discfull;
   let ambest;
@@ -44,14 +43,14 @@ export default function Quotecard2({ quote, plan }) {
 
   if(rateinc.length > 0){
     sum_rateinc = rateinc.map(item => (item.rate_increase*100)).reduce((a, b) => a + b);
-    avg_rateinc = (sum_rateinc / rateinc.length).toString().substr(0,4);
+    avg_rateinc = (sum_rateinc / rateinc.length).toString().substr(0,4) + "%";
   } else {
     avg_rateinc = "N/A"
   }
 
   if(ageinc.length > 0){
     sum_ageinc = ageinc.map(item => (item*100)).reduce((a, b) => a + b);
-    avg_ageinc = (sum_ageinc / ageinc.length).toString().substr(0,4);
+    avg_ageinc = (sum_ageinc / ageinc.length).toString().substr(0,4) + "%";
   } else{
     avg_ageinc = "N/A"
   }
@@ -60,9 +59,13 @@ export default function Quotecard2({ quote, plan }) {
     discfull = "N/A";
   } else{
     discname = disc.map(data => (data.name));    
-    discvalue = (disc.map(data => ((data.value * 100).toString().substr(0, 1)))) + "%";
+    discstr = (disc.map(data => ( (data.value * 100).toString().slice(0,3))));
+    discvalue = Math.round(discstr) + "%";
     discfull = discname +  " (" + discvalue + ")";
   }
+
+
+
 
   if(quote.company_base.ambest_rating === 0 || quote.company_base.ambest_rating === null || quote.company_base.ambest_rating === undefined || quote.company_base.ambest_rating === ""){
     ambest = "N/A";
@@ -223,14 +226,14 @@ const handleClosecheck = () => {
     plogo = " ";
   }
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(true);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(true);
+  //   }, 100);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   // const [open, setOpen] = useState(false);
   
@@ -271,15 +274,10 @@ const handleClosecheck = () => {
 
   return (
     <Card sx={{ minWidth: 275, mb: 3 }} elevation={3}>
-  
-
       <CardContent id="quote-wrap">
-
       <Grid container spacing={3} id="quote-cards">
-
       <Grid item xs={3} >
-        
-        {loading ? (
+       {/* {loading ? ( */}
           <Stack direction="column" >
             <Stack direction="column" sx={{ alignItems: "start" }} >
               {plogo}
@@ -301,19 +299,19 @@ const handleClosecheck = () => {
 
             
           </Stack>
-        ) : (
-          <Skeleton
-            variant="rectangle"
-            animation="wave"
-            height="100%"
-            width="100%"
-          />
-        )}
+         {/* ) : (
+           <Skeleton
+             variant="rectangle"
+             animation="wave"
+             height="100%"
+             width="100%"
+           />
+         )} */}
         
       </Grid>
       
       <Grid item xs={3} >
-      {loading ? (
+      {/* {loading ? ( */}
               <Stack direction="column" spacing={3} >
                 <Stack
                   direction="column"
@@ -322,7 +320,7 @@ const handleClosecheck = () => {
                   id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    AM Best | S&P :
+                    Rating: AM Best | S&P
                   </Typography>
                   <Typography color="text.primary" variant="body1">
                     {ambest} | {sprate}
@@ -360,27 +358,27 @@ const handleClosecheck = () => {
 				  Age Increase history : 
                   </Typography>
                   <Typography color="text.primary" variant="body1">
-				   {avg_ageinc}%
+				   {avg_ageinc}
                   </Typography>
                   
                 </Stack>
 
               </Stack>
-            ) : (
+            {/* ) : (
               <Skeleton
                 variant="rectangle"
                 animation="wave"
                 height="100%"
                 width="100%"
               />
-            )}
+            )} */}
       </Grid>
 
         
           <Grid item xs={3} >
  
 
-        {loading ? (
+        {/* {loading ? ( */}
               <Stack direction="column" spacing={3} >
                 <Stack
                   direction="column"
@@ -420,20 +418,20 @@ const handleClosecheck = () => {
 				  Rate Increase history : 
                   </Typography>
                   <Typography color="text.primary" variant="body1">
-				   {avg_rateinc}%
+				   {avg_rateinc}
                   </Typography>
                 </Stack>
 
              
               </Stack>
-            ) : (
+            {/* ) : (
               <Skeleton
                 variant="rectangle"
                 animation="wave"
                 height="100%"
                 width="100%"
               />
-            )}
+            )} */}
           </Grid>
 
          
@@ -442,7 +440,7 @@ const handleClosecheck = () => {
 
         <Grid item xs={3} sx={{ display: "flex", flexDirection: "column" , alignItems: "center", justifyContent: "center" }} >
 
-        {loading ? (
+        {/* {loading ? ( */}
         <Stack spacing={4} id="quote-cta">
 
         <Stack direction="column" sx={{ alignItems: "center", justifyContent: "center" }} spacing={0} id="quote-pre">
@@ -468,7 +466,7 @@ const handleClosecheck = () => {
               variant="contained"
               // onClick={handleClickOpen}
               onClick={() => handleClickOpen({ quote })}
-              disableElevation
+              
             >
               View Price
             </Button>
@@ -482,7 +480,7 @@ const handleClosecheck = () => {
               color="secondary"
               variant="contained"
               onClick={handleCheckClickOpen}
-              disableElevation 
+              
             >
               Checkout
             </Button>
@@ -490,14 +488,14 @@ const handleClosecheck = () => {
          </Stack>
 
          </Stack>
-          ) : (
+          {/* ) : (
             <Skeleton
               variant="rectangle"
               animation="wave"
               height="10em"
               width="100%"
             />
-          )}
+          )} */}
         </Grid>
         
         </Grid>

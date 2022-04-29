@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import Divider from "@mui/material/Divider";
+import InputMask from "react-input-mask";
 import Stepper from "@mui/material/Stepper";
 import InputAdornment from "@mui/material/InputAdornment";
 import Step from "@mui/material/Step";
@@ -23,7 +24,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 // import CardMedia from '@mui/material/CardMedia';
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { useForm } from "react-hook-form";
+import { useForm,Controller } from "react-hook-form";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -52,6 +53,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -254,7 +256,37 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <TextField
+                <Controller
+    name="phone"
+    control={control}
+    defaultValue={uphone}
+    render={({ field: { onChange, value } }) => (
+        <InputMask mask="(999) 999-9999" maskChar="" color="secondary" value={value} onChange={onChange} 
+              {...register("phone", { 
+              required: "Phone is required.", 
+              minLength: { value: 14, message: "Phone number must be 10 digits long.",
+              }})}>
+            {
+                inputProps => (
+                    <TextField
+                        
+                        label="Phone"
+                        variant="outlined"
+                        type="tel"
+                        fullWidth
+                        required
+                        {...inputProps}
+                        error={Boolean(errors.phone)}
+                        helperText={errors.phone?.message}
+                    />
+                )
+            }
+        </InputMask>
+    )}
+/>
+                  
+                  
+                  {/* <TextField
                     inputProps={{ maxLength: 10 }}
                     InputProps={{
                       startAdornment: (
@@ -286,7 +318,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                     })}
                     error={Boolean(errors.phone)}
                     helperText={errors.phone?.message}
-                  />
+                  /> */}
                 </Grid>
 
                 <Grid item xs={12} sm={12} id="uiform-field">
@@ -550,7 +582,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
             >
 
             <Grid container spacing={3} >
-              <Grid item xs={6} md={6} id="add-wrap">
+              <Grid item xs={12} md={12} id="add-wrap">
                 <TextField
                    name="address1"
                    required
@@ -558,7 +590,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                    label="Address 1"
                    color="secondary"
                    multiline
-                   rows={3}
+                   rows={1}
                    placeholder="Enter Your Address 1"
                    {...register("address1", {
                      
@@ -570,7 +602,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                 />
               </Grid>
 
-              <Grid item xs={6} md={6} id="add-wrap">
+              <Grid item xs={12} md={12} id="add-wrap">
                 <TextField
                   name="address2"
                   required
@@ -578,17 +610,12 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                   label="Address 2"
                   color="secondary"
                   multiline
-                   rows={3}
+                  rows={1}
                   placeholder="Enter Your Address 2"
-                  {...register("address2", {
-                    required: "Address 2 is required.",
-                  })}
-                  error={Boolean(errors.address2)}
-                  helperText={errors.address2?.message}
                 />
               </Grid>
 
-              <Grid item xs={4} md={4} id="city-wrap">
+              <Grid item xs={6} md={6} id="city-wrap">
               <FormControl >
                 <TextField
                   name="city"
@@ -603,8 +630,8 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                   {...register("city", {
                     required: "City is required.",
                     pattern: {
-                      value: /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i,
-                      message: "Spaces & numbers are not allowed.",
+                      value: /^([^0-9]*)$/,
+                      message: "Enter your City.",
                     },
                     minLength: {
                       value: 2,
@@ -619,7 +646,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
               </Grid>
 
             
-              <Grid item xs={4} md={4} id="zip-wrap">
+              <Grid item xs={3} md={3} id="zip-wrap">
               <FormControl >
                 <TextField
                    required
@@ -653,7 +680,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                 </FormControl >
               </Grid>
 
-              <Grid item xs={4} md={4} id="state-wrap">
+              <Grid item xs={3} md={3} id="state-wrap">
                 <TextField
                   required
                   id="state"
@@ -670,7 +697,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                       value: 2,
                       message: "Enter your State. (eg. CA,NY,FL)",
                     },
-                    pattern: { value: /^[a-z]{2}$/i, message: "Spaces & numbers are not allowed." },
+                    pattern: { value:/^([^0-9]*)$/, message: "Enter your State. (eg. CA,NY,FL)" },
                   })}
                   error={Boolean(errors.state)}
                   helperText={errors.state?.message}

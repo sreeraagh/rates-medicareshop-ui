@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-
+import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -51,6 +51,7 @@ const Plans = () => {
   //const [plans, setPlans] = useState([]);
   const [plan, setPlan] = useState("G");
   const [loading, setLoading] = useState(false);
+  const [skeloading, setSkeloading] = useState(false);
   const [isloading, setIsloading] = useState(false);
   const [openDialogName, setOpenDialog] = useState(null);
 
@@ -98,11 +99,17 @@ const plansA = [
       setZipcode(sessionStorage.getItem('zipcode'));
       setSt(sessionStorage.getItem('state'));
       //getPlans();
+      
+      setTimeout(() => {
+        setSkeloading(true);
+      }, 300);
+      
+
     }
 
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 300);
+    }, 200);
     return () => clearTimeout(timer);
 
   }, []);
@@ -157,9 +164,11 @@ const plansA = [
 
   const planUpdate = async () => {
     
+    setSkeloading(false);
+
     try {
-     const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+     //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -180,6 +189,7 @@ const plansA = [
         setIsloading(false);
         setShow(false);
       }
+
     } catch (err) {
       setError(err.message);
       console.log(err);
@@ -189,6 +199,7 @@ const plansA = [
     } finally {
       setIsloading(false);
       setLoading(true);
+      setSkeloading(true);
     }
   };
 
@@ -216,8 +227,8 @@ const plansA = [
      
     
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
-     //const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipstring}/${age}/${gender}/${tobacco}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipstring}/${age}/${gender}/${tobacco}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -234,11 +245,11 @@ const plansA = [
       if (response.ok) {
         setIsloading(false);
         setShow(false);
-        
         setQuotes(quoteData);                  
         setSt(quoteData[0].location_base.state);
         localStorage.setItem('state', quoteData[0].location_base.state);
         //getuserPlans();
+        
       }
 
     } catch (err) {
@@ -250,16 +261,19 @@ const plansA = [
       localStorage.setItem('state', 'N/A');
     } finally {
       setIsloading(false);
+      setSkeloading(true);
     }
   };
 
 
   const userplanUpdate = async () => {
 
+    setSkeloading(false);
+
     const zipcode = userdata.zipcode;
     try {
-      const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -289,6 +303,7 @@ const plansA = [
     } finally {
       setIsloading(false);
       setLoading(true);
+      setSkeloading(true);
     }
   };
 
@@ -321,7 +336,7 @@ const plansA = [
       <Box
         component="main"
         sx={{
-          backgroundColor: "#f4f5f7",
+          backgroundColor: "#f0f0f0",
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
@@ -354,46 +369,18 @@ const plansA = [
                 {isvisible && (
             <Stack direction="column" id="info-stack" spacing={0} sx={{p:1}}>
             
-            <AlertTitle color="text.primary" variant="body1">Showing quotes for..{" "}</AlertTitle>
+            <AlertTitle color="text.primary" variant="body1">Showing quotes for...{" "}</AlertTitle>
                 
             <Stack direction="row" sx={{ alignItems: "start" }} spacing={4} id="info-substack">
 
                 <Stack
-                  direction="row"
-                  sx={{ alignItems: "center" }}
-                  spacing={1}
-                  id="info-details"
-                >
-                  <Typography color="text.secondary" variant="subtitle1">
-                    Zip Code :
-                  </Typography>
-                  <Typography color="text.primary" variant="h6">
-                  <b>{zipcode}</b>
-                  </Typography>
-                </Stack>
-
-                <Stack
                 id="info-details"
                   direction="row"
                   sx={{ alignItems: "center" }}
                   spacing={1}
                 >
                   <Typography color="text.secondary" variant="subtitle1">
-                    State :
-                  </Typography>
-                  <Typography color="text.primary" variant="h6">
-                  <b>{st}</b>
-                  </Typography>
-                </Stack>
-
-                <Stack
-                id="info-details"
-                  direction="row"
-                  sx={{ alignItems: "center" }}
-                  spacing={1}
-                >
-                  <Typography color="text.secondary" variant="subtitle1">
-                    Age :
+                    Age:
                   </Typography>
                   <Typography color="text.primary" variant="h6">
                     <b>65</b>
@@ -407,10 +394,24 @@ const plansA = [
                   spacing={1}
                 >
                   <Typography color="text.secondary" variant="subtitle1">
-                    Gender :
+                    Gender:
                   </Typography>
                   <Typography color="text.primary" variant="h6" >
                   <b>Female</b>
+                  </Typography>
+                </Stack>
+
+                <Stack
+                  direction="row"
+                  sx={{ alignItems: "center" }}
+                  spacing={1}
+                  id="info-details"
+                >
+                  <Typography color="text.secondary" variant="subtitle1">
+                    Zip Code:
+                  </Typography>
+                  <Typography color="text.primary" variant="h6">
+                  <b>{zipcode}</b>
                   </Typography>
                 </Stack>
 
@@ -421,7 +422,21 @@ const plansA = [
                   spacing={1}
                 >
                   <Typography color="text.secondary" variant="subtitle1">
-                    Tobacco :
+                    State:
+                  </Typography>
+                  <Typography color="text.primary" variant="h6">
+                  <b>{st}</b>
+                  </Typography>
+                </Stack>
+
+                <Stack
+                id="info-details"
+                  direction="row"
+                  sx={{ alignItems: "center" }}
+                  spacing={1}
+                >
+                  <Typography color="text.secondary" variant="subtitle1">
+                    Tobacco:
                   </Typography>
                   <Typography color="text.primary" variant="h6">
                   <b>No</b>
@@ -440,46 +455,18 @@ const plansA = [
 
       <Stack direction="column" spacing={1} sx={{p:1}} id="info-stack">
             
-  <AlertTitle color="text.primary" variant="body1">👋 Hi {userdata.firstName}, Showing quotes for..{" "}</AlertTitle>
+  <AlertTitle color="text.primary" variant="body1">👋 Hi {userdata.firstName}, Showing quotes for...{" "}</AlertTitle>
     
 <Stack direction="row" sx={{ alignItems: "start" }} spacing={4} id="info-substack">
 
-    <Stack
+<Stack
       direction="row"
       sx={{ alignItems: "center" }}
       spacing={1}
       id="info-details"
     >
       <Typography color="text.secondary" variant="subtitle1">
-        Zip Code :
-      </Typography>
-      <Typography color="text.primary" variant="h6">
-      <b>{userdata.zipcode}</b>
-      </Typography>
-    </Stack>
-
-    <Stack
-      direction="row"
-      sx={{ alignItems: "center" }}
-      spacing={1}
-      id="info-details"
-    >
-      <Typography color="text.secondary" variant="subtitle1">
-        State :
-      </Typography>
-      <Typography color="text.primary" variant="h6">
-      <b>{st}</b>
-      </Typography>
-    </Stack>
-
-    <Stack
-      direction="row"
-      sx={{ alignItems: "center" }}
-      spacing={1}
-      id="info-details"
-    >
-      <Typography color="text.secondary" variant="subtitle1">
-        Age :
+        Age:
       </Typography>
       <Typography color="text.primary" variant="h6">
         <b>{userage}</b>
@@ -493,10 +480,26 @@ const plansA = [
       id="info-details"
     >
       <Typography color="text.secondary" variant="subtitle1">
-        Gender :
+        Gender:
       </Typography>
       <Typography color="text.primary" variant="h6" sx={{ textTransform: "capitalize"}}>
       <b>{userdata.gender}</b>
+      </Typography>
+    </Stack>
+
+
+
+    <Stack
+      direction="row"
+      sx={{ alignItems: "center" }}
+      spacing={1}
+      id="info-details"
+    >
+      <Typography color="text.secondary" variant="subtitle1">
+        Zip Code:
+      </Typography>
+      <Typography color="text.primary" variant="h6">
+      <b>{userdata.zipcode}</b>
       </Typography>
     </Stack>
 
@@ -507,7 +510,22 @@ const plansA = [
       id="info-details"
     >
       <Typography color="text.secondary" variant="subtitle1">
-        Tobacco :
+        State:
+      </Typography>
+      <Typography color="text.primary" variant="h6">
+      <b>{st}</b>
+      </Typography>
+    </Stack>
+
+   
+    <Stack
+      direction="row"
+      sx={{ alignItems: "center" }}
+      spacing={1}
+      id="info-details"
+    >
+      <Typography color="text.secondary" variant="subtitle1">
+        Tobacco:
       </Typography>
       <Typography color="text.primary" variant="h6">
       <b>{userdata.tobacco}</b>
@@ -556,7 +574,7 @@ const plansA = [
                   <Stack direction="column" sx={{mt: 4, mb:1, alignItems: "center", justifyContent: "center"}} spacing={2} id="notyou">
                   <Typography
                     variant="body1" sx={{ fontWeight: "500", fontSize: "20px", color:"#000" }}>
-                    <b>Not you?</b> See personalized quotes by updating your info.. {" "}
+                    <b>Not you?</b> See personalized quotes by updating your info...{" "}
                   </Typography>
                   <Button
                     startIcon={<BorderColorOutlinedIcon />}
@@ -614,7 +632,7 @@ const plansA = [
               </Container>
             )}
 
-
+{!errors && (
         <Container
           maxWidth="md"
           id="info-cont"
@@ -627,7 +645,7 @@ const plansA = [
         >
 
 
-      {!errors && (
+      
           <Grid item xs={2} id="select-plan" >
             {loading ? (
               <Paper elevation={2}>
@@ -662,13 +680,13 @@ const plansA = [
               <Skeleton
                 variant="rectangle"
                 animation="wave"
-                height="4em"
-                width="100%"
+                height="3em"
+                width="10em"
                 sx={{ mb: 2 }}
               />
             )}
           </Grid>
-        )}
+        
 
            
         <Grid item sx={{ ml: 2 }} id="plan_loader-wrap">
@@ -707,7 +725,7 @@ const plansA = [
             )}
             </Grid>
         </Container>
-
+        )}
         {/* {!show && (
           <Typography variant="subtitle1" sx={{ mb: 2 }}>
             A moment please...
@@ -720,14 +738,166 @@ const plansA = [
           </Typography>
         )} */}
 
-        {quotes && (
+        
+{!errors &&  !show && (
           <Container maxWidth="md" sx={{ mb: 8, mt: 3 }} id="info-cont-last">
-            {quotes.map((quote, i) => (
+            {skeloading ? (
+            <>
+            {quotes && quotes.map((quote, i) => (
               <Stack key={i}>
                 {/* <Quotecard quote={quote} /> */}
                 <Quotecard2  quote={quote} plan={plan} />
               </Stack>
             ))}
+            </>
+            ):(
+              <>
+              <Card sx={{mb:2, p:2}}>
+                <Grid container spacing={3} id="quote-cards">
+                  <Grid item xs={3}>
+                <Skeleton
+                variant="rectangle"
+                animation="wave"
+                height="100%"
+                width="100%"
+                  />
+                  </Grid>
+                  <Grid item xs={3}>
+                <Skeleton
+                variant="rectangle"
+                animation="wave"
+                height="100%"
+                width="100%"
+                  />
+                  </Grid>
+                  <Grid item xs={3}>
+                <Skeleton
+                variant="rectangle"
+                animation="wave"
+                height="100%"
+                width="100%"
+                  />
+                  </Grid>
+                  <Grid item xs={3}>
+                <Skeleton
+                variant="rectangle"
+                animation="wave"
+                height="10em"
+                width="100%"
+                  />
+                  </Grid>
+                </Grid>
+              </Card>
+              <Card sx={{mb:2, p:2}}>
+              <Grid container spacing={3} id="quote-cards">
+                <Grid item xs={3}>
+              <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height="100%"
+              width="100%"
+                />
+                </Grid>
+                <Grid item xs={3}>
+              <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height="100%"
+              width="100%"
+                />
+                </Grid>
+                <Grid item xs={3}>
+              <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height="100%"
+              width="100%"
+                />
+                </Grid>
+                <Grid item xs={3}>
+              <Skeleton
+              variant="rectangle"
+              animation="wave"
+              height="10em"
+              width="100%"
+                />
+                </Grid>
+              </Grid>
+            </Card>
+            <Card sx={{mb:2, p:2}}>
+            <Grid container spacing={3} id="quote-cards">
+              <Grid item xs={3}>
+            <Skeleton
+            variant="rectangle"
+            animation="wave"
+            height="100%"
+            width="100%"
+              />
+              </Grid>
+              <Grid item xs={3}>
+            <Skeleton
+            variant="rectangle"
+            animation="wave"
+            height="100%"
+            width="100%"
+              />
+              </Grid>
+              <Grid item xs={3}>
+            <Skeleton
+            variant="rectangle"
+            animation="wave"
+            height="100%"
+            width="100%"
+              />
+              </Grid>
+              <Grid item xs={3}>
+            <Skeleton
+            variant="rectangle"
+            animation="wave"
+            height="10em"
+            width="100%"
+              />
+              </Grid>
+            </Grid>
+          </Card>
+          <Card sx={{mb:2, p:2}}>
+          <Grid container spacing={3} id="quote-cards">
+            <Grid item xs={3}>
+          <Skeleton
+          variant="rectangle"
+          animation="wave"
+          height="100%"
+          width="100%"
+            />
+            </Grid>
+            <Grid item xs={3}>
+          <Skeleton
+          variant="rectangle"
+          animation="wave"
+          height="100%"
+          width="100%"
+            />
+            </Grid>
+            <Grid item xs={3}>
+          <Skeleton
+          variant="rectangle"
+          animation="wave"
+          height="100%"
+          width="100%"
+            />
+            </Grid>
+            <Grid item xs={3}>
+          <Skeleton
+          variant="rectangle"
+          animation="wave"
+          height="10em"
+          width="100%"
+            />
+            </Grid>
+          </Grid>
+        </Card>
+        </>
+            )}
 
 <Typography color="text.primary" variant="caption">
 Disclaimer: JERA Marketing Solutions, LLC does not 
@@ -758,7 +928,8 @@ warrant the accuracy of the above market data.
 </Typography>
 
           </Container>
-        )}
+)}
+      
       </Box>
 
       <Updateinfo

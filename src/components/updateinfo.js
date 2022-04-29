@@ -14,9 +14,9 @@ import RadioGroup from "@mui/material/RadioGroup";
 
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-
+import InputMask from "react-input-mask";
 //import Collapse from '@mui/material/Collapse';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import FormHelperText from '@mui/material/FormHelperText';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
@@ -60,12 +60,14 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
   //   setEventid("");
   // }, [])
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, control, formState: { errors } } = useForm();
 
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [year, setYear] = useState('1956');
-
+  
+  // const [phone, setPhone] = useState('');
+  
   const handleMonthChange = (event) => {
     setMonth(event.target.value);
     
@@ -118,15 +120,20 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
           //   ggender = "f"
           // }
           
-      let udob =  month + "/" + day + "/" + year;
-      let dob = new Date(JSON.stringify(udob)); 
-      
-      let month_diff = Date.now() - dob.getTime();  
-      let age_dt = new Date(month_diff);   
-      let uyear = age_dt.getUTCFullYear();   
-      let uage = Math.abs(uyear - 1970);
+      // let udob =  month + "/" + day + "/" + year;
+      // let dob = new Date(JSON.stringify(udob));   
 
-     
+      // let month_diff = Date.now() - dob.getTime();  
+      // let age_dt = new Date(month_diff);   
+
+      // let uyear = age_dt.getUTCFullYear();   
+      // let uage = Math.abs(uyear - 1970);
+
+      
+      var udob = new Date(year, month, day);
+      var month_diff = Date.now() - udob.getTime();
+      var age_dt = new Date(month_diff); 
+      var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
 
       localStorage.setItem('user', JSON.stringify(userinfo));
       localStorage.setItem('isuser', "Yes");
@@ -134,32 +141,33 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
       
       localStorage.setItem('age', uage);
     
-      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
-        method: "POST",
-        body: JSON.stringify({
-          "formdata" : formData,
-          "carrier" : prov,
-          "plan": plan,
-          "monthly_premium": premium
-        })
+      // fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     "formdata" : formData,
+      //     "carrier" : prov,
+      //     "plan": plan,
+      //     "monthly_premium": premium
+      //   })
         
-      })
-        .then(response => {
-          console.log(response);  
-        })
-        .catch(error  => {
-          console.log(error);  
-        })
-        
-        
+      // })
+      //   .then(response => {
+      //     console.log(response);  
+      //   })
+      //   .catch(error  => {
+      //     console.log(error);  
+      //   })
         setTimeout(() => {
-          setOpensub(opensub);
-          onClose();
           window.location.reload(true);
         }, 1000);
+
     }
+  
+  
   };
 
+
+  
 
 
   return (
@@ -176,8 +184,8 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
             }}
           >
             <Stack direction="row" id="ui-head-stack">
-            <Typography variant="h6" sx={{fontWeight: "600", lineHeight: "1.4", mt: 1, mb:2}} id="ui-head">
-              Update your basic information and we will display personalized results.
+            <Typography variant="h6" sx={{fontWeight: "600", lineHeight: "1.4", mt: 1, mb:2}} >
+              Update your basic information and we will display personalized results. We promise&nbsp;<b id="uf-icon">❤️</b>
             </Typography>
 
             <CloseIcon onClick={onClose} color="error" id="ui-close"/>
@@ -273,11 +281,42 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} id="uiform-field">
-                  <TextField
+
+
+<Controller
+    name="phone"
+    control={control}
+    defaultValue=""
+    render={({ field: { onChange, value } }) => (
+        <InputMask mask="(999) 999-9999" maskChar="" color="secondary" value={value} onChange={onChange} 
+              {...register("phone", { 
+              required: "Phone is required.", 
+              minLength: { value: 14, message: "Phone number must be 10 digits long.",
+              }})}>
+            {
+                inputProps => (
+                    <TextField
+                        
+                        label="Phone"
+                        variant="outlined"
+                        type="tel"
+                        fullWidth
+                        required
+                        {...inputProps}
+                        error={Boolean(errors.phone)}
+                        helperText={errors.phone?.message}
+                    />
+                )
+            }
+        </InputMask>
+    )}
+/>
+
+                  {/* <TextField
                     inputProps={{ maxLength: 10 }}
-                    InputProps={{
-                      startAdornment: <InputAdornment position="start">+1</InputAdornment>,
-                    }}
+                    // InputProps={{
+                    //   startAdornment: <InputAdornment position="start">+1</InputAdornment>,
+                    // }}
                     required
                     fullWidth
                     type="tel"
@@ -302,7 +341,8 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                     })}
                     error={Boolean(errors.phone)}
                     helperText={errors.phone?.message}
-                  />
+                  />   */}
+
                 </Grid>
 
                 <Grid item xs={12} sm={6} id="uiform-field">
@@ -368,7 +408,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                       name="month"
                       color="secondary"
                       {...register("month", { required: "Month is required.", })}
-                      
+                      disableAnimation={true}
                       onChange={handleMonthChange}
                       //onChange={e => setAge(e.target.value)}
                     >
