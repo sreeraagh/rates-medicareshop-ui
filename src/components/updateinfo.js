@@ -141,22 +141,23 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
       
       localStorage.setItem('age', uage);
     
-      // fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     "formdata" : formData,
-      //     "carrier" : prov,
-      //     "plan": plan,
-      //     "monthly_premium": premium
-      //   })
+      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
+        method: "POST",
+        body: JSON.stringify({
+          "formdata" : formData,
+          "carrier" : prov,
+          "plan": plan,
+          "monthly_premium": premium
+        })
         
-      // })
-      //   .then(response => {
-      //     console.log(response);  
-      //   })
-      //   .catch(error  => {
-      //     console.log(error);  
-      //   })
+      })
+        .then(response => {
+          console.log(response);  
+        })
+        .catch(error  => {
+          console.log(error);  
+        })
+        
         setTimeout(() => {
           window.location.reload(true);
         }, 1000);

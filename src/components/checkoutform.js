@@ -140,7 +140,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
         })
 
         setTimeout(() => {
-          setOpensub(opensub); 
+           
           navigate("../thankyou", {replace: true});
         }, 1000);
     }
