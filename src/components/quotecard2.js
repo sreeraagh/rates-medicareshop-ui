@@ -285,7 +285,7 @@ const handleClosecheck = () => {
               
               <Stack direction="column" sx={{ alignItems: "start" }} spacing={1} id="prov">
               <Typography color="text.secondary" variant="subtitle2" >
-                Provider :
+                Provider:
               </Typography>
               <Typography
                 id="prov-text"
@@ -320,7 +320,7 @@ const handleClosecheck = () => {
                   id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    Rating: AM Best | S&P
+                    Rating by AM Best | S&P:
                   </Typography>
                   <Typography color="text.primary" variant="body1">
                     {ambest} | {sprate}
@@ -337,7 +337,7 @@ const handleClosecheck = () => {
                   
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    Years in the market :
+                    Years in the market:
                   </Typography>
                   <Typography color="text.primary" variant="body1">
                     {2022 - quote.company_base.established_year}
@@ -355,7 +355,7 @@ const handleClosecheck = () => {
                     Age Increase history
                   </Typography> */}
 				  <Typography color="text.secondary" variant="subtitle2">
-				  Age Increase history : 
+				  Age Increase history: 
                   </Typography>
                   <Typography color="text.primary" variant="body1">
 				   {avg_ageinc}
@@ -387,7 +387,7 @@ const handleClosecheck = () => {
                   id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    Rate Type :
+                    Rate Type:
                   </Typography>
                   <Typography color="text.primary" variant="body1">
                     {quote.rate_type}
@@ -401,7 +401,7 @@ const handleClosecheck = () => {
                   id="quote-info"
                 >
                   <Typography color="text.secondary" variant="subtitle2">
-                    Discounts :{" "}
+                    Discounts:{" "}
                   </Typography>
                   <Typography color="text.primary" variant="body1">
                   {discfull}
@@ -415,7 +415,7 @@ const handleClosecheck = () => {
                   id="quote-info"
                 >
 				  <Typography color="text.secondary" variant="subtitle2">
-				  Rate Increase history : 
+				  Rate Increase history: 
                   </Typography>
                   <Typography color="text.primary" variant="body1">
 				   {avg_rateinc}
@@ -445,7 +445,7 @@ const handleClosecheck = () => {
 
         <Stack direction="column" sx={{ alignItems: "center", justifyContent: "center" }} spacing={0} id="quote-pre">
               <Typography color="text.secondary" variant="subtitle2">
-                Premium :
+                Premium:
               </Typography>
 
               <Typography

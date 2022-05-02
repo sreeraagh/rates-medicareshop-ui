@@ -653,23 +653,23 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
                    fullWidth
                    name="zipcode"
                    id="zipcode"
-                   label="Zip code"
+                   label="Zip Code"
                    defaultValue={uzip}
                   //  onChange={handleZipChange}
                    inputProps={{ maxLength: 5 }}
-                   placeholder="Enter Zip code"
+                   placeholder="Enter Zip Code"
                    color="secondary"
                    type="tel"
                    {...register("zipcode", {
-                     required: "Zipcode is required",
-                     pattern: { value: /^(?!00000)\d{5}(?:[-\s]\d{4})?$/, message: "Enter a valid US Zip code" },
+                     required: "Zip Code is required",
+                     pattern: { value: /^(?!00000)\d{5}(?:[-\s]\d{4})?$/, message: "Enter a valid US Zip Code" },
                      minLength: {
                        value: 5,
-                       message: "Zipcode must be 5 digits long.",
+                       message: "Zip Code must be 5 digits long.",
                      },
                      maxLength: {
                        value: 5,
-                       message: "Zipcode must be less than 5 digits.",
+                       message: "Zip Code must be less than 5 digits.",
                      },
                      // validate: (value) => value === '0' || 'Enter a valid US Zip code',
                    })}

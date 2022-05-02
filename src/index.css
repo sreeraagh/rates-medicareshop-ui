@@ -107,6 +107,11 @@ height: 20px !important;
   margin: 5px 0;
 }
 
+
+#gtm-inputs-wrap{
+  display: none;
+}
+
 #prov-text{
   text-transform: capitalize;
 }
@@ -257,6 +262,11 @@ div#select-plan #demo-simple-select{
   background: #fff;
   border: 2px solid #9c27b0;
   font-size: 18px;
+  
+}
+
+#select-plan .MuiInput-root:before{
+  border: none;
 }
 
 div#select-plan #demo-simple-select:hover{
@@ -521,6 +531,7 @@ div#quote-info {
   margin: 0px;
   margin-bottom: 10px;
   flex-direction: row;
+  align-items: center;
 }
 
 div#quote-info p {

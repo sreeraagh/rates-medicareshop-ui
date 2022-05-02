@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
-
+import Input from '@mui/material/Input';
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CloseIcon from '@mui/icons-material/Close';
@@ -140,6 +140,12 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
       localStorage.setItem('state', "");
       
       localStorage.setItem('age', uage);
+
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event':'form-submitted',
+        'value': formData
+      });
     
       fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
         method: "POST",
@@ -200,6 +206,134 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
               onSubmit={handleSubmit(onSubmit)}
               sx={{ mt: 3 }}
             >
+
+              <Grid container id="gtm-inputs-wrap">
+              <input
+                  name="fbclid"
+                  hidden
+                  label="FB click Id"
+                  // value={fbclid}
+                  
+                />
+                <input
+                  name="term_id"
+                  hidden
+                  label="term_id"
+                  // value={term_id}
+                  
+                />
+                <input
+                  name="Campaign_ID"
+                  hidden
+                  label="Campaign_ID"
+                  // value={Campaign_ID}
+                  
+                />
+                <input
+                  name="user_agent"
+                  hidden
+                  label="User Agent"
+                  // value={user_agent}
+                 
+                />
+                <input
+                  name="content_id"
+                  hidden
+                  label="content_id"
+                  // value={content_id}
+                 
+                />
+                <input
+                  name="utm_term"
+                  hidden
+                  label="utm_term"
+                  // value={utm_term}
+                  {...register("utm_term")}
+                />
+                <input
+                  name="utm_type"
+                  hidden
+                  label="utm_type"
+                  // value={utm_type}
+                  
+                />
+                <input
+                  name="utm_campaign"
+                  hidden
+                  label="utm_campaign"
+                  // value={utm_campaign}
+                 
+                />
+                <input
+                  name="utm_source"
+                  hidden
+                  label="utm_source"
+                  // value={utm_source}
+                  
+                />
+                <input
+                  name="utm_content"
+                  hidden
+                  label="utm_content"
+                  // value={utm_content}
+                  
+                />
+                <input
+                  name="gclid"
+                  hidden
+                  label="gclid"
+                  // value={gclid}
+                  
+                />
+                <input
+                  name="ga_client_id"
+                  hidden
+                  label="ga_client_id"
+                  // value={ga_client_id}
+                  
+                />
+                <input
+                  name="keyword"
+                  hidden
+                  label="Keyword"
+                  // value={keyword}
+                 
+                />
+                <input
+                  name="xxTrustedFormCertUrl"
+                  hidden
+                  label="xxTrustedFormCertUrl"
+                  // value={xxTrustedFormCertUrl}
+                  
+                />
+                <input
+                  name="Jornaya"
+                  hidden
+                  label="Jornaya"
+                  id="Jornaya"
+                  
+                />
+                <input
+                  name="TCPALanguage"
+                  hidden
+                  label="TCPA Language"
+                  // value={TCPALanguage}
+                  
+                />
+                <input
+                  name="LandingPage"
+                  hidden
+                  label="LandingPage"
+                  // value={LandingPage}
+                  
+                />
+                <input
+                  name="eventid"
+                  hidden
+                  label="eventid"
+                  // value={eventid}
+                />
+              </Grid>
 
               <Grid container spacing={3} id="ui-form">
               
@@ -352,21 +486,21 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                     required
                     fullWidth
                     name="zipcode"
-                    label="Zip code"
+                    label="Zip Code"
                     inputProps={{ maxLength: 5 }}
-                    placeholder="Enter Your Zip code"
+                    placeholder="Enter Your Zip Code"
                     color="secondary"
                     type="tel"
                     {...register("zipcode", {
-                      required: "Zipcode is required",
-                      pattern: { value: /^(?!00000)\d{5}(?:[-\s]\d{4})?$/, message: "Enter a valid US Zip code" },
+                      required: "Zip Code is required",
+                      pattern: { value: /^(?!00000)\d{5}(?:[-\s]\d{4})?$/, message: "Enter a valid US Zip Code" },
                       minLength: {
                         value: 5,
-                        message: "Zipcode must be 5 digits long.",
+                        message: "Zip Code must be 5 digits long.",
                       },
                       maxLength: {
                         value: 5,
-                        message: "Zipcode must be less than 5 digits.",
+                        message: "Zip Code must be less than 5 digits.",
                       },
                       // validate: (value) => value === '0' || 'Enter a valid US Zip code',
                     })}

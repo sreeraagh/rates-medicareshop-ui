@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 
-
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -41,7 +40,7 @@ const Plans = () => {
   const ischecked = localStorage.getItem('ischecked');
   const userdata =  JSON.parse(localStorage.getItem('user'));
   const userage =  localStorage.getItem('age');
-  console.log(userage);
+  
 
   const [quotes, setQuotes] = useState([]);
   const [show, setShow] = useState(false);
@@ -49,7 +48,7 @@ const Plans = () => {
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState(null);
   //const [plans, setPlans] = useState([]);
-  const [plan, setPlan] = useState("G");
+  //const [plan, setPlan] = useState("");
   const [loading, setLoading] = useState(false);
   const [skeloading, setSkeloading] = useState(false);
   const [isloading, setIsloading] = useState(false);
@@ -72,7 +71,7 @@ const plansA = [
 "N"
   ];
 
-  // let plan = "G";
+  let plan;
 
   let openfade = true;
   let openzoom = true;
@@ -104,8 +103,9 @@ const plansA = [
         setSkeloading(true);
       }, 300);
       
-
     }
+
+    // setPlan("G");     
 
     const timer = setTimeout(() => {
       setLoading(true);
@@ -114,6 +114,22 @@ const plansA = [
 
   }, []);
 
+
+  const handleChange = (event) => {
+    plan = event.target.value;
+    //setPlan(event.target.value);
+    console.log(event.target.value);
+    console.log(plan);
+    setShow(false);
+    setIsloading(true);
+
+    if(isuser === "Yes"){
+      userplanUpdate();
+    }else{
+      planUpdate();      
+    }
+
+  };
 
  
   // const getPlans = async () => {
@@ -163,9 +179,9 @@ const plansA = [
   // };
 
   const planUpdate = async () => {
-    
+    console.log(plan);
     setSkeloading(false);
-
+    
     try {
      const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipcode}/${plan}`);
       //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
@@ -208,7 +224,7 @@ const plansA = [
     
     const zipstring = userdata.zipcode;
     const age = userage;
-    console.log(age);
+    
     let gender;
     let tobacco;
 
@@ -269,11 +285,11 @@ const plansA = [
   const userplanUpdate = async () => {
 
     setSkeloading(false);
-
+    console.log(plan);
     const zipcode = userdata.zipcode;
     try {
-      const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -315,18 +331,7 @@ const plansA = [
     setOpenDialog(null);
   };
 
-  const handleChange = (event) => {
-    // plan = event.target.value;
-    setPlan(event.target.value);
-    setShow(false);
-    setIsloading(true);
-
-    if(isuser === "Yes"){
-      userplanUpdate();
-    }else{
-      planUpdate();
-    }
-  };
+  
 
 
 
@@ -659,20 +664,29 @@ const plansA = [
                   Select a Plan
                 </InputLabel> */}
                 <Select
-                  labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   //label="Select a Plan"
-                  
+                  defaultValue="G"
                   value={plan}
                   color="secondary"
                   onChange={handleChange}
-                  // defaultValue = "G"
                 >
                   {plansA.map((plan, i) => (
                     <MenuItem key={i} value={plan}>
                       Plan <b style={{ marginLeft: "5px" }}>{plan}</b>
                     </MenuItem>
                   ))}
+                  {/* <option value="A">Plan A</option>
+                  <option value="B">Plan B</option>
+                  <option value="C">Plan C</option>
+                  <option value="D">Plan D</option>
+                  <option value="F">Plan F</option>
+                  <option value="G">Plan G</option>
+                  <option value="HDG">Plan HDG</option>
+                  <option value="HDF">Plan HDF</option>
+                  <option value="K">Plan K</option>
+                  <option value="L">Plan L</option>
+                  <option value="N">Plan N</option> */}
                 </Select>
               </FormControl>
               </Paper>
