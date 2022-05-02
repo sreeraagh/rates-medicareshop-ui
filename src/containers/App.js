@@ -5,7 +5,14 @@ import customtheme from "../assets/theme";
 import Home from "./Home";
 import Plans from "./Plans";
 import Thankyou from "./Thankyou";
+import TagManager from 'react-gtm-module';
 
+
+const tagManagerArgs = {
+  gtmId: 'GTM-KZ3V2D2'
+}
+
+TagManager.initialize(tagManagerArgs)
 
 const App = () => {
   return (
