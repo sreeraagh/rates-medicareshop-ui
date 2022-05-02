@@ -21,7 +21,7 @@ const ResponsiveAppBar = () => {
   
   return (
     <AppBar
-      sx={{ background: "#fff", position: "absolute", top: 0, zIndex: 99 }}
+      sx={{ background: "#fff", position: "sticky", top: 0, zIndex: 99 }}
       elevation={1}
     >
       <Container maxWidth="xl" id="appbar-tr">
