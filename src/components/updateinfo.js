@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
-import Input from '@mui/material/Input';
+// import Input from '@mui/material/Input';
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CloseIcon from '@mui/icons-material/Close';
@@ -32,58 +32,39 @@ import Dialog from "@mui/material/Dialog";
 export default function Updateinfo({ open, onClose, prov, plan, premium }) {
 
   const [opensub, setOpensub] = useState(false);
-  //let fbclid;
-  // const selectedcard = cardvalue;
-  // let fbclid=document.getElementById("fbclid").value;
-  // let term_id= document.getElementById("term_id").value;
-  // let campaign_id= document.getElementById("Campaign_ID").value;
-  // let user_agent=document.getElementById("user_agent").value;
-  // let content_id=document.getElementById("content_id").value; 
-  // let utm_term=document.getElementById("utm_term").value; 
-  // let utm_type=document.getElementById("utm_type").value; 
-  // let utm_campaign=document.getElementById("utm_campaign").value; 
-  // let utm_source=document.getElementById("utm_source").value; 
-  // let utm_content=document.getElementById("utm_content").value; 
-  // let gclid=document.getElementById("gclid").value; 
-  // let ga_client_id=document.getElementById("ga_client_id").value; 
-  // let keyword=document.getElementById("keyword").value;
-
-  //const [xxtrustedformcerturl, setXXTrustedFormCertUrl] = useState("");
-  //const [landingpage, setLandingPage] = useState("");
-  //const [tcpalanguage, setTCPALanguage] = useState("");
-  //const [eventid, setEventid] = useState("");
-
-  // useEffect(() => {
-  //   setXXTrustedFormCertUrl("xxTrustedFormCertUrl");
-  //   setLandingPage("https://mnw-client.herokuapp.com/");
-  //   setTCPALanguage("By clicking the button above, you provide your signature expressly consenting to receive marketing communications via live telephone, an automatic telephone dialing system, pre-recorded/artificial voice message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or these Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand all of the Privacy Policy of this site.");
-  //   setEventid("");
-  // }, [])
 
   const { register, handleSubmit, control, formState: { errors } } = useForm();
 
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [year, setYear] = useState('1956');
-  
-  // const [phone, setPhone] = useState('');
-  
+
+const utmtermRef = useRef();
+const termidRef = useRef();
+const campaignidRef = useRef();
+const useragentRef = useRef();
+const contentidRef = useRef();
+const utmtypeRef = useRef();
+const utmcampaignRef = useRef();
+const utmsourceRef = useRef();
+const utmcontentRef = useRef();
+const gclidRef = useRef();
+const gaclientidRef = useRef();
+const keywordRef = useRef();
+
+
+ 
   const handleMonthChange = (event) => {
-    setMonth(event.target.value);
-    
+    setMonth(event.target.value);    
   };
 
   const handleDayChange = (event) => {
     setDay(event.target.value);
-    
   };
 
   const handleYearChange = (event) => {
     setYear(event.target.value);
-    
   };
-
-
 
   const icon = (
     <Typography variant="caption">By clicking the button above, you provide your signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.
@@ -91,24 +72,27 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
   );
 
 
-  // const [checked, setChecked] = useState(false);
+const onSubmit = (formData, e) => {    
+    
+// let utmterm = utmtermRef.current.value;
+// let termid = termidRef.current.value;
+// let campaignid = campaignidRef.current.value;
+// let useragent = useragentRef.current.value;
+// let contentid = contentidRef.current.value;
+// let utmtype = utmtypeRef.current.value;
+// let utmcampaign = utmcampaignRef.current.value;
+// let utmsource = utmsourceRef.current.value;
+// let utmcontent = utmcontentRef.current.value;
+// let gclid = gclidRef.current.value;
+// let gaclientid = gaclientidRef.current.value;
+// let keyword = keywordRef.current.value;
   
-  // const handleChange = () => {
-  //   setChecked((prev) => !prev);
-  // };
-
-
-  const onSubmit = (formData, e) => {
-
     e.preventDefault();
     setOpensub(!opensub);
     let userinfo = formData;
     
-    
-
     if (Object.keys(userinfo).length > 0) {
-
-      
+  
       // let gdob = year + month + day;
       // let gphone = "1"+formData.phone;
       // let fgender = formData.gender;
@@ -138,15 +122,29 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
       localStorage.setItem('user', JSON.stringify(userinfo));
       localStorage.setItem('isuser', "Yes");
       localStorage.setItem('state', "");
-      
+
       localStorage.setItem('age', uage);
 
       window.dataLayer = window.dataLayer || [];
+      
       window.dataLayer.push({
         'event':'form-submitted',
-        'value': formData
+        'value': formData,
+        'utmterm' : utmtermRef.current.value,
+        'termid' : termidRef.current.value,
+        'campaignid' : campaignidRef.current.value,
+        'useragent' : useragentRef.current.value,
+        'contentid' : contentidRef.current.value,
+        'utmtype' : utmtypeRef.current.value,
+        'utmcampaign' : utmcampaignRef.current.value,
+        'utmsource' : utmsourceRef.current.value,
+        'utmcontent' : utmcontentRef.current.value,
+        'gclid' : gclidRef.current.value,
+        'gaclientid' : gaclientidRef.current.value,
+        'keyword' : keywordRef.current.value
       });
     
+      
       fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
         method: "POST",
         body: JSON.stringify({
@@ -199,6 +197,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
 
             </Stack>
             
+
             <Box
               component="form"
               id="ui-formwrap"
@@ -207,138 +206,27 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
               sx={{ mt: 3 }}
             >
 
-              <Grid container id="gtm-inputs-wrap">
-              <input
-                  name="fbclid"
-                  hidden
-                  label="FB click Id"
-                  // value={fbclid}
-                  
-                />
-                <input
-                  name="term_id"
-                  hidden
-                  label="term_id"
-                  // value={term_id}
-                  
-                />
-                <input
-                  name="Campaign_ID"
-                  hidden
-                  label="Campaign_ID"
-                  // value={Campaign_ID}
-                  
-                />
-                <input
-                  name="user_agent"
-                  hidden
-                  label="User Agent"
-                  // value={user_agent}
-                 
-                />
-                <input
-                  name="content_id"
-                  hidden
-                  label="content_id"
-                  // value={content_id}
-                 
-                />
-                <input
-                  name="utm_term"
-                  hidden
-                  label="utm_term"
-                  // value={utm_term}
-                  {...register("utm_term")}
-                />
-                <input
-                  name="utm_type"
-                  hidden
-                  label="utm_type"
-                  // value={utm_type}
-                  
-                />
-                <input
-                  name="utm_campaign"
-                  hidden
-                  label="utm_campaign"
-                  // value={utm_campaign}
-                 
-                />
-                <input
-                  name="utm_source"
-                  hidden
-                  label="utm_source"
-                  // value={utm_source}
-                  
-                />
-                <input
-                  name="utm_content"
-                  hidden
-                  label="utm_content"
-                  // value={utm_content}
-                  
-                />
-                <input
-                  name="gclid"
-                  hidden
-                  label="gclid"
-                  // value={gclid}
-                  
-                />
-                <input
-                  name="ga_client_id"
-                  hidden
-                  label="ga_client_id"
-                  // value={ga_client_id}
-                  
-                />
-                <input
-                  name="keyword"
-                  hidden
-                  label="Keyword"
-                  // value={keyword}
-                 
-                />
-                <input
-                  name="xxTrustedFormCertUrl"
-                  hidden
-                  label="xxTrustedFormCertUrl"
-                  // value={xxTrustedFormCertUrl}
-                  
-                />
-                <input
-                  name="Jornaya"
-                  hidden
-                  label="Jornaya"
-                  id="Jornaya"
-                  
-                />
-                <input
-                  name="TCPALanguage"
-                  hidden
-                  label="TCPA Language"
-                  // value={TCPALanguage}
-                  
-                />
-                <input
-                  name="LandingPage"
-                  hidden
-                  label="LandingPage"
-                  // value={LandingPage}
-                  
-                />
-                <input
-                  name="eventid"
-                  hidden
-                  label="eventid"
-                  // value={eventid}
-                />
-              </Grid>
+              {/* <Grid container id="gtm-inputs-wrap">
+             
+              </Grid> */}
 
               <Grid container spacing={3} id="ui-form">
               
                 <Grid item xs={12} sm={6} id="uiform-field">
+<input hidden id="utm-term" ref={utmtermRef} />
+<input hidden id="utm-type" ref={utmtypeRef}/>
+<input hidden id="utm-campaign" ref={utmcampaignRef}/>
+<input hidden id="utm-source" ref={utmsourceRef}/>
+<input hidden id="utm-content" ref={utmcontentRef}/>
+<input hidden id="term-id" ref={termidRef} />
+<input hidden id="campaign-id" ref={campaignidRef}/>
+<input hidden id="user-agent" ref={useragentRef}/>
+<input hidden id="content-id" ref={contentidRef}/>
+<input hidden id="gclid" ref={gclidRef}/>
+<input hidden id="ga-client-id" ref={gaclientidRef}/>
+<input hidden id="keyword" ref={keywordRef}/>
 
+{/* visible fields */}
                   <TextField
                     name="firstName"
                     required
@@ -416,6 +304,21 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} id="uiform-field">
+
+{/* 
+        <InputMask
+        mask={phone ? "(999) 999-9999" : null}
+        type="text"
+        maskChar={null}
+        id="phone"
+        className="demo-phone"
+        name="phone"
+        placeholder="Enter your Phone no."
+        required
+        value={phone}
+        onChange={(e) => e.preventDefault()}
+        onInput={changePhoneHandler}
+      /> */}
 
 
 <Controller
@@ -543,7 +446,7 @@ export default function Updateinfo({ open, onClose, prov, plan, premium }) {
                       name="month"
                       color="secondary"
                       {...register("month", { required: "Month is required.", })}
-                      disableAnimation={true}
+                      
                       onChange={handleMonthChange}
                       //onChange={e => setAge(e.target.value)}
                     >

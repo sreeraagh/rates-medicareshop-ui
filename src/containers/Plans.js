@@ -184,7 +184,7 @@ const plansA = [
     
     try {
      const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+  //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
@@ -288,8 +288,8 @@ const plansA = [
     console.log(plan);
     const zipcode = userdata.zipcode;
     try {
-      //const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipcode}/${plan}`);
-      const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
+      const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipcode}/${plan}`);
+      //const response = await fetch(`http://localhost:5000/weather/${zipcode}/${plan}`);
 
       if (!response.ok) {
         throw new SyntaxError("Oops, something went wrong. Try again later.");
