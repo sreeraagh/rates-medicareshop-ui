@@ -50,8 +50,10 @@ const utmcampaignRef = useRef();
 const utmsourceRef = useRef();
 const utmcontentRef = useRef();
 const gclidRef = useRef();
+const fbclidRef = useRef();
 const gaclientidRef = useRef();
 const keywordRef = useRef();
+const trustedRef = useRef();
 
 
  
@@ -76,7 +78,7 @@ const keywordRef = useRef();
 const onSubmit = (formData, e) => {    
     
     e.preventDefault();
-   setOpensub(!opensub);
+      setOpensub(!opensub);
     let userinfo = formData;
     
      if (Object.keys(userinfo).length > 0) {
@@ -160,7 +162,7 @@ const onSubmit = (formData, e) => {
       var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
       
       localStorage.setItem('user', JSON.stringify(userinfo));
-      localStorage.setItem('isuser', "Yes");
+     localStorage.setItem('isuser', "Yes");
       localStorage.setItem('state', "");
       localStorage.setItem('age', uage);
       
@@ -169,13 +171,38 @@ const onSubmit = (formData, e) => {
     setTimeout(() => {
 
       window.dataLayer = window.dataLayer || [];
-      
+     
+
       window.dataLayer.push({
         'event': leadStatus,
         'value': formData,
         'utmterm' : utmtermRef.current.value,
+        'utmtype' : utmtypeRef.current.value,
+        'utmcampaign' : utmcampaignRef.current.value,
+        'utmsource' : utmsourceRef.current.value,
+        'utmcontent' : utmcontentRef.current.value,
         'termid' : termidRef.current.value,
         'campaignid' : campaignidRef.current.value,
+        'contentid' : contentidRef.current.value,
+        'gclid' : gclidRef.current.value,
+        'fbclid' : fbclidRef.current.value,
+        'gaclientid' : gaclientidRef.current.value,
+        'keyword' : keywordRef.current.value,
+        'useragent' : useragentRef.current.value,
+        'jornaya': jornaya,
+        'tt': trustedRef.current.value
+      });
+    
+      
+      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u`, {
+      
+        method: "POST",
+        body: JSON.stringify({
+        'event': leadStatus,
+          'value': formData,
+          'utmterm' : utmtermRef.current.value,
+          'termid' : termidRef.current.value,
+          'campaignid' : campaignidRef.current.value,
         'useragent' : useragentRef.current.value,
         'contentid' : contentidRef.current.value,
         'utmtype' : utmtypeRef.current.value,
@@ -183,20 +210,11 @@ const onSubmit = (formData, e) => {
         'utmsource' : utmsourceRef.current.value,
         'utmcontent' : utmcontentRef.current.value,
         'gclid' : gclidRef.current.value,
+        'fbclid' : fbclidRef.current.value,
         'gaclientid' : gaclientidRef.current.value,
         'keyword' : keywordRef.current.value,
-        'jornaya': jornaya
-      });
-    
-      
-      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
-        method: "POST",
-        body: JSON.stringify({
-          "formdata" : formData,
-          "jornaya": jornaya,
-          "carrier" : prov,
-          "plan": plan,
-          "monthly_premium": premium
+        'jornaya': jornaya,
+        'tt': trustedRef.current.value
         })
         
       })
@@ -209,7 +227,7 @@ const onSubmit = (formData, e) => {
         
         window.location.reload(true);
       
-      }, 1000);
+      }, 2000);
 
     }
   
@@ -265,12 +283,13 @@ const onSubmit = (formData, e) => {
 <input hidden id="user-agent" ref={useragentRef}/>
 <input hidden id="content-id" ref={contentidRef}/>
 <input hidden id="gclid" ref={gclidRef}/>
+<input hidden id="fbclid" ref={fbclidRef}/>
 <input hidden id="ga-client-id" ref={gaclientidRef}/>
 <input hidden id="keyword" ref={keywordRef}/>
 <input hidden id="leadid_token" name="universal_leadid" value="" />
 <input hidden id="leadid_tcpa_disclosure" /><label hidden for="leadid_tcpa_disclosure">By clicking the button above, you provide your signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.</label>
 
-{/* <input hidden id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" value="" /> */}
+<input hidden id="xxTrustedFormCertUrl"  name="xxTrustedFormCertUrl" value="" ref={trustedRef}/>
 {/* visible fields */}
                   <TextField
                     name="firstName"
