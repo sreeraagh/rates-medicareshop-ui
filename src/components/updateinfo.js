@@ -126,9 +126,9 @@ const onSubmit = (formData, e) => {
       leadCheck = actualData.response[0].message;
       console.log(leadCheck, actualData);
       if ( leadCheck === 'lead is not a duplicate' && (userage >= 64.5 && userage < 80.0 ) ) {
-        leadStatus = "Unique";
+        leadStatus = "uniqueLead";
       } else{
-        leadStatus = "Duplicate";
+        leadStatus = "duplicateLead";
       }
       console.log(leadStatus);
     })
@@ -176,6 +176,7 @@ const onSubmit = (formData, e) => {
 
       window.dataLayer.push({
         'event': leadStatus,
+        "age": userage,
         'value': formData,
         'utmterm' : utmtermRef.current.value,
         'utmtype' : utmtypeRef.current.value,
