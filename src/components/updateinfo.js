@@ -75,30 +75,64 @@ const keywordRef = useRef();
 
 const onSubmit = (formData, e) => {    
     
-
-// let utmterm = utmtermRef.current.value;
-// let termid = termidRef.current.value;
-// let campaignid = campaignidRef.current.value;
-// let useragent = useragentRef.current.value;
-// let contentid = contentidRef.current.value;
-// let utmtype = utmtypeRef.current.value;
-// let utmcampaign = utmcampaignRef.current.value;
-// let utmsource = utmsourceRef.current.value;
-// let utmcontent = utmcontentRef.current.value;
-// let gclid = gclidRef.current.value;
-// let gaclientid = gaclientidRef.current.value;
-// let keyword = keywordRef.current.value;
-  
     e.preventDefault();
-    setOpensub(!opensub);
+   setOpensub(!opensub);
     let userinfo = formData;
     
      if (Object.keys(userinfo).length > 0) {
-  
-
       
-      let jornaya = cookies.get('leadid_token-3F0C70E5-D003-207E-F402-F3F9F66871E5-385552C3-81F8-6A67-A115-A339DECC3A60');
+      var date = new Date();
+      var d2 = date.getDate();
+      var m2 = 1 + date.getMonth();
+      var y2 = date.getFullYear();
+      var months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      
+      if(day > d2){
+          d2 = d2 + months[m2 - 1];
+          m2 = m2 - 1;
+      }
+      
+      if(month > m2){
+          m2 = m2 + 12;
+          y2 = y2 - 1;
+      }
+        
+      // var d = d2 - day;
+      var m = m2 - month;
+      var y = y2 - year;
+      
+      var userage = y+"."+m;
+
+      var userphone = formData.phone.replace(/[- )(]/g,'');
+
+      console.log(userage, userphone);
+
+     let leadCheck;
+     let leadStatus; 
           
+    fetch(`https://login.leadapache.com/new_api/api.php?Key=35d5acb63bde0fe556c32c657d153b522157974320635bf3216b6d3e2232706a&API_Action=customDuplicateCheck&TYPE=24&Primary_Phone=${userphone}&Format=JSON`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `This is an HTTP error: The status is ${response.status}`
+        );
+      }
+      return response.json();
+    })
+    .then((actualData) => { 
+      leadCheck = actualData.response[0].message;
+      console.log(leadCheck, actualData);
+      if ( leadCheck === 'lead is not a duplicate' && (userage >= 64.5 && userage < 80.0 ) ) {
+        leadStatus = "Unique";
+      } else{
+        leadStatus = "Duplicate";
+      }
+      console.log(leadStatus);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+
       // let gdob = year + month + day;
       // let gphone = "1"+formData.phone;
       // let fgender = formData.gender;
@@ -124,17 +158,20 @@ const onSubmit = (formData, e) => {
       var month_diff = Date.now() - udob.getTime();
       var age_dt = new Date(month_diff); 
       var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
-
+      
       localStorage.setItem('user', JSON.stringify(userinfo));
       localStorage.setItem('isuser', "Yes");
       localStorage.setItem('state', "");
-
       localStorage.setItem('age', uage);
+      
+      let jornaya = cookies.get('leadid_token-3F0C70E5-D003-207E-F402-F3F9F66871E5-385552C3-81F8-6A67-A115-A339DECC3A60');
+      
+    setTimeout(() => {
 
       window.dataLayer = window.dataLayer || [];
       
       window.dataLayer.push({
-        'event':'form-submitted',
+        'event': leadStatus,
         'value': formData,
         'utmterm' : utmtermRef.current.value,
         'termid' : termidRef.current.value,
@@ -164,15 +201,15 @@ const onSubmit = (formData, e) => {
         
       })
         .then(response => {
-          console.log(response);  
+          console.log(response); 
         })
         .catch(error  => {
           console.log(error);  
         })
-
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 1000);
+        
+        window.location.reload(true);
+      
+      }, 1000);
 
     }
   
