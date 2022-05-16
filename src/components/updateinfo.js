@@ -197,7 +197,7 @@ const onSubmit = (formData, e) => {
       });
     
       
-      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u`, {
+      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
         method: "POST",
         body: JSON.stringify({
         'event': leadStatus,
