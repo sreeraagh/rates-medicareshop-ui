@@ -468,7 +468,7 @@ const handleClosecheck = () => {
               onClick={() => handleClickOpen({ quote })}
               
             >
-              View Price
+              View My Price
             </Button>
             
     )}
