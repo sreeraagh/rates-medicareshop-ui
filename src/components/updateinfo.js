@@ -48,6 +48,7 @@ const contentidRef = useRef();
 const utmtypeRef = useRef();
 const utmcampaignRef = useRef();
 const utmsourceRef = useRef();
+const utmmediumRef = useRef();
 const utmcontentRef = useRef();
 const gclidRef = useRef();
 const fbclidRef = useRef();
@@ -180,6 +181,7 @@ const onSubmit = (formData, e) => {
         'utmtype' : utmtypeRef.current.value,
         'utmcampaign' : utmcampaignRef.current.value,
         'utmsource' : utmsourceRef.current.value,
+        'utmmedium' : utmmediumRef.current.value,
         'utmcontent' : utmcontentRef.current.value,
         'termid' : termidRef.current.value,
         'campaignid' : campaignidRef.current.value,
@@ -207,6 +209,7 @@ const onSubmit = (formData, e) => {
         'utmtype' : utmtypeRef.current.value,
         'utmcampaign' : utmcampaignRef.current.value,
         'utmsource' : utmsourceRef.current.value,
+        'utmmedium' : utmmediumRef.current.value,
         'utmcontent' : utmcontentRef.current.value,
         'gclid' : gclidRef.current.value,
         'fbclid' : fbclidRef.current.value,
@@ -276,6 +279,7 @@ const onSubmit = (formData, e) => {
 <input hidden id="utm-type" ref={utmtypeRef}/>
 <input hidden id="utm-campaign" ref={utmcampaignRef}/>
 <input hidden id="utm-source" ref={utmsourceRef}/>
+<input hidden id="utm-medium" ref={utmmediumRef}/>
 <input hidden id="utm-content" ref={utmcontentRef}/>
 <input hidden id="term-id" ref={termidRef} />
 <input hidden id="campaign-id" ref={campaignidRef}/>
