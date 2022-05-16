@@ -70,7 +70,7 @@ const trustedRef = useRef();
   };
 
   const icon = (
-    <Typography variant="caption">By clicking the button above, you provide your signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.
+    <Typography variant="caption">By clicking the button above, you provide your written signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or <a href="https://medicareshop.com/partners/">Companies</a> at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.
     </Typography>
   );
 
@@ -78,7 +78,7 @@ const trustedRef = useRef();
 const onSubmit = (formData, e) => {    
     
     e.preventDefault();
-      setOpensub(!opensub);
+     setOpensub(!opensub);
     let userinfo = formData;
     
      if (Object.keys(userinfo).length > 0) {
@@ -162,7 +162,7 @@ const onSubmit = (formData, e) => {
       var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
       
       localStorage.setItem('user', JSON.stringify(userinfo));
-     localStorage.setItem('isuser', "Yes");
+    localStorage.setItem('isuser', "Yes");
       localStorage.setItem('state', "");
       localStorage.setItem('age', uage);
       
@@ -195,7 +195,6 @@ const onSubmit = (formData, e) => {
     
       
       fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u`, {
-      
         method: "POST",
         body: JSON.stringify({
         'event': leadStatus,
@@ -287,7 +286,7 @@ const onSubmit = (formData, e) => {
 <input hidden id="ga-client-id" ref={gaclientidRef}/>
 <input hidden id="keyword" ref={keywordRef}/>
 <input hidden id="leadid_token" name="universal_leadid" value="" />
-<input hidden id="leadid_tcpa_disclosure" /><label hidden for="leadid_tcpa_disclosure">By clicking the button above, you provide your signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.</label>
+<input hidden id="leadid_tcpa_disclosure" /><label hidden for="leadid_tcpa_disclosure">By clicking the button above, you provide your written signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or Companies at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.</label>
 
 <input hidden id="xxTrustedFormCertUrl"  name="xxTrustedFormCertUrl" value="" ref={trustedRef}/>
 {/* visible fields */}
