@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 // import Input from '@mui/material/Input';
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
+
 import CloseIcon from '@mui/icons-material/Close';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -26,7 +27,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from "@mui/material/Dialog";
-
 
 
 export default function Updateinfo({ open, onClose, prov, plan, premium }) {
@@ -79,7 +79,7 @@ const trustedRef = useRef();
 const onSubmit = (formData, e) => {    
     
     e.preventDefault();
-     setOpensub(!opensub);
+    //  setOpensub(!opensub);
     let userinfo = formData;
     
      if (Object.keys(userinfo).length > 0) {
@@ -113,28 +113,28 @@ const onSubmit = (formData, e) => {
      let leadCheck;
      let leadStatus; 
           
-    fetch(`https://login.leadapache.com/new_api/api.php?Key=35d5acb63bde0fe556c32c657d153b522157974320635bf3216b6d3e2232706a&API_Action=customDuplicateCheck&TYPE=24&Primary_Phone=${userphone}&Format=JSON`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          `This is an HTTP error: The status is ${response.status}`
-        );
-      }
-      return response.json();
-    })
-    .then((actualData) => { 
-      leadCheck = actualData.response[0].message;
-      console.log(leadCheck, actualData);
-      if ( leadCheck === 'lead is not a duplicate' && (userage >= 64.5 && userage < 80.0 ) ) {
-        leadStatus = "uniqueLead";
-      } else{
-        leadStatus = "duplicateLead";
-      }
-      console.log(leadStatus);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+    // fetch(`https://login.leadapache.com/new_api/api.php?Key=35d5acb63bde0fe556c32c657d153b522157974320635bf3216b6d3e2232706a&API_Action=customDuplicateCheck&TYPE=24&Primary_Phone=${userphone}&Format=JSON`)
+    // .then((response) => {
+    //   if (!response.ok) {
+    //     throw new Error(
+    //       `This is an HTTP error: The status is ${response.status}`
+    //     );
+    //   }
+    //   return response.json();
+    // })
+    // .then((actualData) => { 
+    //   leadCheck = actualData.response[0].message;
+    //   console.log(leadCheck, actualData);
+    //   if ( leadCheck === 'lead is not a duplicate' && (userage >= 64.5 && userage < 80.0 ) ) {
+    //     leadStatus = "uniqueLead";
+    //   } else{
+    //     leadStatus = "duplicateLead";
+    //   }
+    //   console.log(leadStatus);
+    // })
+    // .catch((err) => {
+    //   console.log(err.message);
+    // });
 
       // let gdob = year + month + day;
       // let gphone = "1"+formData.phone;
@@ -163,79 +163,129 @@ const onSubmit = (formData, e) => {
       var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
       
       localStorage.setItem('user', JSON.stringify(userinfo));
-    localStorage.setItem('isuser', "Yes");
+      // localStorage.setItem('isuser', "Yes");
       localStorage.setItem('state', "");
       localStorage.setItem('age', uage);
       
       let jornaya = cookies.get('leadid_token-3F0C70E5-D003-207E-F402-F3F9F66871E5-385552C3-81F8-6A67-A115-A339DECC3A60');
       
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      window.dataLayer = window.dataLayer || [];
+      // window.dataLayer = window.dataLayer || [];
      
+      // window.dataLayer.push({
+      //   'event': leadStatus,
+      //   "age": userage,
+      //   'value': formData,
+      //   'utm_term' : utmtermRef.current.value,
+      //   'utm_type' : utmtypeRef.current.value,
+      //   'utm_campaign' : utmcampaignRef.current.value,
+      //   'utm_source' : utmsourceRef.current.value,
+      //   'utm_medium' : utmmediumRef.current.value,
+      //   'utm_content' : utmcontentRef.current.value,
+      //   'term_id' : termidRef.current.value,
+      //   'campaign_id' : campaignidRef.current.value,
+      //   'content_id' : contentidRef.current.value,
+      //   'gclid' : gclidRef.current.value,
+      //   'fbclid' : fbclidRef.current.value,
+      //   'gaclient_id' : gaclientidRef.current.value,
+      //   'keyword' : keywordRef.current.value,
+      //   'useragent' : useragentRef.current.value,
+      //   'jornaya': jornaya,
+      //   'tt': trustedRef.current.value
+      // });
 
-      window.dataLayer.push({
-        'event': leadStatus,
-        "age": userage,
-        'value': formData,
-        'utm_term' : utmtermRef.current.value,
-        'utm_type' : utmtypeRef.current.value,
-        'utm_campaign' : utmcampaignRef.current.value,
-        'utm_source' : utmsourceRef.current.value,
-        'utm_medium' : utmmediumRef.current.value,
-        'utm_content' : utmcontentRef.current.value,
-        'term_id' : termidRef.current.value,
-        'campaign_id' : campaignidRef.current.value,
-        'content_id' : contentidRef.current.value,
-        'gclid' : gclidRef.current.value,
-        'fbclid' : fbclidRef.current.value,
-        'gaclient_id' : gaclientidRef.current.value,
-        'keyword' : keywordRef.current.value,
-        'useragent' : useragentRef.current.value,
-        'jornaya': jornaya,
-        'tt': trustedRef.current.value
-      });
+      // let firstname = formData.firstName;
+      // let lastname = formData.lastName;
+      // let email = formData.email;
     
-      
-      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
-        method: "POST",
-        body: JSON.stringify({
-        'event': leadStatus,
-          'value': formData,
-          'utm_term' : utmtermRef.current.value,
-          'term_id' : termidRef.current.value,
-          'campaign_id' : campaignidRef.current.value,
-        'useragent' : useragentRef.current.value,
-        'content_id' : contentidRef.current.value,
-        'utm_type' : utmtypeRef.current.value,
-        'utm_campaign' : utmcampaignRef.current.value,
-        'utm_source' : utmsourceRef.current.value,
-        'utm_medium' : utmmediumRef.current.value,
-        'utm_content' : utmcontentRef.current.value,
-        'gclid' : gclidRef.current.value,
-        'fbclid' : fbclidRef.current.value,
-        'gaclient_id' : gaclientidRef.current.value,
-        'keyword' : keywordRef.current.value,
-        'jornaya': jornaya,
-        'tt': trustedRef.current.value
-        })
-        
+      console.log(formData.firstName, formData.lastName, formData.email, userphone);
+
+       fetch(`https://webgwy.neustar.biz/v2/access/query`, {
+        method: "GET",
+        header: {
+          'Authorization': 'Basic SmVyYURlbW86d3p2NDNeUTk=',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        data: {
+          "timeoutms": 10000,
+          "sid": "7507103359",
+          "elems": [
+            "3226"
+          ],
+          "queries": [
+            {
+              "875": `<Contact><Names><Name type="C"><First>${formData.firstName}</First><Last>${formData.lastName}</Last></Name></Names><Phones><Phone score="1" appends="validation,active,daconnected">${userphone}</Phone></Phones><eMailAddresses><eMail score="1" appends="validation">${formData.email}</eMail></eMailAddresses></Contact>`
+            }
+          ]
+        }
+      }).then(response => {
+        console.log(response);
+        console.log(response.json()); 
       })
-        .then(response => {
-          console.log(response); 
-        })
-        .catch(error  => {
-          console.log(error);  
-        })
-        
-        window.location.reload(true);
+      .catch(error  => {
+        console.log(error);  
+      })
       
-      }, 2000);
+
+
+  //   const getNeustar = async () => {  
+
+  //   try {
+  //     //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
+  //     const response = await fetch(`http://localhost:5000/neustar/${firstname}/${lastname}/${userphone}/${email}`);
+  //     let actualData = await response.json();
+  //     console.log(actualData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // getNeustar();
+
+
+
+
+
+
+      // fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //   'event': leadStatus,
+      //     'value': formData,
+      //     'utm_term' : utmtermRef.current.value,
+      //     'term_id' : termidRef.current.value,
+      //     'campaign_id' : campaignidRef.current.value,
+      //   'useragent' : useragentRef.current.value,
+      //   'content_id' : contentidRef.current.value,
+      //   'utm_type' : utmtypeRef.current.value,
+      //   'utm_campaign' : utmcampaignRef.current.value,
+      //   'utm_source' : utmsourceRef.current.value,
+      //   'utm_medium' : utmmediumRef.current.value,
+      //   'utm_content' : utmcontentRef.current.value,
+      //   'gclid' : gclidRef.current.value,
+      //   'fbclid' : fbclidRef.current.value,
+      //   'gaclient_id' : gaclientidRef.current.value,
+      //   'keyword' : keywordRef.current.value,
+      //   'jornaya': jornaya,
+      //   'tt': trustedRef.current.value
+      //   })
+        
+      // })
+      //   .then(response => {
+      //     console.log(response); 
+      //   })
+      //   .catch(error  => {
+      //     console.log(error);  
+      //   })
+        
+        // window.location.reload(true);
+      
+      // }, 2000);
 
     }
-  
-  
-  };
+};
 
 
   return (
