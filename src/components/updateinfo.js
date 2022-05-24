@@ -201,33 +201,63 @@ const onSubmit = (formData, e) => {
     
       console.log(formData.firstName, formData.lastName, formData.email, userphone);
 
-       fetch(`https://webgwy.neustar.biz/v2/access/query`, {
-        method: "GET",
-        header: {
-          'Authorization': 'Basic SmVyYURlbW86d3p2NDNeUTk=',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        data: {
-          "timeoutms": 10000,
-          "sid": "7507103359",
-          "elems": [
-            "3226"
-          ],
-          "queries": [
-            {
-              "875": `<Contact><Names><Name type="C"><First>${formData.firstName}</First><Last>${formData.lastName}</Last></Name></Names><Phones><Phone score="1" appends="validation,active,daconnected">${userphone}</Phone></Phones><eMailAddresses><eMail score="1" appends="validation">${formData.email}</eMail></eMailAddresses></Contact>`
-            }
-          ]
-        }
-      }).then(response => {
-        console.log(response);
-        console.log(response.json()); 
-      })
-      .catch(error  => {
-        console.log(error);  
-      })
+      //  fetch(`https://webgwy.neustar.biz/v2/access/query`, {
+      //   method: "GET",
+      //   header: {
+      //     'Authorization': 'Basic SmVyYURlbW86d3p2NDNeUTk=',
+      //     'Content-Type': 'application/json',
+      //     'Accept': 'application/json'
+      //   },
+      //   data: {
+      //     "timeoutms": 10000,
+      //     "sid": "7507103359",
+      //     "elems": [
+      //       "3226"
+      //     ],
+      //     "queries": [
+      //       {
+      //         "875": `<Contact><Names><Name type="C"><First>${formData.firstName}</First><Last>${formData.lastName}</Last></Name></Names><Phones><Phone score="1" appends="validation,active,daconnected">${userphone}</Phone></Phones><eMailAddresses><eMail score="1" appends="validation">${formData.email}</eMail></eMailAddresses></Contact>`
+      //       }
+      //     ]
+      //   }
+      // }).then(response => {
+      //   console.log(response);
+      //   console.log(response.json()); 
+      // })
+      // .catch(error  => {
+      //   console.log(error);  
+      // })
       
+
+      var myHeaders = new Headers();
+myHeaders.append("Accept", "application/json");
+myHeaders.append("Authorization", "Basic SmVyYURlbW86d3p2NDNeUTk=");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  "timeoutms": 10000,
+  "sid": "7507103359",
+  "elems": [
+    "3226"
+  ],
+  "queries": [
+    {
+      "875": "<Contact><Names><Name type=\"C\"><First>Lauren</First><Last>Illiucci</Last></Name></Names><Phones><Phone score=\"1\" appends=\"validation,daconnected,active\">3055875921</Phone></Phones><eMailAddresses><eMail score=\"1\" appends=\"validation\">teset@test.com</eMail></eMailAddresses></Contact>"
+    }
+  ]
+});
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://webgwy.neustar.biz/v2/access/query", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 
 
   //   const getNeustar = async () => {  
