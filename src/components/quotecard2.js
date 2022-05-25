@@ -118,10 +118,12 @@ const handleClosecheck = () => {
   const prov = quote.company_base.name_full.toLowerCase();
   let plogo;
   
-
+  const userTries = localStorage.getItem('userTries');
+  const isuser = localStorage.getItem('isuser');
 
   useEffect(() => {
-  if(localStorage.getItem('isuser') === "Yes") {
+    
+  if( isuser === "Yes" && (userTries === "" || userTries === null || userTries === undefined)) {
     setCheckbtn(true);
     setPricebtn(false);
   } else{

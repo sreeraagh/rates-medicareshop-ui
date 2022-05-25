@@ -73,8 +73,6 @@ const Home = () => {
       const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipstring}`);
       //const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
 
-      
-
       if (!response.ok) {
         throw new SyntaxError("Oops! Something went wrong. Try again later.");
       }
@@ -91,9 +89,9 @@ const Home = () => {
         
         setShow(false);
         
-        sessionStorage.setItem("plans", JSON.stringify(quoteData));
-        sessionStorage.setItem("zipcode", zipstring);
-        sessionStorage.setItem("state", quoteData[0].location_base.state);
+        localStorage.setItem("plans", JSON.stringify(quoteData));
+        localStorage.setItem("zipcode", zipstring);
+        localStorage.setItem("state", quoteData[0].location_base.state);
         
         // navigate("../plans", {
           //     state: { quoteData, zipstring, replace: true },

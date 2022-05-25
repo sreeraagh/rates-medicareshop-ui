@@ -35,7 +35,7 @@ const Plans = () => {
   //const { state } = useLocation();
 
   
-
+  const userTries = localStorage.getItem('userTries');
   const isuser = localStorage.getItem('isuser');
   const ischecked = localStorage.getItem('ischecked');
   const userdata =  JSON.parse(localStorage.getItem('user'));
@@ -79,6 +79,10 @@ const plansA = [
 
   useEffect (() => {
 
+   if (userTries === "2"){
+    navigate("/thankyou2"); 
+   } 
+
   if(ischecked === "Yes"){
     navigate("/thankyou");
   }
@@ -87,16 +91,15 @@ const plansA = [
       navigate("/");
     }
 
-    if(isuser === "Yes"){
+    if(isuser === "Yes" &&  (userTries === "" || userTries === null || userTries === undefined) ){
       userQuotes();
       setIsvisible(false);
       setZipcode(localStorage.getItem('zipcode'));
       setSt(localStorage.getItem('state'));
-      
     } else{
-      setQuotes(JSON.parse(sessionStorage.getItem('plans')));
-      setZipcode(sessionStorage.getItem('zipcode'));
-      setSt(sessionStorage.getItem('state'));
+      setQuotes(JSON.parse(localStorage.getItem('plans')));
+      setZipcode(localStorage.getItem('zipcode'));
+      setSt(localStorage.getItem('state'));
       //getPlans();
       
       setTimeout(() => {
@@ -348,9 +351,9 @@ const plansA = [
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          justifyContent: "flex-start",
-          paddingTop: "65px !important",
+          justifyContent: "flex-start",          
         }}
+        id="plans-header"
       >
         <Container maxWidth="md" id="info-cont">
           

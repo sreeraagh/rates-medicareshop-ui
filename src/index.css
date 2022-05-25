@@ -9,6 +9,10 @@ html{
   overflow: hidden;
 }
 
+#plans-header{
+  padding-top: 65px !important;
+}
+
 .app{
   background-color: #f5f5f5;
   scroll-behavior: smooth;
@@ -76,6 +80,9 @@ input::placeholder {
   margin-left: 0px !important;
 }
 
+.tq2-subhead, .tq2-head{
+  margin-bottom: 15px !important;
+}
 
 #solid-header{
   background: #fff;
@@ -239,6 +246,9 @@ input, textarea {
 /* div#ch-box {
   margin-bottom: 16px;
 } */
+
+
+
 #tq-sub1,#tq-sub2, #tq-sub3{
   width: 75%;
     max-width: 75%;
@@ -721,6 +731,10 @@ font-size: 18px !important;
   margin: 10px 0px;
 }
 
+.tq2-subhead{
+  width: 85% !important;
+}
+
 #tq-sub1,#tq-sub2, #tq-sub3{
   line-height: 1.5em;
   text-align: center;
@@ -801,6 +815,11 @@ h6#ui-head small {
 
 #tq-icon {
  display: block;
+}
+
+#useralert{
+  margin-top: -15px;
+  margin-bottom: 30px;
 }
 
 }

@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 // import Input from '@mui/material/Input';
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
+import { useNavigate } from "react-router";
 import CloseIcon from '@mui/icons-material/Close';
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -19,7 +19,8 @@ import InputMask from "react-input-mask";
 //import Collapse from '@mui/material/Collapse';
 import { useForm, Controller } from "react-hook-form";
 import FormHelperText from '@mui/material/FormHelperText';
-
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -32,8 +33,22 @@ import Dialog from "@mui/material/Dialog";
 export default function Updateinfo({ open, onClose, prov, plan, premium }) {
 
   const [opensub, setOpensub] = useState(false);
+  const [usererror, setUsererror] = useState(false);
+  const userTries = localStorage.getItem('userTries');
   const cookies = new Cookies();
-
+  
+  useEffect(()=> {
+    if(userTries === "1"){
+      setUsererror(true);
+      console.log(userTries);
+      
+    }
+  }, []);
+  
+  console.log(usererror);
+  const navigate = useNavigate();
+  
+  var XMLParser = require('react-xml-parser');
   const { register, handleSubmit, control, formState: { errors } } = useForm();
 
   const [month, setMonth] = useState('');
@@ -56,6 +71,8 @@ const gaclientidRef = useRef();
 const keywordRef = useRef();
 const trustedRef = useRef();
 
+const userAlert = useRef();
+
 
  
   const handleMonthChange = (event) => {
@@ -71,7 +88,7 @@ const trustedRef = useRef();
   };
 
   const icon = (
-    <Typography variant="caption">By clicking the button above, you provide your written signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or <a href="https://medicareshop.com/partners/">Companies</a> at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.
+    <Typography variant="caption" sx={{pb:1}}>By clicking the button above, you provide your written signature expressly consenting to receive communications via live telephone, an automatic dialing system, pre-recorded message, or text message from Jera Marketing Solutions, LLC or its subsidiaries, affiliates, or <a href="https://medicareshop.com/partners/">Companies</a> at the telephone number provided including your wireless number (if provided) as well as via email regarding your health insurance options including Medicare Supplement Insurance, Medicare Advantage, and/or Medicare Part D. Your consent to receive communications in this way is not required as a condition of purchasing any goods or services. Your telephone company may impose additional charges for text messages, and you may revoke your consent at any time through any reasonable manner. You acknowledge that you have read and understand the Privacy Policy of this site.
     </Typography>
   );
 
@@ -79,7 +96,7 @@ const trustedRef = useRef();
 const onSubmit = (formData, e) => {    
     
     e.preventDefault();
-    //  setOpensub(!opensub);
+     setOpensub(!opensub);
     let userinfo = formData;
     
      if (Object.keys(userinfo).length > 0) {
@@ -113,28 +130,7 @@ const onSubmit = (formData, e) => {
      let leadCheck;
      let leadStatus; 
           
-    // fetch(`https://login.leadapache.com/new_api/api.php?Key=35d5acb63bde0fe556c32c657d153b522157974320635bf3216b6d3e2232706a&API_Action=customDuplicateCheck&TYPE=24&Primary_Phone=${userphone}&Format=JSON`)
-    // .then((response) => {
-    //   if (!response.ok) {
-    //     throw new Error(
-    //       `This is an HTTP error: The status is ${response.status}`
-    //     );
-    //   }
-    //   return response.json();
-    // })
-    // .then((actualData) => { 
-    //   leadCheck = actualData.response[0].message;
-    //   console.log(leadCheck, actualData);
-    //   if ( leadCheck === 'lead is not a duplicate' && (userage >= 64.5 && userage < 80.0 ) ) {
-    //     leadStatus = "uniqueLead";
-    //   } else{
-    //     leadStatus = "duplicateLead";
-    //   }
-    //   console.log(leadStatus);
-    // })
-    // .catch((err) => {
-    //   console.log(err.message);
-    // });
+    
 
       // let gdob = year + month + day;
       // let gphone = "1"+formData.phone;
@@ -163,156 +159,158 @@ const onSubmit = (formData, e) => {
       var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
       
       localStorage.setItem('user', JSON.stringify(userinfo));
-      // localStorage.setItem('isuser', "Yes");
-      localStorage.setItem('state', "");
+      localStorage.setItem('isuser', "Yes");
+      // localStorage.setItem('state', "");
       localStorage.setItem('age', uage);
       
-      let jornaya = cookies.get('leadid_token-3F0C70E5-D003-207E-F402-F3F9F66871E5-385552C3-81F8-6A67-A115-A339DECC3A60');
+    let jornaya = cookies.get('leadid_token-3F0C70E5-D003-207E-F402-F3F9F66871E5-385552C3-81F8-6A67-A115-A339DECC3A60');
       
-    // setTimeout(() => {
+    let neustarData;
+    let firstname = formData.firstName;
+    let lastname = formData.lastName;
+    let email = formData.email;
 
-      // window.dataLayer = window.dataLayer || [];
+    let phoneActive;
+    let phoneScore;
+  
+    const getNeustar = async () => { 
+    try {
+      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
+      const response = await fetch(`https://mnw-server.herokuapp.com/neustar/${firstname}/${lastname}/${userphone}/${email}`);
+      
+      neustarData = await response.json();
+
+      // console.log(neustarData);
+      // console.log(neustarData.xgdresponse.errorcode[0]);
+      // console.log(neustarData.xgdresponse.response[0].result[0].value[0]);
+      
+      var xmlText = neustarData.xgdresponse.response[0].result[0].value[0];
+
+      var xml = new XMLParser().parseFromString(xmlText);    // Assume xmlText contains the example XML
+
+      phoneActive = xml.children[2].children[0].attributes.active;
+      phoneScore = parseInt(xml.children[2].children[0].attributes.score);
+      console.log(xml, phoneActive, phoneScore);
+      
+      if ( phoneActive === "1" && phoneScore > 50){
+      localStorage.setItem('userTries', "");
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event': leadStatus,
+        "age": userage,
+        'value': formData,
+        'utm_term' : utmtermRef.current.value,
+        'utm_type' : utmtypeRef.current.value,
+        'utm_campaign' : utmcampaignRef.current.value,
+        'utm_source' : utmsourceRef.current.value,
+        'utm_medium' : utmmediumRef.current.value,
+        'utm_content' : utmcontentRef.current.value,
+        'term_id' : termidRef.current.value,
+        'campaign_id' : campaignidRef.current.value,
+        'content_id' : contentidRef.current.value,
+        'gclid' : gclidRef.current.value,
+        'fbclid' : fbclidRef.current.value,
+        'gaclient_id' : gaclientidRef.current.value,
+        'keyword' : keywordRef.current.value,
+        'useragent' : useragentRef.current.value,
+        'jornaya': jornaya,
+        'tt': trustedRef.current.value
+      });
+
+      fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
+        method: "POST",
+        body: JSON.stringify({
+        'event': leadStatus,
+          'value': formData,
+          'utm_term' : utmtermRef.current.value,
+          'term_id' : termidRef.current.value,
+          'campaign_id' : campaignidRef.current.value,
+        'useragent' : useragentRef.current.value,
+        'content_id' : contentidRef.current.value,
+        'utm_type' : utmtypeRef.current.value,
+        'utm_campaign' : utmcampaignRef.current.value,
+        'utm_source' : utmsourceRef.current.value,
+        'utm_medium' : utmmediumRef.current.value,
+        'utm_content' : utmcontentRef.current.value,
+        'gclid' : gclidRef.current.value,
+        'fbclid' : fbclidRef.current.value,
+        'gaclient_id' : gaclientidRef.current.value,
+        'keyword' : keywordRef.current.value,
+        'jornaya': jornaya,
+        'tt': trustedRef.current.value
+        })
+        
+      })
+        .then(response => {
+          console.log(response); 
+        })
+        .catch(error  => {
+          console.log(error);  
+        })
+
+        setTimeout(() => { 
+          window.location.reload(true);
+        }, 2000);
+        
+      } else{
+        console.log('hello there');
+
+        const userTries = localStorage.getItem('userTries');
+
+        console.log(userTries);
+
+        if (userTries === undefined || userTries === null || userTries === ""){
+          localStorage.setItem('userTries', "1");
+          setUsererror(true);
+          setOpensub(opensub);
+          userAlert.current.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+        
+        if (userTries === "1"){
+          localStorage.setItem('userTries', "2");
+          navigate("/thankyou2");
+        }
+      }
      
-      // window.dataLayer.push({
-      //   'event': leadStatus,
-      //   "age": userage,
-      //   'value': formData,
-      //   'utm_term' : utmtermRef.current.value,
-      //   'utm_type' : utmtypeRef.current.value,
-      //   'utm_campaign' : utmcampaignRef.current.value,
-      //   'utm_source' : utmsourceRef.current.value,
-      //   'utm_medium' : utmmediumRef.current.value,
-      //   'utm_content' : utmcontentRef.current.value,
-      //   'term_id' : termidRef.current.value,
-      //   'campaign_id' : campaignidRef.current.value,
-      //   'content_id' : contentidRef.current.value,
-      //   'gclid' : gclidRef.current.value,
-      //   'fbclid' : fbclidRef.current.value,
-      //   'gaclient_id' : gaclientidRef.current.value,
-      //   'keyword' : keywordRef.current.value,
-      //   'useragent' : useragentRef.current.value,
-      //   'jornaya': jornaya,
-      //   'tt': trustedRef.current.value
-      // });
-
-      // let firstname = formData.firstName;
-      // let lastname = formData.lastName;
-      // let email = formData.email;
-    
-      console.log(formData.firstName, formData.lastName, formData.email, userphone);
-
-      //  fetch(`https://webgwy.neustar.biz/v2/access/query`, {
-      //   method: "GET",
-      //   header: {
-      //     'Authorization': 'Basic SmVyYURlbW86d3p2NDNeUTk=',
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/json'
-      //   },
-      //   data: {
-      //     "timeoutms": 10000,
-      //     "sid": "7507103359",
-      //     "elems": [
-      //       "3226"
-      //     ],
-      //     "queries": [
-      //       {
-      //         "875": `<Contact><Names><Name type="C"><First>${formData.firstName}</First><Last>${formData.lastName}</Last></Name></Names><Phones><Phone score="1" appends="validation,active,daconnected">${userphone}</Phone></Phones><eMailAddresses><eMail score="1" appends="validation">${formData.email}</eMail></eMailAddresses></Contact>`
-      //       }
-      //     ]
-      //   }
-      // }).then(response => {
-      //   console.log(response);
-      //   console.log(response.json()); 
-      // })
-      // .catch(error  => {
-      //   console.log(error);  
-      // })
-      
-
-      var myHeaders = new Headers();
-myHeaders.append("Accept", "application/json");
-myHeaders.append("Authorization", "Basic SmVyYURlbW86d3p2NDNeUTk=");
-myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({
-  "timeoutms": 10000,
-  "sid": "7507103359",
-  "elems": [
-    "3226"
-  ],
-  "queries": [
-    {
-      "875": "<Contact><Names><Name type=\"C\"><First>Lauren</First><Last>Illiucci</Last></Name></Names><Phones><Phone score=\"1\" appends=\"validation,daconnected,active\">3055875921</Phone></Phones><eMailAddresses><eMail score=\"1\" appends=\"validation\">teset@test.com</eMail></eMailAddresses></Contact>"
+    } catch (err) {
+      console.log(err);
     }
-  ]
-});
-
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("https://webgwy.neustar.biz/v2/access/query", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
-
-  //   const getNeustar = async () => {  
-
-  //   try {
-  //     //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
-  //     const response = await fetch(`http://localhost:5000/neustar/${firstname}/${lastname}/${userphone}/${email}`);
-  //     let actualData = await response.json();
-  //     console.log(actualData);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // getNeustar();
-
-
-
-
-
-
-      // fetch(`https://hooks.zapier.com/hooks/catch/3556959/b8xbj6u/`, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //   'event': leadStatus,
-      //     'value': formData,
-      //     'utm_term' : utmtermRef.current.value,
-      //     'term_id' : termidRef.current.value,
-      //     'campaign_id' : campaignidRef.current.value,
-      //   'useragent' : useragentRef.current.value,
-      //   'content_id' : contentidRef.current.value,
-      //   'utm_type' : utmtypeRef.current.value,
-      //   'utm_campaign' : utmcampaignRef.current.value,
-      //   'utm_source' : utmsourceRef.current.value,
-      //   'utm_medium' : utmmediumRef.current.value,
-      //   'utm_content' : utmcontentRef.current.value,
-      //   'gclid' : gclidRef.current.value,
-      //   'fbclid' : fbclidRef.current.value,
-      //   'gaclient_id' : gaclientidRef.current.value,
-      //   'keyword' : keywordRef.current.value,
-      //   'jornaya': jornaya,
-      //   'tt': trustedRef.current.value
-      //   })
+    };
+    
+   
+    fetch(`https://login.leadapache.com/new_api/api.php?Key=35d5acb63bde0fe556c32c657d153b522157974320635bf3216b6d3e2232706a&API_Action=customDuplicateCheck&TYPE=24&Primary_Phone=${userphone}&Format=JSON`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `This is an HTTP error: The status is ${response.status}`
+        );
+      }
+      return response.json();
+    })
+    .then((actualData) => { 
+      leadCheck = actualData.response[0].message;
+      console.log(leadCheck, actualData);
+      if ( leadCheck === 'lead is not a duplicate' && (userage >= 64.5 && userage < 80.0 ) ) {
+        leadStatus = "uniqueLead";
+        getNeustar();
+      } else{
+        leadStatus = "duplicateLead";
         
-      // })
-      //   .then(response => {
-      //     console.log(response); 
-      //   })
-      //   .catch(error  => {
-      //     console.log(error);  
-      //   })
+        setTimeout(() => { 
+          window.location.reload(true);
+        }, 2000);
         
-        // window.location.reload(true);
-      
-      // }, 2000);
+      }
+      console.log(leadStatus);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  
+
+    // setTimeout(() => { 
+    //   window.location.reload(true);
+    // }, 2000);
 
     }
 };
@@ -340,19 +338,27 @@ fetch("https://webgwy.neustar.biz/v2/access/query", requestOptions)
 
             </Stack>
 
+            {usererror && (
+            <Stack direction="row" sx={{mt:2, width: "100%"}} ref={userAlert} id="useralert">
+            <Alert severity="error" sx={{width: "100%"}}>
+            <AlertTitle>Your information could not be validated.</AlertTitle>
+               You have <strong>1 final attempt remaining.</strong>
+            </Alert>
+            </Stack>
+            )}
 
             <Box
               component="form"
               id="ui-formwrap"
               noValidate
               onSubmit={handleSubmit(onSubmit)}
-              sx={{ mt: 3 }}
+              sx={{ mt: 2 }}
             >
 
               {/* <Grid container id="gtm-inputs-wrap">
              
               </Grid> */}
-
+              
               <Grid container spacing={3} id="ui-form">
               
                 <Grid item xs={12} sm={6} id="uiform-field">

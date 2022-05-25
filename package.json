@@ -1,7 +1,6 @@
 {
   "name": "client",
   "version": "0.1.0",
-  
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.1",
@@ -24,6 +23,7 @@
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "react-xml-parser": "^1.1.8",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
