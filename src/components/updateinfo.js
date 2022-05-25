@@ -175,8 +175,7 @@ const onSubmit = (formData, e) => {
   
     const getNeustar = async () => { 
     try {
-      //const response = await fetch(`https://mnw-server.herokuapp.com/weather/plans/${zipcode}/${st}`);
-      const response = await fetch(`https://mnw-server.herokuapp.com/neustar/${firstname}/${lastname}/${userphone}/${email}`);
+      const response = await fetch(`https://medicareshop-server.herokuapp.com/neustar/${firstname}/${lastname}/${userphone}/${email}`);
       
       neustarData = await response.json();
 
