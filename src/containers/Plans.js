@@ -347,13 +347,13 @@ const plansA = [
         sx={{
           backgroundColor: "#f0f0f0",
           flexGrow: 1,
-          height: "100vh",
+          height: "auto",
           overflow: "auto",
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
           justifyContent: "flex-start",
-          paddingTop: "10px"
+          paddingTop: "65px"
         }}
         
       >

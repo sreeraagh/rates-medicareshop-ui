@@ -13,8 +13,10 @@ html{
 .app{
   background-color: #f5f5f5;
   scroll-behavior: smooth;
- display: flex;
- flex-direction: column; 
+  display: flex;
+  flex-direction: column; 
+  height: 100vh;
+  overflow: auto;
 }
 
 #seemyquotes-btn:hover{
@@ -822,9 +824,7 @@ h6#ui-head small {
   margin-bottom: 30px;
 }
 
-#plans-main{
-  padding-top: 80px !important;
-}
+
 
 }
 
