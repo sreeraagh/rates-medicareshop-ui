@@ -342,11 +342,12 @@ const plansA = [
     <>
     <ResponsiveAppBar />
       <Box
+        id="plans-main"
         component="main"
         sx={{
           backgroundColor: "#f0f0f0",
           flexGrow: 1,
-          height: "calc(100vh - 65px)",
+          height: "100vh",
           overflow: "auto",
           display: "flex",
           alignItems: "center",

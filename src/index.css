@@ -86,8 +86,7 @@ input::placeholder {
 
 #solid-header{
   background: #fff;
-  position: sticky;
-  position: -webkit-sticky;
+  position: fixed;
   top: 0;
   z-index: 99;
 } 
@@ -821,6 +820,10 @@ h6#ui-head small {
 #useralert{
   margin-top: -15px;
   margin-bottom: 30px;
+}
+
+#plans-main{
+  padding-top: 80px !important;
 }
 
 }
