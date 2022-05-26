@@ -346,7 +346,7 @@ const plansA = [
         sx={{
           backgroundColor: "#f0f0f0",
           flexGrow: 1,
-          height: "100vh",
+          height: "calc(100vh - 65px)",
           overflow: "auto",
           display: "flex",
           alignItems: "center",
