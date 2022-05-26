@@ -11,12 +11,9 @@ html{
 
 
 .app{
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
   scroll-behavior: smooth;
-  display: flex;
-  flex-direction: column; 
-  height: 100vh;
-  overflow: auto;
+  
 }
 
 #seemyquotes-btn:hover{
@@ -88,7 +85,7 @@ input::placeholder {
 
 #solid-header{
   background: #fff;
-  position: relative;
+  position: fixed;
   top: 0;
   z-index: 99;
 } 
@@ -104,6 +101,16 @@ form#ui-formwrap {
   color: #d32f2f;
   line-height: normal;
 }
+
+#plans-main{
+    position: fixed;
+    width: 100%;
+    background: #f0f0f0;
+    top: 65px;
+    height: 100vh;
+    overflow: auto;
+}
+
 
 #act_wrap .MuiAlert-icon,
  #plans_error .MuiAlert-icon,

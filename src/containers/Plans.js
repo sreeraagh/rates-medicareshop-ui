@@ -344,18 +344,6 @@ const plansA = [
       <Box
         id="plans-main"
         component="main"
-        sx={{
-          backgroundColor: "#f0f0f0",
-          flexGrow: 1,
-          height: "auto",
-          overflow: "auto",
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          // paddingTop: "65px"
-        }}
-        
       >
         <Container maxWidth="md" id="info-cont">
           
