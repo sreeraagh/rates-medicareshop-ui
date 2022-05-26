@@ -353,7 +353,7 @@ const plansA = [
           alignItems: "center",
           flexDirection: "column",
           justifyContent: "flex-start",
-          paddingTop: "65px"
+          // paddingTop: "65px"
         }}
         
       >
