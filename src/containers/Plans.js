@@ -353,7 +353,7 @@ const plansA = [
           flexDirection: "column",
           justifyContent: "flex-start",          
         }}
-        id="plans-header"
+        
       >
         <Container maxWidth="md" id="info-cont">
           
