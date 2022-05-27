@@ -280,7 +280,6 @@ const onSubmit = (formData, e) => {
     }
     };
     
-   
     fetch(`https://login.leadapache.com/new_api/api.php?Key=35d5acb63bde0fe556c32c657d153b522157974320635bf3216b6d3e2232706a&API_Action=customDuplicateCheck&TYPE=24&Primary_Phone=${userphone}&Format=JSON`)
     .then((response) => {
       if (!response.ok) {
@@ -311,6 +310,7 @@ const onSubmit = (formData, e) => {
       console.log(err.message);
     });
   
+    
 
     // setTimeout(() => { 
     //   window.location.reload(true);

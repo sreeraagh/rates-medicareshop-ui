@@ -120,6 +120,15 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
 
       let finalcheck = JSON.parse(localStorage.getItem('checkinfo'));
 
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        "event" : "Checkout click",
+        "value": checkinfo,
+        "carrier" : prov,
+        "plan": plan,
+        "monthly_premium": premium
+      })
+
 
       fetch(`https://hooks.zapier.com/hooks/catch/3556959/bzqc6l0/`, {
         method: "POST",
