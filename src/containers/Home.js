@@ -377,21 +377,21 @@ const Home = () => {
   </Typography> */}
 
   <div className="videoWrapper">
-    <iframe
+    {/* <iframe
       title="med-video"
       className="ms-iframe"      
       src="https://player.vimeo.com/video/714551607?h=bae5701741&badge=0&autoplay=1&loop=1&player_id=0&app_id=58479"
       frameBorder="1"
       allow="autoplay"
       allowFullScreen
-    ></iframe>
-    {/* <iframe className="ms-iframe" 
+    ></iframe> */}
+    <iframe className="ms-iframe" 
     src="https://www.youtube.com/embed/eX_6Kyqu6Q0?controls=0" 
     title="med-video"
     frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
     allowfullscreen>
-    </iframe> */}
+    </iframe>
   </div>
 </Stack>
 </Box>
