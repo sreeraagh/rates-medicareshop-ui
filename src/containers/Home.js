@@ -362,34 +362,37 @@ const Home = () => {
             </Zoom>
           )}
         </Box>
-      </Container>
 
-
-  <Container maxWidth="md" sx={{pb:6}} id="home-second">
+        <Box maxWidth="md" sx={{pb:6}} id="home-second">
       <Stack
   direction="column"
   sx={{  mb: 6, alignItems: "center" }}
   spacing={2}
   id="vid-wrap"
 >
-  <Typography variant="subtitle1" id="tq-sub3" sx={{mt:0}}>
+  {/* <Typography variant="subtitle1" id="tq-sub3" sx={{mt:0}}>
     If you have a moment, we encourage you to take a couple
     minutes and watch the video below to learn how to make the
     best decision on purchasing a medigap plan.
-  </Typography>
+  </Typography> */}
 
   <div className="videoWrapper">
     <iframe
       title="med-video"
-      className="ms-iframe"
-      src="https://player.vimeo.com/video/675905157?h=2e17b32375"
-      frameBorder="0"
+      className="ms-iframe"      
+      src="https://player.vimeo.com/video/714551607?h=bae5701741&badge=0&autoplay=1&loop=1&player_id=0&app_id=58479"
+      frameBorder="1"
       allow="autoplay"
       allowFullScreen
     ></iframe>
   </div>
 </Stack>
-</Container>
+</Box>
+
+      </Container>
+
+
+ 
     </Box>
     </>
   );

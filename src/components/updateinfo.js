@@ -300,9 +300,9 @@ const onSubmit = (formData, e) => {
         leadStatus = "duplicateLead";
         const stt = localStorage.getItem("state");
         console.log(stt);
-        // setTimeout(() => { 
-        //   window.location.reload(true);
-        // }, 2000);
+        setTimeout(() => { 
+          window.location.reload(true);
+        }, 2000);
         
       }
       console.log(leadStatus);
