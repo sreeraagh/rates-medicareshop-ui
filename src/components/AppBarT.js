@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 //import Tooltip from "@mui/material/Tooltip";
 //import MenuItem from "@mui/material/MenuItem";
-import Logo from "../assets/medicareshop-tlogo.png";
+import Logo from "../assets/ms-logo.jpeg";
 import { Stack } from "@mui/material";
 
 const ResponsiveAppBarT = () => {
@@ -35,8 +35,8 @@ const ResponsiveAppBarT = () => {
          
 
          
-            <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#fff"}}>
-               <Typography color="common.white" variant="subtitle1">
+            <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#000"}}>
+               <Typography  color="text.secondary" variant="subtitle1">
                 Need Help?
                 </Typography>
             <Button size="large" variant="outlined" color="inherit" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>

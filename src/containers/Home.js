@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 //import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PinDropIcon from '@mui/icons-material/PinDrop';
+import Stack from "@mui/material/Stack";
 import InputAdornment from '@mui/material/InputAdornment';
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -13,11 +14,11 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
-import image from "../assets/background-img.jpg";
+// import image from "../assets/background-img.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CircularProgress from "@mui/material/CircularProgress";
 import Zoom from "@mui/material/Zoom";
-import ResponsiveAppBarT from "../components/AppBarT";
+import ResponsiveAppBar from "../components/AppBar";
 
 
 const Home = () => {
@@ -126,46 +127,49 @@ const Home = () => {
 
 
 
-  const styles = {
-    paperContainer: {
-      background: `url(${image}) rgba(0,0,0,0.7)`,
-      backgroundBlendMode: "multiply",
-      backgroundPosition: "top",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      width: "100%",
-      height: "100%",
-      maxWidth: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-    },
-  };
+  // const styles = {
+  //   paperContainer: {
+  //     // background: `url(${image}) rgba(0,0,0,0.7)`,
+  //     // backgroundBlendMode: "multiply",
+  //     // backgroundPosition: "top",
+  //     // backgroundRepeat: "no-repeat",
+  //     // backgroundSize: "cover",
+  //     backgroundColor: "#fff",
+  //     width: "100%",
+  //     height: "100%",
+  //     maxWidth: "100%",
+  //     display: "flex",
+  //     flexDirection: "column",
+  //     justifyContent: "center",
+  //   },
+  // };
 
   return (
 <>
-    <ResponsiveAppBarT/>
+    <ResponsiveAppBar/>
     <Box
+      id="plans-main"
       component="main"
-      sx={{
-        backgroundColor: "#f5f5f5",
-        flexGrow: 1,
-        height: "100vh",
-        overflow: "auto",
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
+      sx={{backgroundColor: "#fff !important"}}
+      // sx={{
+      //   backgroundColor: "#fff",
+      //   flexGrow: 1,
+      //   height: "100vh",
+      //   overflow: "auto",
+      //   display: "flex",
+      //   alignItems: "center",
+      //   flexDirection: "column",
         
-      }}
+      // }}
     >
-      <Container style={styles.paperContainer}>
+      <Container id="lp-home" >
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            mt: -4,
+            // mt: -4,
           }}
         >
           {loading ? (
@@ -175,12 +179,12 @@ const Home = () => {
               variant="h4"
               style={{
                 textAlign: "center",
-                color: "#fff",
-                fontWeight: 600,
+                color: "#4a4a4a",
+                fontWeight: 700,
               }}
               sx={{ mb: 2 }}
             >
-              Find the Best Medicare Supplement Insurance plans in your area.
+              Finally, You Can View Medicare Supplement Rates Online
             </Typography>
           ) : (
             <Skeleton
@@ -200,13 +204,12 @@ const Home = () => {
               variant="subtitle1"
               style={{
                 textAlign: "center",
-                color: "#fff",
+                color: "#4a4a4a",
                 fontWeight: 400,
               }}
               sx={{ mb: 3 }}
             >
-              Medicare Supplement Insurance (Medigap) is extra insurance you can
-              buy from a private company that helps pay your share of costs.
+              Let's get started by entering your Zip Code.
             </Typography>
           ) : (
             <Skeleton
@@ -272,7 +275,7 @@ const Home = () => {
                       variant="contained"
                       sx={{ height: "100%", width: "100%" }}
                     >
-                      Get Plans
+                      See Prices
                     </Button>
                   ) : (
                     <Skeleton
@@ -360,6 +363,33 @@ const Home = () => {
           )}
         </Box>
       </Container>
+
+
+  <Container maxWidth="md" sx={{pb:6}} id="home-second">
+      <Stack
+  direction="column"
+  sx={{  mb: 6, alignItems: "center" }}
+  spacing={2}
+  id="vid-wrap"
+>
+  <Typography variant="subtitle1" id="tq-sub3" sx={{mt:0}}>
+    If you have a moment, we encourage you to take a couple
+    minutes and watch the video below to learn how to make the
+    best decision on purchasing a medigap plan.
+  </Typography>
+
+  <div className="videoWrapper">
+    <iframe
+      title="med-video"
+      className="ms-iframe"
+      src="https://player.vimeo.com/video/675905157?h=2e17b32375"
+      frameBorder="0"
+      allow="autoplay"
+      allowFullScreen
+    ></iframe>
+  </div>
+</Stack>
+</Container>
     </Box>
     </>
   );

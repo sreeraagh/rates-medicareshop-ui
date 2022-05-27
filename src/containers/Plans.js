@@ -264,7 +264,8 @@ const plansA = [
       if (response.ok) {
         setIsloading(false);
         setShow(false);
-        setQuotes(quoteData);                  
+        setQuotes(quoteData);         
+        console.log(quoteData,quoteData[0].location_base.state);         
         setSt(quoteData[0].location_base.state);
         localStorage.setItem('state', quoteData[0].location_base.state);
         //getuserPlans();

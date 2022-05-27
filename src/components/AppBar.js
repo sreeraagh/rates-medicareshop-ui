@@ -14,7 +14,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 //import Tooltip from "@mui/material/Tooltip";
 //import MenuItem from "@mui/material/MenuItem";
-import Logo from "../assets/medicareshop-logo.png";
+import Logo from "../assets/ms-logo.jpeg";
 import { Stack } from "@mui/material";
 
 const ResponsiveAppBar = () => {

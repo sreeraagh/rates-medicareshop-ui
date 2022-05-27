@@ -153,15 +153,19 @@ const onSubmit = (formData, e) => {
       // let uage = Math.abs(uyear - 1970);
 
       
-      var udob = new Date(year, month, day);
-      var month_diff = Date.now() - udob.getTime();
-      var age_dt = new Date(month_diff); 
-      var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
+      // var udob = new Date(year, month, day);
+      // var month_diff = Date.now() - udob.getTime();
+      // var age_dt = new Date(month_diff); 
+      // var uage = Math.abs(age_dt.getUTCFullYear() - 1970);
       
-      localStorage.setItem('user', JSON.stringify(userinfo));
-      localStorage.setItem('isuser', "Yes");
-      // localStorage.setItem('state', "");
-      localStorage.setItem('age', uage);
+      // console.log(uage);
+
+    var uage = Math.round(userage);
+
+    localStorage.setItem('user', JSON.stringify(userinfo));
+    localStorage.setItem('isuser', "Yes");
+    // localStorage.setItem('state', "");
+    localStorage.setItem('age', uage);
       
     let jornaya = cookies.get('leadid_token-3F0C70E5-D003-207E-F402-F3F9F66871E5-385552C3-81F8-6A67-A115-A339DECC3A60');
       
@@ -294,10 +298,11 @@ const onSubmit = (formData, e) => {
         getNeustar();
       } else{
         leadStatus = "duplicateLead";
-        
-        setTimeout(() => { 
-          window.location.reload(true);
-        }, 2000);
+        const stt = localStorage.getItem("state");
+        console.log(stt);
+        // setTimeout(() => { 
+        //   window.location.reload(true);
+        // }, 2000);
         
       }
       console.log(leadStatus);
