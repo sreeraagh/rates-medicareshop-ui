@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router";
 import ResponsiveAppBar from "../components/AppBar";
 import Stack from "@mui/material/Stack";
@@ -28,10 +28,12 @@ import Quotecard2 from "../components/quotecard2";
 
 
 
-const Plans = () => {
+const Rates = () => {
 
   const navigate = useNavigate();
   
+
+
   //const { state } = useLocation();
 
   
@@ -40,6 +42,8 @@ const Plans = () => {
   const ischecked = localStorage.getItem('ischecked');
   const userdata =  JSON.parse(localStorage.getItem('user'));
   const userage =  localStorage.getItem('age');
+  
+  
   
 
   const [quotes, setQuotes] = useState([]);
@@ -73,12 +77,14 @@ const plansA = [
 
   let plan;
 
-
   let openfade = true;
   let openzoom = true;
   
 
-  useEffect (() => {
+  useEffect (() => { 
+
+    localStorage.setItem('plan', 'G');
+    
 
    if (userTries === "2"){
     navigate("/thankyou2"); 
@@ -92,22 +98,27 @@ const plansA = [
       navigate("/");
     }
 
+
     // if(isuser === "Yes" &&  (userTries === "" || userTries === null || userTries === undefined) ){
+    //     navigate("/plans");
+    // }
+
     if(isuser === "Yes" && userTries === "3") {
-      // userQuotes();
-      // setIsvisible(false);
-      // setZipcode(localStorage.getItem('zipcode'));
-      // setSt(localStorage.getItem('state'));
-      navigate("/rates");
-    } else{
-      setQuotes(JSON.parse(localStorage.getItem('plans')));
+      userQuotes();
+      setIsvisible(false);
       setZipcode(localStorage.getItem('zipcode'));
       setSt(localStorage.getItem('state'));
-      //getPlans();
+    } else{
+    //   setQuotes(JSON.parse(localStorage.getItem('plans')));
+    //   setZipcode(localStorage.getItem('zipcode'));
+    //   setSt(localStorage.getItem('state'));
+    //   //getPlans();
       
-      setTimeout(() => {
-        setSkeloading(true);
-      }, 300);
+    //   setTimeout(() => {
+    //     setSkeloading(true);
+    //   }, 300);
+
+    navigate("/plans");
       
     }
 
@@ -127,7 +138,9 @@ const plansA = [
     console.log(event.target.value);
     console.log(plan);
     setShow(false);
+    localStorage.setItem("plan", event.target.value);
     setIsloading(true);
+    
 
     if(isuser === "Yes"){
       userplanUpdate();
@@ -943,14 +956,14 @@ warrant the accuracy of the above market data.
       
       </Box>
 
-      <Updateinfo
+      {/* <Updateinfo
         open={openDialogName === "updateinfo"}
         onClose={handleClose}
         plan={plan}
-      />
+      /> */}
       
     </>
   );
 };
 
-export default Plans;
+export default Rates;

@@ -4,6 +4,7 @@ import { ThemeProvider } from "@mui/material";
 import customtheme from "../assets/theme";
 import Home from "./Home";
 import Plans from "./Plans";
+import Rates from "./Rates";
 import Thankyou from "./Thankyou";
 import Thankyou2 from "./Thankyou2";
 import TagManager from 'react-gtm-module';
@@ -26,6 +27,7 @@ const App = () => {
             <Route exact path="/plans" element={<Plans />} />
             <Route exact path="/thankyou" element={<Thankyou />} />
             <Route exact path="/thankyou2" element={<Thankyou2 />} />
+            <Route exact path="/rates" element={<Rates />} />
             <Route path="*" element={<Navigate to="/" replace />}/>
           </Routes>
         </div>

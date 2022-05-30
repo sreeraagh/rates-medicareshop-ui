@@ -5,9 +5,9 @@ import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 //import LocationOnIcon from '@mui/icons-material/LocationOn';
-import PinDropIcon from '@mui/icons-material/PinDrop';
+import PinDropIcon from "@mui/icons-material/PinDrop";
 import Stack from "@mui/material/Stack";
-import InputAdornment from '@mui/material/InputAdornment';
+import InputAdornment from "@mui/material/InputAdornment";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -20,9 +20,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Zoom from "@mui/material/Zoom";
 import ResponsiveAppBar from "../components/AppBar";
 
-
 const Home = () => {
-
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -35,23 +33,21 @@ const Home = () => {
   let open = true;
   let zipstring;
 
-
   useEffect(() => {
     const user = localStorage.getItem("isuser");
 
-    if(ischecked === "Yes"){
+    if (ischecked === "Yes") {
       navigate("/thankyou");
     }
 
     if (user === "Yes") {
       navigate("/plans");
-    } else{
+    } else {
       localStorage.setItem("isuser", "No");
-    }    
+    }
     if (user === "" || user === null || user === undefined) {
       localStorage.setItem("isuser", "No");
     }
-    
   }, []);
 
   const {
@@ -59,8 +55,7 @@ const Home = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
-  
+
   const fetchMyAPI = (data) => {
     zipstring = data["zip"];
     getQuotes();
@@ -70,8 +65,9 @@ const Home = () => {
 
   const getQuotes = async () => {
     try {
-      
-      const response = await fetch(`https://medicareshop-server.herokuapp.com/weather/${zipstring}`);
+      const response = await fetch(
+        `https://medicareshop-server.herokuapp.com/weather/${zipstring}`
+      );
       //const response = await fetch(`http://localhost:5000/weather/${zipstring}`);
 
       if (!response.ok) {
@@ -87,33 +83,28 @@ const Home = () => {
       }
 
       if (response.ok) {
-        
         setShow(false);
-        
+
         localStorage.setItem("plans", JSON.stringify(quoteData));
         localStorage.setItem("zipcode", zipstring);
         localStorage.setItem("state", quoteData[0].location_base.state);
-        
+
         // navigate("../plans", {
-          //     state: { quoteData, zipstring, replace: true },
-          // });
-          
-          
-        }
+        //     state: { quoteData, zipstring, replace: true },
+        // });
+      }
 
-        setTimeout(() => {
-          setIsloading(false);  
-          navigate("../plans", {replace: true});
-        }, 500);
-
-      } catch (err) {
+      setTimeout(() => {
+        setIsloading(false);
+        navigate("../plans", { replace: true });
+      }, 500);
+    } catch (err) {
       setError(err.message);
       console.log(err);
       setIsloading(false);
       setShow(true);
     } finally {
       setIsloading(false);
-      
     }
   };
 
@@ -122,10 +113,7 @@ const Home = () => {
       setLoading(true);
     }, 300);
     return () => clearTimeout(timer);
-
   }, []);
-
-
 
   // const styles = {
   //   paperContainer: {
@@ -145,262 +133,272 @@ const Home = () => {
   // };
 
   return (
-<>
-    <ResponsiveAppBar/>
-    <Box
-      id="plans-main"
-      component="main"
-      sx={{backgroundColor: "#fff !important"}}
-      // sx={{
-      //   backgroundColor: "#fff",
-      //   flexGrow: 1,
-      //   height: "100vh",
-      //   overflow: "auto",
-      //   display: "flex",
-      //   alignItems: "center",
-      //   flexDirection: "column",
-        
-      // }}
-    >
-      <Container id="lp-home" >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            // mt: -4,
-          }}
-        >
-          {loading ? (
-            <Typography
-              id="lp-head"
-              maxWidth="sm"
-              variant="h4"
-              style={{
-                textAlign: "center",
-                color: "#4a4a4a",
-                fontWeight: 700,
-              }}
-              sx={{ mb: 2 }}
-            >
-              Finally, You Can View Medicare Supplement Rates Online
-            </Typography>
-          ) : (
-            <Skeleton
-              variant="rectangle"
-              height="5em"
-              width="50%"
-              animation="wave"
-              color="black"
-              sx={{ mb: 2 }}
-            />
-          )}
+    <>
+      <ResponsiveAppBar />
+      <Box
+        id="plans-main"
+        component="main"
+        sx={{ backgroundColor: "#fff !important" }}
+        // sx={{
+        //   backgroundColor: "#fff",
+        //   flexGrow: 1,
+        //   height: "100vh",
+        //   overflow: "auto",
+        //   display: "flex",
+        //   alignItems: "center",
+        //   flexDirection: "column",
 
-          {loading ? (
-            <Typography
-            id="lp-para"
-              maxWidth="sm"
-              variant="subtitle1"
-              style={{
-                textAlign: "center",
-                color: "#4a4a4a",
-                fontWeight: 400,
-              }}
-              sx={{ mb: 3 }}
-            >
-              Let's get started by entering your Zip Code.
-            </Typography>
-          ) : (
-            <Skeleton
-              variant="rectangle"
-              animation="wave"
-              height="3em"
-              width="30%"
-              sx={{ mb: 3 }}
-            />
-          )}
-        </Box>
-        <Grid container sx={{ justifyContent: "center", mt: 2, mb: 2 }}>
-          <Paper
-          id="lp-formwrap"
-            elevation={4}
-            sx={{ p: 3, display: "flex", flexDirection: "column" }}
+        // }}
+      >
+        <Container id="lp-home">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              // mt: -4,
+            }}
           >
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <form
-                noValidate
-                autoComplete="off"
-                onSubmit={handleSubmit(fetchMyAPI)}
-                id="zip-input-form"
-                style={{ display: "flex" }}
+            {loading ? (
+              <Typography
+                id="lp-head"
+                maxWidth="sm"
+                variant="h4"
+                style={{
+                  textAlign: "center",
+                  color: "#4a4a4a",
+                  fontWeight: 700,
+                }}
+                sx={{ mb: 2 }}
               >
-                <Grid item xs={6} sx={{ mr: 2 }}>
-                  {loading ? (
-                    <TextField
-                      id="home-zip-input"
-                      label="Zip Code"
-                      placeholder="Enter your Zip Code"
-                      variant="outlined"
-                      type="tel"
-                      size="large"
-                      color="secondary"
-                      InputProps={{
-                        startAdornment: <InputAdornment position="start"><PinDropIcon sx={{color:"#bbb"}} /></InputAdornment>,
-                      }}
-                      inputProps={{
-                        maxLength: 5,
-                        inputMode: "numeric",
-                      }}
-                      {...register("zip", {
-                        required: true,
-                        pattern: /^[0-9]{5}$/,
-                        minLength: 5,
-                      })}
-                    />
-                  ) : (
-                    <Skeleton variant="rectangle" animation="wave" width="100%">
-                      <TextField />
-                    </Skeleton>
-                  )}
-                </Grid>
+                Finally, You Can View Medicare Supplement Rates Online
+              </Typography>
+            ) : (
+              <Skeleton
+                variant="rectangle"
+                height="5em"
+                width="50%"
+                animation="wave"
+                color="black"
+                sx={{ mb: 2 }}
+              />
+            )}
 
-                <Grid id="lp-formbtn" item xs={6}>
-                  {loading ? (
-                    <Button
-                      endIcon={<ArrowForwardIcon />}
-                      size="large"
-                      type="submit"
-                      color="secondary"
-                      variant="contained"
-                      sx={{ height: "100%", width: "100%" }}
-                    >
-                      See Prices
-                    </Button>
-                  ) : (
-                    <Skeleton
-                      variant="rectangle"
-                      animation="wave"
-                      height="100%"
-                      width="100%"
-                    >
-                      <Button />
-                    </Skeleton>
-                  )}
-                </Grid>
-              </form>
-            </Box>
-          </Paper>
-        </Grid>
-
-        <Box
-          id="act_wrap"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          {errors.zip?.type === "pattern" && (
-            <Zoom
-              in={open}
-              sx={{ display: "flex", alignItems: "center", mv: 1 }}
+            {loading ? (
+              <Typography
+                id="lp-para"
+                maxWidth="sm"
+                variant="subtitle1"
+                style={{
+                  textAlign: "center",
+                  color: "#4a4a4a",
+                  fontWeight: 400,
+                }}
+                sx={{ mb: 3 }}
+              >
+                Let's get started by entering your Zip Code.
+              </Typography>
+            ) : (
+              <Skeleton
+                variant="rectangle"
+                animation="wave"
+                height="3em"
+                width="30%"
+                sx={{ mb: 3 }}
+              />
+            )}
+          </Box>
+          <Grid container sx={{ justifyContent: "center", mt: 2, mb: 2 }}>
+            <Paper
+              id="lp-formwrap"
+              elevation={4}
+              sx={{ p: 3, display: "flex", flexDirection: "column" }}
             >
-              <Alert severity="warning" color="grey" variant="filled">
-                <Typography className="error">Zip Code must contain numbers only.</Typography>
-              </Alert>
-            </Zoom>
-          )}
-          {errors.zip?.type === "required" && (
-            <Zoom
-              in={open}
-              sx={{ display: "flex", alignItems: "center", mv: 1 }}
-            >
-              <Alert severity="warning" color="grey" variant="filled">
-                <Typography className="error">
-                  Enter your Zip Code to get quotes.
-                </Typography>
-              </Alert>
-            </Zoom>
-          )}
-          {errors.zip?.type === "minLength" && (
-            <Zoom
-              in={open}
-              sx={{ display: "flex", alignItems: "center", mv: 1 }}
-            >
-              <Alert severity="warning" color="grey" variant="filled">
-                <Typography className="error">Zip Code must be 5 digit long.</Typography>
-              </Alert>
-            </Zoom>
-          )}
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <form
+                  noValidate
+                  autoComplete="off"
+                  onSubmit={handleSubmit(fetchMyAPI)}
+                  id="zip-input-form"
+                  style={{ display: "flex" }}
+                >
+                  <Grid item xs={6} sx={{ mr: 2 }}>
+                    {loading ? (
+                      <TextField
+                        id="home-zip-input"
+                        label="Zip Code"
+                        placeholder="Enter your Zip Code"
+                        variant="outlined"
+                        type="tel"
+                        size="large"
+                        color="secondary"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <PinDropIcon sx={{ color: "#bbb" }} />
+                            </InputAdornment>
+                          ),
+                        }}
+                        inputProps={{
+                          maxLength: 5,
+                          inputMode: "numeric",
+                        }}
+                        {...register("zip", {
+                          required: true,
+                          pattern: /^[0-9]{5}$/,
+                          minLength: 5,
+                        })}
+                      />
+                    ) : (
+                      <Skeleton
+                        variant="rectangle"
+                        animation="wave"
+                        width="100%"
+                      >
+                        <TextField />
+                      </Skeleton>
+                    )}
+                  </Grid>
 
-          {error && show && (
-            <Zoom in={open} sx={{ display: "flex", alignItems: "center" }}>
-              <Alert severity="warning" color="grey" variant="filled">
-                <Typography variant="subtitle2" sx={{fontSize: "16px"}}  color="#d32f2f">
-                  {`${error}`}
-                </Typography>
-              </Alert>
-            </Zoom>
-          )}
+                  <Grid id="lp-formbtn" item xs={6}>
+                    {loading ? (
+                      <Button
+                        endIcon={<ArrowForwardIcon />}
+                        size="large"
+                        type="submit"
+                        color="secondary"
+                        variant="contained"
+                        sx={{ height: "100%", width: "100%" }}
+                      >
+                        See Prices
+                      </Button>
+                    ) : (
+                      <Skeleton
+                        variant="rectangle"
+                        animation="wave"
+                        height="100%"
+                        width="100%"
+                      >
+                        <Button />
+                      </Skeleton>
+                    )}
+                  </Grid>
+                </form>
+              </Box>
+            </Paper>
+          </Grid>
 
-          {isloading && (
-            <Zoom in={open} sx={{ display: "flex", alignItems: "center" }} id="lp-loader">
-              <Alert icon={false} color="grey" variant="filled">
-                <Box sx={{ display: "flex", alignItems: "center", color: "#000" }}>
-                  <CircularProgress color="inherit" />
-                  <Typography
-                    variant="subtitle1"
-                    color="common.black"
-                    sx={{ ml: 2, fontWeight: 500 }}
-                  >
-                    Finding the best quotes in your area...
+          <Box
+            id="act_wrap"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            {errors.zip?.type === "pattern" && (
+              <Zoom
+                in={open}
+                sx={{ display: "flex", alignItems: "center", mv: 1 }}
+              >
+                <Alert severity="warning" color="grey" variant="filled">
+                  <Typography className="error">
+                    Zip Code must contain numbers only.
                   </Typography>
-                </Box>
-              </Alert>
-            </Zoom>
-          )}
-        </Box>
+                </Alert>
+              </Zoom>
+            )}
+            {errors.zip?.type === "required" && (
+              <Zoom
+                in={open}
+                sx={{ display: "flex", alignItems: "center", mv: 1 }}
+              >
+                <Alert severity="warning" color="grey" variant="filled">
+                  <Typography className="error">
+                    Enter your Zip Code to get quotes.
+                  </Typography>
+                </Alert>
+              </Zoom>
+            )}
+            {errors.zip?.type === "minLength" && (
+              <Zoom
+                in={open}
+                sx={{ display: "flex", alignItems: "center", mv: 1 }}
+              >
+                <Alert severity="warning" color="grey" variant="filled">
+                  <Typography className="error">
+                    Zip Code must be 5 digit long.
+                  </Typography>
+                </Alert>
+              </Zoom>
+            )}
 
-        <Box maxWidth="md" sx={{pb:6}} id="home-second">
-      <Stack
-  direction="column"
-  sx={{  mb: 6, alignItems: "center" }}
-  spacing={2}
-  id="vid-wrap"
->
-  {/* <Typography variant="subtitle1" id="tq-sub3" sx={{mt:0}}>
-    If you have a moment, we encourage you to take a couple
-    minutes and watch the video below to learn how to make the
-    best decision on purchasing a medigap plan.
-  </Typography> */}
+            {error && show && (
+              <Zoom in={open} sx={{ display: "flex", alignItems: "center" }}>
+                <Alert severity="warning" color="grey" variant="filled">
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontSize: "16px" }}
+                    color="#d32f2f"
+                  >
+                    {`${error}`}
+                  </Typography>
+                </Alert>
+              </Zoom>
+            )}
 
-  <div className="videoWrapper">
-    {/* <iframe
-      title="med-video"
-      className="ms-iframe"      
-      src="https://player.vimeo.com/video/714551607?h=bae5701741&badge=0&autoplay=1&loop=1&player_id=0&app_id=58479"
-      frameBorder="1"
-      allow="autoplay"
-      allowFullScreen
-    ></iframe> */}
-    <iframe className="ms-iframe" 
-    src="https://www.youtube.com/embed/eX_6Kyqu6Q0?controls=0" 
-    title="med-video"
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-    </iframe>
-  </div>
-</Stack>
-</Box>
+            {isloading && (
+              <Zoom
+                in={open}
+                sx={{ display: "flex", alignItems: "center" }}
+                id="lp-loader"
+              >
+                <Alert icon={false} color="grey" variant="filled">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#000",
+                    }}
+                  >
+                    <CircularProgress color="inherit" />
+                    <Typography
+                      variant="subtitle1"
+                      color="common.black"
+                      sx={{ ml: 2, fontWeight: 500 }}
+                    >
+                      Finding the best quotes in your area...
+                    </Typography>
+                  </Box>
+                </Alert>
+              </Zoom>
+            )}
+          </Box>
 
-      </Container>
-
-
- 
-    </Box>
+          <Box maxWidth="md" sx={{ pb: 6 }} id="home-second">
+            <Stack
+              direction="column"
+              sx={{ mb: 6, alignItems: "center" }}
+              spacing={2}
+              id="vid-wrap"
+            >
+              <div className="videoWrapper">
+              
+                <iframe
+                  className="ms-iframe"
+                  src="https://www.youtube.com/embed/eX_6Kyqu6Q0?autoplay=1&controls=0"
+                  title="med-video"
+                  frameBorder="1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </Stack>
+          </Box>
+        </Container>
+      </Box>
     </>
   );
 };

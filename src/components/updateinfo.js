@@ -197,6 +197,7 @@ const onSubmit = (formData, e) => {
       
       if ( phoneActive === "1" && phoneScore > 50){
       localStorage.setItem('userTries', "");
+
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         'event': leadStatus,
@@ -250,9 +251,12 @@ const onSubmit = (formData, e) => {
         .catch(error  => {
           console.log(error);  
         })
+        
+        localStorage.setItem('userTries', "3");
 
         setTimeout(() => { 
-          window.location.reload(true);
+          // window.location.reload(true);
+          navigate("/rates");
         }, 2000);
         
       } else{
@@ -298,9 +302,11 @@ const onSubmit = (formData, e) => {
       } else{
         leadStatus = "duplicateLead";
         const stt = localStorage.getItem("state");
+        localStorage.setItem('userTries', "3");
         console.log(stt);
         setTimeout(() => { 
-          window.location.reload(true);
+          // window.location.reload(true);
+          navigate("/rates");
         }, 2000);
         
       }
@@ -310,7 +316,7 @@ const onSubmit = (formData, e) => {
       console.log(err.message);
     });
   
-    
+
 
     // setTimeout(() => { 
     //   window.location.reload(true);

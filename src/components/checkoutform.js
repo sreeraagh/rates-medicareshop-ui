@@ -40,6 +40,7 @@ import CallIcon from "@mui/icons-material/Call";
 export default function Checkout({ open, onClose, prov, plan, premium }) {
   const steps = ["Basic-info", "Address", "Checkout"];
   const isuser = localStorage.getItem("isuser");
+  const userplan =  localStorage.getItem('plan');
   const usstate = localStorage.getItem("state");
   const userdata = JSON.parse(localStorage.getItem("user"));
   
@@ -122,10 +123,10 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
 
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
-        "event" : "Checkout click",
+        "event" : "checkoutClick",
         "value": checkinfo,
         "carrier" : prov,
-        "plan": plan,
+        "plan": userplan,
         "monthly_premium": premium
       })
 
@@ -135,7 +136,7 @@ export default function Checkout({ open, onClose, prov, plan, premium }) {
         body: JSON.stringify({
           "formdata" : finalcheck,
           "carrier" : prov,
-          "plan": plan,
+          "plan": userplan,
           "monthly_premium": premium
         })
         

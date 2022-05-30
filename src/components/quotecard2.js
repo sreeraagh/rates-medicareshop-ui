@@ -20,7 +20,8 @@ import Checkoutform from "./checkoutform";
 
 export default function Quotecard2({ quote, plan}) {
 
-
+  
+  
   const rateinc = quote.rate_increases;
   //const st = quote.location_base.state;
   let ageinc = quote.age_increases;  
@@ -123,7 +124,8 @@ const handleClosecheck = () => {
 
   useEffect(() => {
     
-  if( isuser === "Yes" && (userTries === "" || userTries === null || userTries === undefined)) {
+  // if( isuser === "Yes" && (userTries === "" || userTries === null || userTries === undefined)) {
+  if( isuser === "Yes" && userTries === "3") {
     setCheckbtn(true);
     setPricebtn(false);
   } else{
