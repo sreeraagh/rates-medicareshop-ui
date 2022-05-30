@@ -19,6 +19,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CircularProgress from "@mui/material/CircularProgress";
 import Zoom from "@mui/material/Zoom";
 import ResponsiveAppBar from "../components/AppBar";
+import varrow from "../assets/varrow.png";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -208,6 +210,10 @@ const Home = () => {
                 sx={{ mb: 3 }}
               />
             )}
+
+              
+              {/* <Box component="img" id="varrow" alt="MedicareShop" src={varrow} /> */}
+              
           </Box>
           <Grid container sx={{ justifyContent: "center", mt: 2, mb: 2 }}>
             <Paper
@@ -233,6 +239,7 @@ const Home = () => {
                         type="tel"
                         size="large"
                         color="secondary"
+                        autoFocus
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">

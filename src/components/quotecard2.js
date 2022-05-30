@@ -461,11 +461,14 @@ const handleClosecheck = () => {
               </Typography>
             </Stack>
 
+
+            {checkbtn && (
          <Stack direction="row" sx={{ alignItems: "center", justifyContent: "center" }} spacing={0} id="viewprice">
 
-        {pricebtn && (
+        {/* {pricebtn && (
             <Button
               size="large"
+              id="view-my-price"
               color="secondary"
               variant="contained"
               // onClick={handleClickOpen}
@@ -475,10 +478,10 @@ const handleClosecheck = () => {
               View My Price
             </Button>
             
-    )}
+    )} */}
 
 
-        {checkbtn && (
+        
           
             <Button
               color="secondary"
@@ -488,8 +491,9 @@ const handleClosecheck = () => {
             >
               Checkout
             </Button>
-)}
+
          </Stack>
+         )}
 
          </Stack>
           {/* ) : (

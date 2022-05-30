@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import ResponsiveAppBar from "../components/AppBar";
+import ResponsiveAppBarT from "../components/AppBarT";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import { useHistory } from "react-router-dom";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -20,11 +20,12 @@ import Fade from "@mui/material/Fade";
 import Skeleton from "@mui/material/Skeleton";
 import Zoom from "@mui/material/Zoom";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import arrowp from "../assets/arrowp.png";
+import plansarrow from "../assets/plansarrow.png";
 import Updateinfo from "../components/updateinfo";
 //import Quotecard from "../components/quotecard";
 import Quotecard2 from "../components/quotecard2";
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 
@@ -74,12 +75,12 @@ const plansA = [
   let plan;
 
 
+
   let openfade = true;
   let openzoom = true;
   
 
   useEffect (() => {
-
    if (userTries === "2"){
     navigate("/thankyou2"); 
    } 
@@ -183,6 +184,7 @@ const plansA = [
   //     setShow(true);
   //   }
   // };
+
 
   const planUpdate = async () => {
     console.log(plan);
@@ -344,7 +346,7 @@ const plansA = [
 
   return (
     <>
-    <ResponsiveAppBar />
+    <ResponsiveAppBarT />
       <Box
         id="plans-main"
         component="main"
@@ -574,13 +576,15 @@ const plansA = [
             <>
               {isvisible && (
                   <Stack direction="column" sx={{mt: 4, mb:1, alignItems: "center", justifyContent: "center"}} spacing={2} id="notyou">
+                  {/* <Box component="img" id="arrow" alt="MedicareShop" src={arrowp} /> */}
                   <Typography
-                    variant="body1" sx={{ fontWeight: "500", fontSize: "20px", color:"#000" }}>
+                    variant="body1" id="not-you" sx={{ fontWeight: "500", fontSize: "20px", color:"#000" }}>
                     <b>Not you?</b> See personalized quotes by updating your info...{" "}
                   </Typography>
                   <Button
                     startIcon={<BorderColorOutlinedIcon />}
                     color="secondary"
+                    id="update-info-btn"
                     // sx={{ color: "#000", background: "#fff" }}
                     size="large"
                     variant="contained"
@@ -648,19 +652,12 @@ const plansA = [
 
 
       
-          <Grid item xs={2} id="select-plan" >
+          <Grid item xs={12} id="select-plan" >
+          <Stack direction="row" sx={{alignItems:"center"}}>
             {loading ? (
-              <Paper elevation={2}>
+              <Paper elevation={2} id="plan-select-btn">
               <FormControl fullWidth >
-                {/* <InputLabel
-                  id="demo-simple-select-label"
-                  size="small"
-                  color="secondary"
-                  
-                >
-                  Select a Plan
-                </InputLabel> */}
-                <Select
+                {/* <Select
                   id="demo-simple-select"
                   //label="Select a Plan"
                   defaultValue="G"
@@ -673,18 +670,19 @@ const plansA = [
                       Plan <b style={{ marginLeft: "5px" }}>{plan}</b>
                     </MenuItem>
                   ))}
-                  {/* <option value="A">Plan A</option>
-                  <option value="B">Plan B</option>
-                  <option value="C">Plan C</option>
-                  <option value="D">Plan D</option>
-                  <option value="F">Plan F</option>
-                  <option value="G">Plan G</option>
-                  <option value="HDG">Plan HDG</option>
-                  <option value="HDF">Plan HDF</option>
-                  <option value="K">Plan K</option>
-                  <option value="L">Plan L</option>
-                  <option value="N">Plan N</option> */}
-                </Select>
+                </Select> */}
+              
+                <Button
+                    endIcon={<ArrowDropDownIcon />}
+                    id="demo-simple-select"
+                    color="secondary"
+                    size="large"
+                    variant="outlined"
+                    onClick={handleClickOpen}
+                  >
+                    Plan &nbsp;<b>G</b>
+                  </Button>
+
               </FormControl>
               </Paper>
             ) : (
@@ -696,6 +694,17 @@ const plansA = [
                 sx={{ mb: 2 }}
               />
             )}
+
+              <Box component="img" id="plansarrow" alt="MedicareShop" src={plansarrow} />
+
+                  <Typography
+                      variant="subtitle1"
+                      color="common.black"
+                      sx={{ ml: 1, fontWeight: 500, lineHeight: "normal" }}
+                    >
+                     Click here to Change Plans.
+                    </Typography>
+                  </Stack>
           </Grid>
         
 

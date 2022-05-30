@@ -1,5 +1,6 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
+
 import CallIcon from '@mui/icons-material/Call';
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -17,14 +18,12 @@ import Logo from "../assets/ms-logo.jpeg";
 import { Stack } from "@mui/material";
 
 const ResponsiveAppBarT = () => {
-
+  
   return (
-    <AppBar
-      elevation={0}
-      sx={{ background: "transparent", position: "absolute", top: 0, zIndex: 99 }}
-    >
+    <AppBar  sx={{background: "#fff"}} id="solid-header-sh" elevation={1}>
       <Container maxWidth="xl" id="appbar-tr">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
+          
 
             <Box
               component="img"
@@ -32,14 +31,14 @@ const ResponsiveAppBarT = () => {
               src={Logo}
               style={{ maxHeight: 45 }}
             />
-         
+          
 
-         
-            <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#000"}}>
-               <Typography  color="text.secondary" variant="subtitle1">
+          
+            <Stack direction="row" spacing={1} sx={{alignItems: "center"}}>
+               <Typography color="text.secondary" variant="subtitle1">
                 Need Help?
                 </Typography>
-            <Button size="large" variant="outlined" color="inherit" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>
+            <Button size="medium" variant="outlined" color="secondary" id="help-btn" href="tel:18884301355" startIcon={<CallIcon />}>1-888-430-1355</Button>
             </Stack>
           
         </Toolbar>
@@ -47,4 +46,6 @@ const ResponsiveAppBarT = () => {
     </AppBar>
   );
 };
+
+
 export default ResponsiveAppBarT;

@@ -20,7 +20,7 @@ import { Stack } from "@mui/material";
 const ResponsiveAppBar = () => {
   
   return (
-    <AppBar elevation={1} sx={{background: "#fff"}} id="solid-header">
+    <AppBar  sx={{background: "#fff"}} id="solid-header">
       <Container maxWidth="xl" id="appbar-tr">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
           

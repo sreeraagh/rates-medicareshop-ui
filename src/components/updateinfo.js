@@ -302,11 +302,11 @@ const onSubmit = (formData, e) => {
       } else{
         leadStatus = "duplicateLead";
         const stt = localStorage.getItem("state");
-        localStorage.setItem('userTries', "3");
+        localStorage.setItem('userTries', "2");
         console.log(stt);
         setTimeout(() => { 
           // window.location.reload(true);
-          navigate("/rates");
+          navigate("/thankyou2");
         }, 2000);
         
       }
