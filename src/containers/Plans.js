@@ -83,7 +83,7 @@ const plansA = [
   useEffect(() => {
     const intervalId = setInterval(() => {
       setOpenDialog("updateinfo");
-    }, 5000);
+    }, 10000);
   
     return () => clearInterval(intervalId);
   }, []);
