@@ -80,7 +80,17 @@ const plansA = [
   let openzoom = true;
   
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setOpenDialog("updateinfo");
+    }, 5000);
+  
+    return () => clearInterval(intervalId);
+  }, []);
+
+
   useEffect (() => {
+  
    if (userTries === "2"){
     navigate("/thankyou2"); 
    } 
