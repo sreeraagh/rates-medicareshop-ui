@@ -7,14 +7,14 @@ import Plans from "./Plans";
 import Rates from "./Rates";
 import Thankyou from "./Thankyou";
 import Thankyou2 from "./Thankyou2";
-import TagManager from 'react-gtm-module';
+//import TagManager from 'react-gtm-module';
 
 
-const tagManagerArgs = {
-  gtmId: 'GTM-KZ3V2D2'
-}
+// const tagManagerArgs = {
+//   gtmId: 'GTM-KZ3V2D2'
+// }
 
-TagManager.initialize(tagManagerArgs)
+// TagManager.initialize(tagManagerArgs)
 
 const App = () => {
   return (
