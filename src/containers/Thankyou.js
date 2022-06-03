@@ -44,7 +44,7 @@ return (
           paddingTop: "65px",
         }}
       >
-<Container maxWidth="md" id="info-cont" sx={{mb:6}}>
+<Container maxWidth="md" id="info-cont-tq" sx={{mb:6}}>
 
 <Stack
   direction="row"

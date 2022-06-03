@@ -596,7 +596,7 @@ div#info-cont-last {
   }
 
   /* plans */
-#info-cont, #info-cont-last, #info-cont-splan {
+  #info-cont-tq, #info-cont-tq2, #info-cont, #info-cont-last, #info-cont-splan {
   padding: 0px 10px;
   margin: 0px;
 }
