@@ -97,6 +97,11 @@ input::placeholder {
   font-weight: 500;
 }
 
+
+.trustpilot-widget{
+  width: 100%;
+}
+
 /* Firefox */
 #zip-input-form input {
     -moz-appearance: textfield; 
@@ -256,6 +261,27 @@ input, textarea {
   border: 1px solid #eee;
 } */
 
+div#uma-wrap {
+  align-items: center;
+  text-align: center;
+}
+
+#uma-video .MuiDialog-paper{
+  width: 100%;
+  background: transparent;
+  box-shadow: none;
+}
+
+#uma-video .MuiDialog-paper div#home-second, #uma-video .MuiDialog-paper #vid-wrap{
+  margin: 0px;
+}
+
+
+#uma-note{
+  width: 50%;
+  line-height: 1.4em;
+}
+
  #tq-head{
   justify-content: center;
   margin: 50px 0 30px;
@@ -346,7 +372,9 @@ div#select-plan #demo-simple-select{
   font-size: 20px;
   padding: 8px 16px;
   text-transform: capitalize;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
 }
 
 #select-plan #demo-simple-select svg{
@@ -507,8 +535,35 @@ div#info-cont-last {
   }
 }
 
+@media only screen and (max-width: 415px) {
+  #uma-logo{
+    width: 100% !important;
+  }
+}
+
 /* Responsive CSS */
 @media only screen and (max-width: 600px) {
+
+  .uma-content{
+    padding: 30px 10px !important; 
+  }
+
+
+  #uma-video .MuiDialog-paper{
+    margin: 20px !important;
+  }
+
+  #uma-video .videoWrapper{
+    padding-bottom: 150%;
+  }
+
+  #uma-video div#home-second #vid-wrap{
+    margin-bottom: 0px !important;
+  }
+
+  #uma-note{
+    width: 100%
+  }
 
   #plan-select-btn{
     width: 50%;
@@ -637,8 +692,8 @@ div#info-cont-last {
 }
 
 div#select-plan {
-  width: auto;
-  max-width: fit-content;
+  width: 35%;
+  max-width: 35%;
   margin-top: 30px;
   margin-bottom: 0px;
 }
@@ -1002,6 +1057,31 @@ div#info-substack {
 
 }
 
+
+@media only screen and (max-width: 352px){
+
+#plan-select-btn {
+    width: 70% !important;
+}
+
+div#select-plan #demo-simple-select{
+  padding: 8px 12px;
+}
+
+#select-plan #demo-simple-select svg {
+  font-size: 24px;
+}
+}
+
+
+@media only screen and (max-width: 373px){
+
+  #plan-select-btn {
+      width: 60% ;
+  }
+
+}  
+
 /* scrollbar */
 /* width */
 ::-webkit-scrollbar {
@@ -1023,4 +1103,17 @@ div#info-substack {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#uma-video .MuiDialog-paper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#uma-video .MuiDialog-paper {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

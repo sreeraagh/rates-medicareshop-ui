@@ -401,9 +401,9 @@ const onSubmit = (formData, e) => {
                     autoFocus
                      
                     {...register("firstName", {
-                      pattern: { value: /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i
+                      pattern: { value: /^[A-Za-z]+[A-Za-z ]*$/
                       ,
-                      message: "Spaces & numbers are not allowed"
+                      message: "First Name must be letters only"
                     },
                       required: "First Name is required.",
                       minLength: {
@@ -428,9 +428,9 @@ const onSubmit = (formData, e) => {
                     color="secondary"
                     placeholder="Enter Your Last Name"
                     {...register("lastName", {
-                      pattern: { value: /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i
+                      pattern: { value: /^[A-Za-z]+[A-Za-z ]*$/
                       ,
-                      message: "Spaces & numbers are not allowed."
+                      message: "First Name must be letters only"
                     },
                       required: "Last Name is required.",
                       minLength: {

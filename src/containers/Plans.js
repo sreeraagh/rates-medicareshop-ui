@@ -21,10 +21,10 @@ import Skeleton from "@mui/material/Skeleton";
 import Zoom from "@mui/material/Zoom";
 import CircularProgress from "@mui/material/CircularProgress";
 import arrowp from "../assets/arrowp.png";
-import plansarrow from "../assets/plansarrow.png";
 import Updateinfo from "../components/updateinfo";
 //import Quotecard from "../components/quotecard";
 import Quotecard2 from "../components/quotecard2";
+import plansarrow from "../assets/plansarrow.png";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
@@ -667,21 +667,7 @@ const plansA = [
             {loading ? (
               <Paper elevation={2} id="plan-select-btn">
               <FormControl fullWidth >
-                {/* <Select
-                  id="demo-simple-select"
-                  //label="Select a Plan"
-                  defaultValue="G"
-                  value={plan}
-                  color="secondary"
-                  onChange={handleChange}
-                >
-                  {plansA.map((plan, i) => (
-                    <MenuItem key={i} value={plan}>
-                      Plan <b style={{ marginLeft: "5px" }}>{plan}</b>
-                    </MenuItem>
-                  ))}
-                </Select> */}
-              
+            
                 <Button
                     endIcon={<ArrowDropDownIcon />}
                     id="demo-simple-select"

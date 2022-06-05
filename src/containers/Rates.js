@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router";
-import ResponsiveAppBar from "../components/AppBar";
+import ResponsiveAppBarT from "../components/AppBarT";
+import TrustBox from "../components/trustpilot";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -8,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import CloseIcon from '@mui/icons-material/Close';
 import Paper from "@mui/material/Paper";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import { useHistory } from "react-router-dom";
@@ -20,11 +22,11 @@ import Fade from "@mui/material/Fade";
 import Skeleton from "@mui/material/Skeleton";
 import Zoom from "@mui/material/Zoom";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Modal from "@mui/material/Dialog";
 import Updateinfo from "../components/updateinfo";
 //import Quotecard from "../components/quotecard";
 import Quotecard2 from "../components/quotecard2";
-
+import Logo from "../assets/uma-logo.png";
 
 
 
@@ -81,9 +83,23 @@ const plansA = [
   let openzoom = true;
   
 
+  const [open, setOpen] = React.useState(false);
+  const [showbtn, setShowbtn] = React.useState(false);
+  
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   useEffect (() => { 
 
     localStorage.setItem('plan', 'G');
+    
+    setOpen(true);
+
+    
+    const btntimer = setTimeout(() => {
+      setShowbtn(true);
+    }, 10000);
     
 
    if (userTries === "2"){
@@ -127,7 +143,7 @@ const plansA = [
     const timer = setTimeout(() => {
       setLoading(true);
     }, 200);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer, btntimer);
 
   }, []);
 
@@ -343,13 +359,13 @@ const plansA = [
     }
   };
 
-  const handleClickOpen = () => {
-    setOpenDialog("updateinfo");
-  };
+  // const handleClickOpen = () => {
+  //   setOpenDialog("updateinfo");
+  // };
 
-  const handleClose = () => {
-    setOpenDialog(null);
-  };
+  // const handleClose = () => {
+  //   setOpenDialog(null);
+  // };
 
   
 
@@ -357,14 +373,35 @@ const plansA = [
 
   return (
     <>
-    <ResponsiveAppBar />
+    <ResponsiveAppBarT />
       <Box
         id="plans-main"
         component="main"
-      >
-        <Container maxWidth="md" id="info-cont">
-          
-          <Paper elevation={3} sx={{background: "#fff", mt:4,  mb:6, p:2}} id="info-wrap">
+      >                
+
+    <Container maxWidth="md" id="info-cont">
+      <Paper elevation={3} sx={{background: "#fff", mt:4,  mb:4, pt:6, pb:6, pr:2, pl:2}} id="info-wrap" className="uma-content">
+      
+      <Stack direction="column" spacing={5} sx={{alignItems: "center"}}>
+      
+      <Stack direction="column" spacing={3} id="uma-wrap">
+      <Typography color="text.primary" variant="h6"  sx={{lineHeight: "1.4em"}}>
+        <b>Based on your information<br/>you've been matched with :</b>
+      </Typography>
+      <Box component="img" id="uma-logo" alt="United Medicare Advisor" src={Logo} style={{ maxHeight: 70, width: "fit-content"  }} />
+    </Stack>
+    
+      <TrustBox/>
+      
+      <Typography color="text.primary" variant="subtitle1" textAlign="center" id="uma-note">
+      Note that all carriers are not presented here. We highly recommended asking your assigned agent about other carriers for the most savings.
+      </Typography>
+      </Stack>
+    </Paper>
+    </Container>
+
+        <Container maxWidth="md" id="info-cont" >
+          <Paper elevation={3} sx={{background: "#fff", mt:4,  mb:6, p:2}} id="info-wrap" >
           <Fade in={openfade}>
             {loading ? (
               <Alert
@@ -597,7 +634,7 @@ const plansA = [
                     // sx={{ color: "#000", background: "#fff" }}
                     size="large"
                     variant="contained"
-                    onClick={handleClickOpen}
+                    // onClick={handleClickOpen}
                   >
                     Update my Info
                   </Button>
@@ -955,6 +992,46 @@ warrant the accuracy of the above market data.
 )}
       
       </Box>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        id="uma-video"
+      >
+
+
+
+        <Box maxWidth="md"  id="home-second">
+            <Stack
+              direction="column"
+              sx={{ mb: 6, alignItems: "center" }}
+              spacing={2}
+              id="vid-wrap"
+            >
+              <div className="videoWrapper">
+              
+                <iframe
+                  className="ms-iframe"
+                  src="https://www.youtube.com/embed/XIMyL0n0iFA?autoplay=1&controls=1"
+                  title="med-video"
+                  frameBorder="1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            
+            {showbtn && (
+              <Button onClick={handleClose} startIcon={<CloseIcon />} sx={{mt: 6}} id="uma-video-btn" color="error"  variant="contained">Close</Button>
+            )}
+              
+            
+            </Stack>
+          </Box>
+        {/* <CloseIcon  color="error" id="ui-close">Close</CloseIcon> */}
+       {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/XIMyL0n0iFA?autoplay=1&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
+      
+      </Modal>
+
 
       {/* <Updateinfo
         open={openDialogName === "updateinfo"}
