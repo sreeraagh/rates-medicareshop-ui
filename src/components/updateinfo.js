@@ -202,6 +202,8 @@ const onSubmit = (formData, e) => {
       window.dataLayer.push({
         'event': leadStatus,
         "age": userage,
+        "phoneScore": phoneScore,
+        "phoneActive": phoneActive,
         'value': formData,
         'utm_term' : utmtermRef.current.value,
         'utm_type' : utmtypeRef.current.value,
@@ -225,6 +227,8 @@ const onSubmit = (formData, e) => {
         method: "POST",
         body: JSON.stringify({
         'event': leadStatus,
+        "phoneScore": phoneScore,
+        "phoneActive": phoneActive,
           'value': formData,
           'utm_term' : utmtermRef.current.value,
           'term_id' : termidRef.current.value,
