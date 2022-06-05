@@ -662,7 +662,7 @@ const plansA = [
 
 
       
-          <Grid item xs={12} id="select-plan" >
+          <Grid item id="select-plan">
           <Stack direction="row" sx={{alignItems:"center"}}>
             {loading ? (
               <Paper elevation={2} id="plan-select-btn">
@@ -691,8 +691,7 @@ const plansA = [
               />
             )}
 
-              <Box component="img" id="plansarrow" alt="MedicareShop" src={plansarrow} />
-
+                <Box component="img" id="plansarrow" alt="MedicareShop" src={plansarrow} />
                   <Typography
                       variant="subtitle1"
                       color="common.black"
@@ -700,7 +699,8 @@ const plansA = [
                     >
                      Click here to Change Plans.
                     </Typography>
-                  </Stack>
+
+              </Stack>
           </Grid>
         
 

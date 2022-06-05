@@ -118,6 +118,11 @@ input::placeholder {
   margin-bottom: 15px !important;
 }
 
+
+div#select-plan{
+  width: 100% ;
+}
+
 img#arrow {
   max-height: 80px;
   position: absolute;
@@ -539,6 +544,14 @@ div#info-cont-last {
   #uma-logo{
     width: 100% !important;
   }
+
+  
+}
+
+@media only screen and (max-width: 443px){
+  #plan-select-btn{
+    width: 50% ;
+    }
 }
 
 /* Responsive CSS */
@@ -548,6 +561,9 @@ div#info-cont-last {
     padding: 30px 10px !important; 
   }
 
+  #select-plan{
+    margin-top: 30px;
+  }
 
   #uma-video .MuiDialog-paper{
     margin: 20px !important;
@@ -565,9 +581,7 @@ div#info-cont-last {
     width: 100%
   }
 
-  #plan-select-btn{
-    width: 50%;
-  }
+ 
 
   #varrow, #arrow{
     display: none;
@@ -691,12 +705,7 @@ div#info-cont-last {
   text-align: center;
 }
 
-div#select-plan {
-  width: 35%;
-  max-width: 35%;
-  margin-top: 30px;
-  margin-bottom: 0px;
-}
+
 
 div#demo-simple-select {
   padding: 10px 40px 10px 10px;
@@ -1057,6 +1066,23 @@ div#info-substack {
 
 }
 
+/* @media only screen and (max-width: 500px){
+
+  div#select-plan{
+    max-width: 35% !important;
+    width: 35% !important;
+  }
+
+}  
+
+@media only screen and (max-width: 730px){
+div#select-plan {
+  width: 25%;
+  max-width: 25%;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+} */
 
 @media only screen and (max-width: 352px){
 

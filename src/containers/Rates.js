@@ -698,9 +698,9 @@ const plansA = [
 
 
       
-          <Grid item xs={2} id="select-plan" >
+          <Grid item xs={4} sm={3} md={2} lg={2} xl={2} id="select-plan" >
             {loading ? (
-              <Paper elevation={2}>
+              <Paper elevation={2} fullWidth>
               <FormControl fullWidth >
                 {/* <InputLabel
                   id="demo-simple-select-label"
