@@ -5,6 +5,9 @@ import TrustBox from "../components/trustpilot";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+
+import CardMedia from '@mui/material/CardMedia';
+
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -27,7 +30,7 @@ import Updateinfo from "../components/updateinfo";
 //import Quotecard from "../components/quotecard";
 import Quotecard2 from "../components/quotecard2";
 import Logo from "../assets/uma-logo.png";
-
+import video from "../assets/video-rates.mp4";
 
 
 const Rates = () => {
@@ -84,7 +87,7 @@ const plansA = [
   
 
   const [open, setOpen] = React.useState(false);
-  const [showbtn, setShowbtn] = React.useState(false);
+  
   
 
   const handleOpen = () => setOpen(true);
@@ -96,10 +99,6 @@ const plansA = [
     
     setOpen(true);
 
-    
-    const btntimer = setTimeout(() => {
-      setShowbtn(true);
-    }, 10000);
     
 
    if (userTries === "2"){
@@ -143,7 +142,7 @@ const plansA = [
     const timer = setTimeout(() => {
       setLoading(true);
     }, 200);
-    return () => clearTimeout(timer, btntimer);
+    return () => clearTimeout(timer);
 
   }, []);
 
@@ -999,7 +998,7 @@ warrant the accuracy of the above market data.
         id="uma-video"
       >
 
-
+        
 
         <Box maxWidth="md"  id="home-second">
             <Stack
@@ -1008,6 +1007,7 @@ warrant the accuracy of the above market data.
               spacing={2}
               id="vid-wrap"
             >
+              
               <div className="videoWrapper">
               
                 <iframe
@@ -1020,13 +1020,15 @@ warrant the accuracy of the above market data.
                 ></iframe>
               </div>
             
-            {showbtn && (
               <Button onClick={handleClose} startIcon={<CloseIcon />} sx={{mt: 6}} id="uma-video-btn" color="error"  variant="contained">Close</Button>
-            )}
+            
               
             
             </Stack>
           </Box>
+
+
+
         {/* <CloseIcon  color="error" id="ui-close">Close</CloseIcon> */}
        {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/XIMyL0n0iFA?autoplay=1&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
       
