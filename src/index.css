@@ -566,12 +566,12 @@ div#info-cont-last {
   }
 
   #uma-video .MuiDialog-paper{
-    margin: 20px !important;
+    margin: 10px !important;
   }
 
-  #uma-video .videoWrapper{
+  /* #uma-video .videoWrapper{
     padding-bottom: 150%;
-  }
+  } */
 
   #uma-video div#home-second #vid-wrap{
     margin-bottom: 0px !important;
