@@ -72,7 +72,7 @@ return (
     working to finalize your application.
   </Typography>
   <Typography variant="subtitle1" id="tq-sub2">
-  To lock in your rate, an agent licensed in your state will call you at the number provided to verify your information. Our office hours are 9am-6pm eastern.
+  To lock in your rate, an agent licensed in your state will call you at the number provided to verify your information. Our office hours are 9am-6pm central.
   </Typography>
 </Stack>
 

@@ -801,13 +801,13 @@ div#quote-info p {
 
 
 
-#ui-dial .MuiDialog-paper{
+/* #ui-dial .MuiDialog-paper{
 width: 100% !important;
 max-width: 100% !important;
 margin: 10px;
 height: 100% !important;
 max-height: 95% !important;
-}
+} */
 
 #ui-dial main{
   padding: 16px;

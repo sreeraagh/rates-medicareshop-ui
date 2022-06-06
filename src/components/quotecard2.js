@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Updateinfo from "./updateinfo";
 import Checkoutform from "./checkoutform";
+import CheckoutAlt from "./checkoutAlt";
 //import Box from "@mui/material/Box";
 // import CardActions from "@mui/material/CardActions";
 // import Dialog from "@mui/material/Dialog";
@@ -94,12 +95,12 @@ export default function Quotecard2({ quote, plan}) {
  const [openDialoginfo, setOpenDialoginfo] = useState(null);
  const [openDialogcheck, setOpenDialogcheck] = useState(null);
 
- const handleClickOpen = () => {
-  setOpenDialoginfo("updateinfo");
-};
+//  const handleClickOpen = () => {
+//   setOpenDialoginfo("updateinfo");
+// };
 
 const handleCheckClickOpen = () => {
-  setOpenDialogcheck("checkoutform");
+  setOpenDialogcheck("CheckoutAlt");
 };
 
 
@@ -489,7 +490,7 @@ const handleClosecheck = () => {
               onClick={handleCheckClickOpen}
               
             >
-              Checkout
+              Lock-in rate
             </Button>
 
          </Stack>
@@ -520,8 +521,8 @@ const handleClosecheck = () => {
         plan={plan}
       />
 
-      <Checkoutform
-        open={openDialogcheck === "checkoutform"}
+      <CheckoutAlt
+        open={openDialogcheck === "CheckoutAlt"}
         onClose={handleClosecheck}
         prov={prov}
         premium={premium}
