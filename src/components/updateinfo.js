@@ -195,7 +195,7 @@ const onSubmit = (formData, e) => {
       phoneScore = parseInt(xml.children[2].children[0].attributes.score);
       console.log(xml, phoneActive, phoneScore);
       
-      if ( phoneActive === "1" && phoneScore > 50){
+      if ( phoneActive === "1" && phoneScore > 70){
       localStorage.setItem('userTries', "");
 
       window.dataLayer = window.dataLayer || [];
