@@ -390,7 +390,7 @@ const plansA = [
         Unlock Premium: <b>$89</b>
       </Typography>
       <Typography color="text.primary" variant="caption" id="en-disc"  sx={{lineHeight: "1.4em", mt:1, fontStyle: "italic"}}>
-        *Only available in select states
+        *Subject to eligibility
       </Typography>
       </Stack>
       <Typography color="text.primary" variant="h6"  sx={{lineHeight: "1.4em"}} id="en-stars">

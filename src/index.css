@@ -264,7 +264,7 @@ div#eightynine-wrap {
   display: flex;
   justify-content: center;
   margin-bottom: 120px;
-  margin-top: -5px;
+  margin-top: 0px;
 }
 
 div#eightynine-wrap .MuiContainer-root{
