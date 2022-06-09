@@ -992,14 +992,11 @@ warrant the accuracy of the above market data.
       
       </Box>
 
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         id="uma-video"
-      >
-
-        
-
+      > 
         <Box maxWidth="md"  id="home-second">
             <Stack
               direction="column"
@@ -1021,19 +1018,9 @@ warrant the accuracy of the above market data.
               </div>
             
               <Button onClick={handleClose} startIcon={<CloseIcon />} sx={{mt: 6}} id="uma-video-btn" color="error"  variant="contained">Close</Button>
-            
-              
-            
             </Stack>
           </Box>
-
-
-
-        {/* <CloseIcon  color="error" id="ui-close">Close</CloseIcon> */}
-       {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/XIMyL0n0iFA?autoplay=1&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-      
-      </Modal>
-
+      </Modal> */}
 
       {/* <Updateinfo
         open={openDialogName === "updateinfo"}
