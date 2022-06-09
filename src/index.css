@@ -629,6 +629,10 @@ div#info-cont-last {
   #eightynine-card{
     flex-direction: column;  
   }
+
+  #en-disc{
+    text-align: center;
+  }
   
   div#eightynine-wrap{
     margin-bottom: 210px;

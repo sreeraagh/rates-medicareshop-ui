@@ -32,6 +32,7 @@ import Quotecard2 from "../components/quotecard2";
 import Logo from "../assets/uma-logo.png";
 import video from "../assets/video-rates.mp4";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CheckoutAlt from "../components/checkoutAlt";
 
 const Rates = () => {
 
@@ -90,8 +91,8 @@ const plansA = [
   
   
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   useEffect (() => { 
 
@@ -366,7 +367,13 @@ const plansA = [
   //   setOpenDialog(null);
   // };
 
+  const handleClickOpen = () => {
+    setOpenDialog("CheckoutAlt");
+  };
   
+  const handleClose = () => {
+    setOpenDialog(null);
+  };
 
 
 
@@ -375,21 +382,21 @@ const plansA = [
     <ResponsiveAppBarT />
       <Box id="plans-main" component="main" >                
 
-    <Box id="eightynine-wrap">
-    <Container maxWidth="md" id="info-cont">  
-    <Stack direction="row" id="eightynine-card">
+    <Box id="eightynine-wrap" elevation={3}>
+    <Container maxWidth="md" id="info-cont" elevation={3}>  
+    <Stack direction="row" id="eightynine-card" elevation={3}>
       <Stack >
       <Typography color="text.primary" variant="h6"  sx={{lineHeight: "1.4em"}}>
         Unlock Premium: <b>$89</b>
       </Typography>
-      <Typography color="text.primary" variant="caption"  sx={{lineHeight: "1.4em", mt:1, fontStyle: "italic"}}>
+      <Typography color="text.primary" variant="caption" id="en-disc"  sx={{lineHeight: "1.4em", mt:1, fontStyle: "italic"}}>
         *Only available in select states
       </Typography>
       </Stack>
       <Typography color="text.primary" variant="h6"  sx={{lineHeight: "1.4em"}} id="en-stars">
         ★★★★★
       </Typography>
-      <Button endIcon={<ArrowForwardIcon />} color="secondary" size="large" variant="contained" id="en-btn">
+      <Button endIcon={<ArrowForwardIcon />} onClick={handleClickOpen} color="secondary" size="large" variant="contained" id="en-btn">
         Unlock Rate
       </Button>
     </Stack>
@@ -1008,6 +1015,8 @@ warrant the accuracy of the above market data.
 
           </Container>
 )}
+
+<CheckoutAlt open={openDialogName === "CheckoutAlt"} onClose={handleClose}/>
       
       </Box>
 

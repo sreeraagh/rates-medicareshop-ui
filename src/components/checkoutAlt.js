@@ -145,7 +145,7 @@ year: year,
     <Dialog open={open} onClose={onClose} maxWidth={"sm"} id="ui-dial">
       <Box id="ui-chform">
         <Container component="main">
-          <Box variant="outlined" sx={{ my: 3 }} id="ch-box" component="form" noValidate onSubmit={handleSubmit(onCheckout)}>
+          <Box variant="outlined" sx={{ my: 1 }} id="ch-box" component="form" noValidate onSubmit={handleSubmit(onCheckout)}>
 
           
               <Grid container >
