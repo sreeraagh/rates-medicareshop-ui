@@ -25,7 +25,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { useForm, Controller } from "react-hook-form";
-
+import Timer from "./timer";
 
 
 export default function CheckoutAlt({ open, onClose, prov, plan, premium }) {
@@ -165,6 +165,10 @@ year: year,
                       />
                       
                     </Stack>
+
+                    <Grid item xs={12} sm={8} sx={{width: "100%"}}>
+                      <Timer/>
+                    </Grid>
 
                   <Grid item xs={12} sm={6} sx={{width: "100%"}}>
                   <Controller
