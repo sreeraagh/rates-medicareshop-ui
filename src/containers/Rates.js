@@ -31,7 +31,7 @@ import Updateinfo from "../components/updateinfo";
 import Quotecard2 from "../components/quotecard2";
 import Logo from "../assets/uma-logo.png";
 import video from "../assets/video-rates.mp4";
-
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const Rates = () => {
 
@@ -373,10 +373,29 @@ const plansA = [
   return (
     <>
     <ResponsiveAppBarT />
-      <Box
-        id="plans-main"
-        component="main"
-      >                
+      <Box id="plans-main" component="main" >                
+
+    <Box id="eightynine-wrap">
+    <Container maxWidth="md" id="info-cont">  
+    <Stack direction="row" id="eightynine-card">
+      <Stack >
+      <Typography color="text.primary" variant="h6"  sx={{lineHeight: "1.4em"}}>
+        Unlock Premium: <b>$89</b>
+      </Typography>
+      <Typography color="text.primary" variant="caption"  sx={{lineHeight: "1.4em", mt:1, fontStyle: "italic"}}>
+        *Only available in select states
+      </Typography>
+      </Stack>
+      <Typography color="text.primary" variant="h6"  sx={{lineHeight: "1.4em"}} id="en-stars">
+        ★★★★★
+      </Typography>
+      <Button endIcon={<ArrowForwardIcon />} color="secondary" size="large" variant="contained" id="en-btn">
+        Unlock Rate
+      </Button>
+    </Stack>
+     </Container> 
+    </Box>
+
 
     <Container maxWidth="md" id="info-cont">
       <Paper elevation={3} sx={{background: "#fff", mt:4,  mb:4, pt:6, pb:6, pr:2, pl:2}} id="info-wrap" className="uma-content">
